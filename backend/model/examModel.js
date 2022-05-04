@@ -1,12 +1,21 @@
 const mongoose = require("mongoose");
 
+const dateTimeSchema = mongoose.Schema(
+  {
+    from: { type: Date, required: true },
+    to: { type: Date, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const examSchema = mongoose.Schema(
   {
     title: { type: String, required: true },
-    instructions: { type: String, required: true },
+    description: { type: String, required: true },
     timeLimit: { type: Number, required: true },
-    dateAndTimeStart: { type: String, required: true },
-    dateAndTimeEnd: { type: String, required: true },
+    dateAndTime: dateTimeSchema,
     code: { type: String, required: true },
     questions: [],
   },

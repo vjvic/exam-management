@@ -46,7 +46,7 @@ const deleteExam = AsyncHandler(async (req, res) => {
 
   await exam.deleteOne(exam);
 
-  res.status(200).json({ message: "Delete success" });
+  res.status(200).json({ id: exam._id });
 });
 
 // @desc    update exam
