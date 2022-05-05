@@ -17,6 +17,7 @@ const questionSchema = mongoose.Schema(
     point: { type: Number, required: true },
     cpd: { type: String, required: true },
     kd: { type: String, required: true },
+    questionBank: String,
   },
   {
     timestamps: true,

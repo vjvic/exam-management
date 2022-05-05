@@ -19,6 +19,17 @@ const getAllQuestion = AsyncHandler(async (req, res) => {
   res.status(200).json(question);
 });
 
+// @desc    get all question by question bank
+// @route   GET /api/question/qbquestion/:id
+// @access  Private
+const getQuestionByQuestionBank = AsyncHandler(async (req, res) => {
+  const question = await Question.find({ questionBank: req.params.id });
+
+  console.log(req.params.id);
+
+  res.status(200).json(question);
+});
+
 // @desc    get question by id
 // @route   GET /api/question/:id
 // @access  Private
@@ -46,7 +57,7 @@ const deleteQuestion = AsyncHandler(async (req, res) => {
 
   await question.deleteOne(question);
 
-  res.status(200).json({ message: "Delete success" });
+  res.status(200).json({ id: question._id });
 });
 
 // @desc    update question
@@ -75,4 +86,5 @@ module.exports = {
   getQuestionById,
   deleteQuestion,
   updateQuestion,
+  getQuestionByQuestionBank,
 };

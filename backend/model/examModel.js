@@ -17,7 +17,7 @@ const examSchema = mongoose.Schema(
     timeLimit: { type: Number, required: true },
     dateAndTime: dateTimeSchema,
     code: { type: String, required: true },
-    questions: [],
+    questions: [{ type: mongoose.Schema.ObjectId, ref: "Question" }],
   },
   {
     timestamps: true,
