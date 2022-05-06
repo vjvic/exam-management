@@ -14,6 +14,7 @@ import {
   Questions,
   QuestionForm,
   Results,
+  Profile,
 } from "./pages";
 
 const App = () => {
@@ -65,6 +66,12 @@ const App = () => {
     </PrivateRoute>
   );
 
+  const profileRoute = (
+    <PrivateRoute>
+      <Profile />
+    </PrivateRoute>
+  );
+
   return (
     <ThemeProvider theme={themeOptions}>
       <CssBaseline />
@@ -88,6 +95,7 @@ const App = () => {
           <Route path="/questions/" element={questionsRoute} />
           <Route path="/questions/:id" element={questionsRoute} />
           <Route path="/results" element={resultsRoute} />
+          <Route path="/profile" element={profileRoute} />
         </Routes>
       </Layout>
     </ThemeProvider>

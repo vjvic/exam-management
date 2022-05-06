@@ -51,7 +51,7 @@ const getQuestionById = AsyncHandler(async (req, res) => {
   const question = await Question.findById(req.params.id);
 
   if (!question) {
-    res.status(400);
+    res.status(404);
     throw new Error("Question not found");
   }
 
@@ -65,7 +65,7 @@ const deleteQuestion = AsyncHandler(async (req, res) => {
   const question = await Question.findById(req.params.id);
 
   if (!question) {
-    res.status(400);
+    res.status(404);
     throw new Error("Question not found");
   }
 
@@ -81,7 +81,7 @@ const updateQuestion = AsyncHandler(async (req, res) => {
   const question = await Question.findById(req.params.id);
 
   if (!question) {
-    res.status(400);
+    res.status(404);
     throw new Error("Question not found");
   }
 

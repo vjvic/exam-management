@@ -8,7 +8,6 @@ import {
   Typography,
   Menu,
   Container,
-  Avatar,
   Button,
   Tooltip,
   MenuItem,
@@ -71,6 +70,8 @@ const Appbar = ({ display }: { display: boolean }) => {
   const handleSettingClick = (setting: string) => {
     if (setting === "Logout") {
       dispatch(logout());
+    } else if (setting === "Profile") {
+      navigate("/profile");
     }
   };
 
@@ -159,17 +160,19 @@ const Appbar = ({ display }: { display: boolean }) => {
           </Box>
 
           <Box sx={{ flexGrow: 0, display: display ? "block" : "none" }}>
-            <Tooltip title="Open settings">
-              <Button
-                onClick={handleOpenUserMenu}
-                sx={{ p: 0 }}
-                color="inherit"
-                variant="outlined"
-                endIcon={<ArrowDropDownIcon />}
-              >
-                {user!.fName!}
-              </Button>
-            </Tooltip>
+            {user && (
+              <Tooltip title="Open settings">
+                <Button
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                  color="inherit"
+                  variant="outlined"
+                  endIcon={<ArrowDropDownIcon />}
+                >
+                  {user!.fName!}
+                </Button>
+              </Tooltip>
+            )}
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

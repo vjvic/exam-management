@@ -8,6 +8,7 @@ import QuestionBankForm from "./Question/QuestionBankForm";
 import Questions from "./Question/Questions";
 import QuestionForm from "./Question/QuestionForm";
 import Results from "./Results/Result";
+import Profile from "./Profile";
 
 export {
   Signin,
@@ -20,4 +21,5 @@ export {
   Questions,
   Results,
   QuestionForm,
+  Profile,
 };

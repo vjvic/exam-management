@@ -26,7 +26,7 @@ const getExamById = AsyncHandler(async (req, res) => {
   const exam = await Exam.findById(req.params.id);
 
   if (!exam) {
-    res.status(400);
+    res.status(404);
     throw new Error("Exam not found");
   }
 
@@ -40,7 +40,7 @@ const deleteExam = AsyncHandler(async (req, res) => {
   const exam = await Exam.findById(req.params.id);
 
   if (!exam) {
-    res.status(400);
+    res.status(404);
     throw new Error("Exam not found");
   }
 
@@ -56,7 +56,7 @@ const updateExam = AsyncHandler(async (req, res) => {
   const exam = await Exam.findById(req.params.id);
 
   if (!exam) {
-    res.status(400);
+    res.status(404);
     throw new Error("Exam not found");
   }
 
