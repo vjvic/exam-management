@@ -59,7 +59,7 @@ const Signin = () => {
   }, [isSuccess, dispatch, navigate]);
 
   return (
-    <section>
+    <Box component="section">
       <FormContainer>
         <Wrapper>
           <Box sx={{ marginBottom: 5 }}>
@@ -122,7 +122,7 @@ const Signin = () => {
           </Typography>
         </Wrapper>
       </FormContainer>
-    </section>
+    </Box>
   );
 };
 

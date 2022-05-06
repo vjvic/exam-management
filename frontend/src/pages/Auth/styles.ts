@@ -5,7 +5,8 @@ export const FormContainer = styled(Container)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: "90vh",
+  padding: "1.5rem 0",
+  minHeight: "90vh",
 }));
 
 export const Wrapper = styled(Paper)(({ theme }) => ({
@@ -13,4 +14,6 @@ export const Wrapper = styled(Paper)(({ theme }) => ({
   maxWidth: "500px",
   border: "1px solid white",
   padding: 30,
+
+  /*  margin: "auto", */
 }));

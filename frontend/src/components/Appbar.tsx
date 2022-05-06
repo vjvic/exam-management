@@ -166,7 +166,6 @@ const Appbar = ({ display }: { display: boolean }) => {
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0 }}
                   color="inherit"
-                  variant="outlined"
                   endIcon={<ArrowDropDownIcon />}
                 >
                   {user!.fName!}
