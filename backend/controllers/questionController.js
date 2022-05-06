@@ -19,6 +19,24 @@ const getAllQuestion = AsyncHandler(async (req, res) => {
   res.status(200).json(question);
 });
 
+// @desc    get random question
+// @route   GET /api/question/random/:id?size
+// @access  Private
+const getRandomQuestion = AsyncHandler(async (req, res) => {
+  const question = await Question.aggregate([
+    {
+      $match: { questionBank: req.params.id },
+    },
+    {
+      $sample: { size: Number(req.query.size) },
+    },
+  ]);
+
+  /* const randomQuestion = await  question; */
+
+  res.status(200).json(question);
+});
+
 // @desc    get all question by question bank
 // @route   GET /api/question/qbquestion/:id
 // @access  Private
@@ -87,4 +105,5 @@ module.exports = {
   deleteQuestion,
   updateQuestion,
   getQuestionByQuestionBank,
+  getRandomQuestion,
 };

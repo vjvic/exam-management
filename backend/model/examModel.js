@@ -1,5 +1,29 @@
 const mongoose = require("mongoose");
 
+const choicesSchema = mongoose.Schema(
+  {
+    text: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const questionSchema = mongoose.Schema(
+  {
+    questionText: { type: String, required: true },
+    choices: [choicesSchema],
+    answer: { type: String, required: true },
+    point: { type: Number, required: true },
+    cpd: { type: String, required: true },
+    kd: { type: String, required: true },
+    questionBank: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const dateTimeSchema = mongoose.Schema(
   {
     from: { type: Date, required: true },
@@ -17,7 +41,7 @@ const examSchema = mongoose.Schema(
     timeLimit: { type: Number, required: true },
     dateAndTime: dateTimeSchema,
     code: { type: String, required: true },
-    questions: [{ type: mongoose.Schema.ObjectId, ref: "Question" }],
+    questions: [questionSchema],
   },
   {
     timestamps: true,

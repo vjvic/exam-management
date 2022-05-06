@@ -16,6 +16,9 @@ const createExam = AsyncHandler(async (req, res) => {
 const getAllExam = AsyncHandler(async (req, res) => {
   const exam = await Exam.find({});
 
+  //Random exam
+  /* const exam = await Exam.aggregate([{ $sample: { size: 2 } }]); */
+
   res.status(200).json(exam);
 });
 
