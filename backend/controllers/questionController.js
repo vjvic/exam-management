@@ -41,8 +41,6 @@ const getRandomQuestion = AsyncHandler(async (req, res) => {
 const getQuestionByQuestionBank = AsyncHandler(async (req, res) => {
   const question = await Question.find({ questionBank: req.params.id });
 
-  console.log(req.params.id);
-
   res.status(200).json(question);
 });
 

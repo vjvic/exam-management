@@ -31,8 +31,6 @@ const QuestionBankForm = () => {
     e.preventDefault();
 
     if (isEdit) {
-      console.log("edit");
-
       dispatch(updateQuestionBank({ _id: id, title }));
     } else {
       dispatch(createQuestionBank({ title }));

@@ -35,6 +35,7 @@ import { reset as questionReset } from "../../features/question/question";
 import { reset as questionBankReset } from "../../features/questionBank/questionBankSlice";
 import { QuestionBank } from "../../interface/QuestionBank";
 import axios from "axios";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const cpDimension = [
   "Remember",
@@ -103,7 +104,6 @@ const ExamForm = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [imageData, setImageData] = useState("");
 
   //Selector and dispatch
   const dispatch = useAppDispatch();
@@ -164,7 +164,6 @@ const ExamForm = () => {
         filename = Date.now() + question.file.name;
         data.append("name", filename);
         data.append("file", question.file);
-        console.log(questionInputFields, filename);
         uploadHandler(data);
       }
 
@@ -255,10 +254,8 @@ const ExamForm = () => {
 
           uploadHandler(data); */
 
-          console.log(questionInputFields);
           /* console.log(data); */
         } else {
-          console.log(123);
           i[event.target.name] = event.target.value;
         }
       }
@@ -330,8 +327,6 @@ const ExamForm = () => {
   useEffect(() => {
     dispatch(getAllQuestionBank(""));
   }, [dispatch]);
-
-  console.log(questionInputFields);
 
   //Loader
   if (isLoading) return <Loader />;
@@ -496,14 +491,30 @@ const ExamForm = () => {
                       />
                     )}
                     <div>
-                      <input
+                      {/* <input
                         name="file"
                         type="file"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                           handleChangeInput(input.id, e)
                         }
                         required
-                      />
+                      /> */}
+                      <Button
+                        variant="outlined"
+                        component="label"
+                        startIcon={<FileUploadIcon />}
+                      >
+                        Upload Image
+                        <input
+                          type="file"
+                          name="file"
+                          hidden
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          required
+                        />
+                      </Button>
                     </div>
 
                     <TextField

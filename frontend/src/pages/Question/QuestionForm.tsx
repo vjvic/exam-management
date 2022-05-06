@@ -20,6 +20,9 @@ import {
   getQuestionDetails,
 } from "../../features/question/question";
 import { Loader, Error } from "../../components";
+import axios from "axios";
+import { Question } from "../../interface/Question";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 const cpDimension = [
   "Remember",
@@ -44,6 +47,7 @@ const QuestionForm = () => {
   const [answer, setAnswer] = useState("");
   const [cpd, setCpd] = useState("");
   const [kd, setKd] = useState("");
+  const [file, setFile] = useState<File>();
 
   //Selector and dispatch
   const dispatch = useAppDispatch();
@@ -57,14 +61,10 @@ const QuestionForm = () => {
 
   const isEdit = id ? true : false;
 
-  console.log("bank" + bank, "id" + id);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isEdit) {
-      console.log("edit");
-
       const updatedQuestion = {
         _id: id,
         questionText,
@@ -90,7 +90,7 @@ const QuestionForm = () => {
 
       dispatch(updateQuestion(updatedQuestion));
     } else {
-      const newQuestion = {
+      const newQuestion: Question = {
         questionText,
         choices: [
           {
@@ -112,8 +112,29 @@ const QuestionForm = () => {
         cpd,
         questionBank: bank,
       };
-      dispatch(createQuestion(newQuestion));
+
+      if (file) {
+        const data = new FormData();
+        const filename = Date.now() + file.name;
+        data.append("name", filename);
+        data.append("file", file);
+        newQuestion.image = filename;
+
+        try {
+          await axios.post("http://localhost:5000/api/upload", data);
+        } catch (error) {}
+
+        dispatch(createQuestion(newQuestion));
+      }
     }
+  };
+
+  const onUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    setFile(e.target.files[0]);
   };
 
   useEffect(() => {
@@ -153,6 +174,31 @@ const QuestionForm = () => {
       <div>
         <form onSubmit={handleSubmit}>
           <Stack spacing={1}>
+            {file && (
+              <img
+                src={URL.createObjectURL(file)}
+                alt="pic"
+                style={{ width: "100%" }}
+              />
+            )}
+            <div>
+              {/*  <input type="file" onChange={onUploadChange} required /> */}
+
+              <Button
+                variant="outlined"
+                component="label"
+                startIcon={<FileUploadIcon />}
+              >
+                Upload Image
+                <input
+                  type="file"
+                  name="file"
+                  hidden
+                  onChange={onUploadChange}
+                  required
+                />
+              </Button>
+            </div>
             <TextField
               label="Question Text"
               value={questionText}
