@@ -32,8 +32,6 @@ const getRandomQuestion = AsyncHandler(async (req, res) => {
     },
   ]);
 
-  /* const randomQuestion = await  question; */
-
   res.status(200).json(question);
 });
 
