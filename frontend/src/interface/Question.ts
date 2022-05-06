@@ -6,5 +6,6 @@ export interface Question {
   point: number;
   cpd: string;
   kd: string;
+  image?: string;
   questionBank?: string;
 }

@@ -34,6 +34,7 @@ import { QuestionBankItem } from "../../components";
 import { reset as questionReset } from "../../features/question/question";
 import { reset as questionBankReset } from "../../features/questionBank/questionBankSlice";
 import { QuestionBank } from "../../interface/QuestionBank";
+import axios from "axios";
 
 const cpDimension = [
   "Remember",
@@ -95,11 +96,14 @@ const ExamForm = () => {
       point: "",
       cpd: "",
       kd: "",
+      image: "",
+      file: new File([""], "filename"),
     },
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [imageData, setImageData] = useState("");
 
   //Selector and dispatch
   const dispatch = useAppDispatch();
@@ -129,7 +133,7 @@ const ExamForm = () => {
     );
   };
 
-  const questions = questionInputFields.map((question) => {
+  /*  const questions = questionInputFields.map((question) => {
     const newQuestions = {
       questionText: question.questionText,
       choices: [
@@ -146,11 +150,41 @@ const ExamForm = () => {
 
     return newQuestions;
   });
-
+ */
   //Handlers
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const questions = questionInputFields.map((question) => {
+      let filename;
+
+      if (question.file) {
+        const data = new FormData();
+        filename = Date.now() + question.file.name;
+        data.append("name", filename);
+        data.append("file", question.file);
+        console.log(questionInputFields, filename);
+        uploadHandler(data);
+      }
+
+      const newQuestions = {
+        questionText: question.questionText,
+        choices: [
+          { text: question.option1.toLowerCase() },
+          { text: question.option2.toLowerCase() },
+          { text: question.option3.toLowerCase() },
+          { text: question.option4.toLowerCase() },
+        ],
+        answer: question.answer.toLowerCase(),
+        point: Number(question.point),
+        cpd: question.cpd,
+        kd: question.kd,
+        image: filename,
+      };
+
+      return newQuestions;
+    });
 
     if (isEdit) {
       const updatedExam = {
@@ -173,8 +207,6 @@ const ExamForm = () => {
         questions: [...questions, ...questionRandom],
       };
 
-      console.log(newExam);
-
       dispatch(createExam(newExam));
     }
   };
@@ -193,14 +225,42 @@ const ExamForm = () => {
         point: "",
         cpd: "",
         kd: "",
+        image: "",
+        file: new File([""], "filename"),
       },
     ]);
+  };
+
+  const uploadHandler = async (data: FormData) => {
+    try {
+      await axios.post("api/upload", data);
+    } catch (err) {}
   };
 
   const handleChangeInput = (id: any, event: any) => {
     const newInputFields = questionInputFields.map((i) => {
       if (id === i.id) {
-        i[event.target.name] = event.target.value;
+        if (event.target.name === "file") {
+          const file = event.target.files[0];
+
+          i[event.target.name] = file;
+
+          /*   console.log("file triggered");
+          const data = new FormData();
+          const filename = Date.now() + file.name;
+          data.append("name", filename);
+          data.append("file", file);
+
+          i.images = filename;
+
+          uploadHandler(data); */
+
+          console.log(questionInputFields);
+          /* console.log(data); */
+        } else {
+          console.log(123);
+          i[event.target.name] = event.target.value;
+        }
       }
       return i;
     });
@@ -271,6 +331,8 @@ const ExamForm = () => {
     dispatch(getAllQuestionBank(""));
   }, [dispatch]);
 
+  console.log(questionInputFields);
+
   //Loader
   if (isLoading) return <Loader />;
   if (isError) return <Error />;
@@ -325,7 +387,7 @@ const ExamForm = () => {
         </Box>
       </Modal>
 
-      <Container maxWidth="md">
+      <Container maxWidth="sm">
         <Typography variant="h4" sx={{ marginBottom: 3 }}>
           Create Exam
         </Typography>
@@ -426,6 +488,24 @@ const ExamForm = () => {
                   sx={{ my: 5 }}
                 >
                   <Stack spacing={2} sx={{ width: "100%" }}>
+                    {input.file.size > 0 && (
+                      <img
+                        src={URL.createObjectURL(input.file)}
+                        alt="pic"
+                        style={{ width: "100%" }}
+                      />
+                    )}
+                    <div>
+                      <input
+                        name="file"
+                        type="file"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        required
+                      />
+                    </div>
+
                     <TextField
                       label="Question"
                       name="questionText"

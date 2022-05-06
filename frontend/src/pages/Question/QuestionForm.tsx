@@ -146,7 +146,7 @@ const QuestionForm = () => {
   if (isError) return <Error />;
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="sm">
       <Typography variant="h4" sx={{ marginBottom: 3 }}>
         Create Question
       </Typography>
