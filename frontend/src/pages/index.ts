@@ -9,6 +9,9 @@ import Questions from "./Question/Questions";
 import QuestionForm from "./Question/QuestionForm";
 import Results from "./Results/Result";
 import Profile from "./Profile";
+import Home from "./Home";
+import Score from "./Score";
+import StartExam from "./StartExam";
 
 export {
   Signin,
@@ -22,4 +25,7 @@ export {
   Results,
   QuestionForm,
   Profile,
+  Home,
+  Score,
+  StartExam,
 };

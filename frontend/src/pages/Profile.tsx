@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getProfile, updateProfile } from "../features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { RootState } from "../app/store";
+import { Error, Loader } from "../components";
 
 const Profile = () => {
   const [fName, setFName] = useState<string | undefined>("");
@@ -21,7 +22,9 @@ const Profile = () => {
 
   //Redux hooks
   const dispatch = useAppDispatch();
-  const { profile } = useAppSelector((state: RootState) => state.auth);
+  const { profile, isLoading, isError } = useAppSelector(
+    (state: RootState) => state.auth
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,6 +57,9 @@ const Profile = () => {
       setEmail(profile.email);
     }
   }, [profile]);
+
+  if (isLoading) return <Loader />;
+  if (isError) return <Error />;
 
   return (
     <Container maxWidth="sm">

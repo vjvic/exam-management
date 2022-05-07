@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { themeOptions } from "./theme";
-import { Layout, PrivateRoute } from "./components";
+import { Layout, PrivateRoute, FacultyRoute } from "./components";
 import { Routes, Route } from "react-router-dom";
 import {
   Signin,
@@ -15,60 +15,81 @@ import {
   QuestionForm,
   Results,
   Profile,
+  Home,
+  Score,
+  StartExam,
 } from "./pages";
 
 const App = () => {
   const examRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <Exam />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const examFormRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <ExamForm />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const examDetailsRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <ExamDetails />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const questionBankRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <QuestionBank />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const questionBankFormRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <QuestionBankForm />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const questionsRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <Questions />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const questionFormRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <QuestionForm />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const resultsRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <Results />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   const profileRoute = (
     <PrivateRoute>
       <Profile />
+    </PrivateRoute>
+  );
+
+  const homeRoute = (
+    <PrivateRoute>
+      <Home />
+    </PrivateRoute>
+  );
+
+  const scoreRoute = (
+    <PrivateRoute>
+      <Score />
+    </PrivateRoute>
+  );
+
+  const startExamRoute = (
+    <PrivateRoute>
+      <StartExam />
     </PrivateRoute>
   );
 
@@ -96,6 +117,9 @@ const App = () => {
           <Route path="/questions/:id" element={questionsRoute} />
           <Route path="/results" element={resultsRoute} />
           <Route path="/profile" element={profileRoute} />
+          <Route path="/home" element={homeRoute} />
+          <Route path="/score" element={scoreRoute} />
+          <Route path="/start-exam/:id" element={startExamRoute} />
         </Routes>
       </Layout>
     </ThemeProvider>

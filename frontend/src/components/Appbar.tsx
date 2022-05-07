@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../app/store";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-const pages = [
+const facultyPages = [
   {
     text: "Exams",
     path: "/",
@@ -32,6 +32,18 @@ const pages = [
     path: "/results",
   },
 ];
+
+const studentPages = [
+  {
+    text: "Home",
+    path: "/home",
+  },
+  {
+    text: "Score",
+    path: "/score",
+  },
+];
+
 const settings = ["Profile", "Logout"];
 
 const Appbar = ({ display }: { display: boolean }) => {
@@ -124,14 +136,26 @@ const Appbar = ({ display }: { display: boolean }) => {
                 display: display ? { xs: "block", md: "none" } : "none",
               }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  key={page.text}
-                  onClick={() => handleCloseNavMenu(page.path)}
-                >
-                  <Typography textAlign="center">{page.text}</Typography>
-                </MenuItem>
-              ))}
+              {user &&
+                user.role === "faculty" &&
+                facultyPages.map((page) => (
+                  <MenuItem
+                    key={page.text}
+                    onClick={() => handleCloseNavMenu(page.path)}
+                  >
+                    <Typography textAlign="center">{page.text}</Typography>
+                  </MenuItem>
+                ))}
+              {user &&
+                user.role === "student" &&
+                studentPages.map((page) => (
+                  <MenuItem
+                    key={page.text}
+                    onClick={() => handleCloseNavMenu(page.path)}
+                  >
+                    <Typography textAlign="center">{page.text}</Typography>
+                  </MenuItem>
+                ))}
             </Menu>
           </Box>
           <Typography
@@ -148,15 +172,28 @@ const Appbar = ({ display }: { display: boolean }) => {
               display: display ? { xs: "none", md: "flex" } : "none",
             }}
           >
-            {pages.map((page) => (
-              <Button
-                key={page.text}
-                onClick={() => handleCloseNavMenu(page.path)}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page.text}
-              </Button>
-            ))}
+            {user &&
+              user.role === "faculty" &&
+              facultyPages.map((page) => (
+                <Button
+                  key={page.text}
+                  onClick={() => handleCloseNavMenu(page.path)}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.text}
+                </Button>
+              ))}
+            {user &&
+              user.role === "student" &&
+              studentPages.map((page) => (
+                <Button
+                  key={page.text}
+                  onClick={() => handleCloseNavMenu(page.path)}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.text}
+                </Button>
+              ))}
           </Box>
 
           <Box sx={{ flexGrow: 0, display: display ? "block" : "none" }}>

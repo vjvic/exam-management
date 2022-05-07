@@ -5,25 +5,16 @@ import { Exam } from "../../interface/Exam";
 
 interface InitialState {
   examList: Exam[];
-  examDet: Exam;
+  examDet: Exam | null;
   isError: boolean;
   isLoading: boolean;
   isSuccess: boolean;
   message: string | unknown;
 }
 
-const exam = {
-  title: "",
-  description: "",
-  timeLimit: 0,
-  dateAndTime: { from: null, to: null },
-  code: "",
-  questions: [],
-};
-
 const initialState: InitialState = {
   examList: [],
-  examDet: exam,
+  examDet: null,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -69,6 +60,30 @@ export const getExamDetails = createAsyncThunk<
       },
     };
     const response = await axios.get(API_URL + id, config);
+
+    return response.data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return rejectWithValue(message);
+  }
+});
+
+export const getExamByCode = createAsyncThunk<
+  Exam,
+  string,
+  { state: RootState }
+>("exam/getByCode", async (code: string, { getState, rejectWithValue }) => {
+  try {
+    const token = getState().auth.user!.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${API_URL}single/${code}`, config);
 
     return response.data;
   } catch (error: any) {
@@ -209,6 +224,7 @@ export const examSlice = createSlice({
       })
       .addCase(getExamDetails.pending, (state) => {
         state.isLoading = true;
+        state.examDet = null;
       })
       .addCase(getExamDetails.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -218,6 +234,23 @@ export const examSlice = createSlice({
       .addCase(getExamDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+        state.message = action.payload;
+        state.examDet = null;
+      })
+      .addCase(getExamByCode.pending, (state) => {
+        state.isLoading = true;
+        state.examDet = null;
+        state.message = "";
+      })
+      .addCase(getExamByCode.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.examDet = action.payload;
+      })
+      .addCase(getExamByCode.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.examDet = null;
         state.message = action.payload;
       })
       .addCase(updateExam.pending, (state) => {

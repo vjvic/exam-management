@@ -103,25 +103,25 @@ export const themeOptions: ThemeOptions = createTheme({
   components: {
     MuiAppBar: {
       defaultProps: {
-        elevation: 0,
+        elevation: 1,
         color: "primary",
       },
     },
     MuiButton: {
       defaultProps: {
-        disableRipple: true,
-        disableElevation: true,
+        /* disableRipple: true, */
+        /* disableElevation: true, */
       },
     },
     MuiCard: {
       defaultProps: {
         raised: false,
-        elevation: 0,
+        elevation: 1,
       },
     },
     MuiPaper: {
       defaultProps: {
-        elevation: 0,
+        elevation: 1,
       },
     },
   },

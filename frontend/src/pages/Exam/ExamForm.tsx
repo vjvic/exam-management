@@ -159,7 +159,7 @@ const ExamForm = () => {
     const questions = questionInputFields.map((question) => {
       let filename;
 
-      if (question.file) {
+      if (question.file && question.file.size > 0) {
         const data = new FormData();
         filename = Date.now() + question.file.name;
         data.append("name", filename);
@@ -512,7 +512,6 @@ const ExamForm = () => {
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             handleChangeInput(input.id, e)
                           }
-                          required
                         />
                       </Button>
                     </div>

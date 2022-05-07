@@ -6,10 +6,12 @@ const {
   getExamById,
   deleteExam,
   updateExam,
+  getExamByCode,
 } = require("../controllers/examController.js");
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").post(protect, createExam).get(protect, getAllExam);
+router.get("/single/:code", protect, getExamByCode);
 router
   .route("/:id")
   .get(protect, getExamById)

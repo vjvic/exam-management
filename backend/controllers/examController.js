@@ -19,6 +19,22 @@ const getAllExam = AsyncHandler(async (req, res) => {
   res.status(200).json(exam);
 });
 
+// @desc    get all exam
+// @route   GET /api/exam/single/:code
+// @access  Private
+const getExamByCode = AsyncHandler(async (req, res) => {
+  const code = req.params.code;
+
+  const exam = await Exam.findOne({ code });
+
+  if (!exam) {
+    res.status(404);
+    throw new Error("Exam not found");
+  }
+
+  res.status(200).json(exam);
+});
+
 // @desc    get exam by id
 // @route   GET /api/exam/:id
 // @access  Private
@@ -73,4 +89,5 @@ module.exports = {
   getExamById,
   deleteExam,
   updateExam,
+  getExamByCode,
 };
