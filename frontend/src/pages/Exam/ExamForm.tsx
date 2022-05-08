@@ -193,8 +193,10 @@ const ExamForm = () => {
         description,
         code,
         dateAndTime: { from, to },
-        questions: [],
+        questions: [...examDet!?.questions!, ...questions, ...questionRandom],
       };
+
+      console.log(updatedExam);
       dispatch(updateExam(updatedExam));
     } else {
       const newExam = {
@@ -264,6 +266,8 @@ const ExamForm = () => {
 
     setQuestionInputFields(newInputFields);
   };
+
+  console.log(to);
 
   const handleRemoveFields = (id: number) => {
     const values = [...questionInputFields];

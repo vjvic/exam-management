@@ -40,7 +40,7 @@ const Exam = () => {
         return (
           <div className="rowitem">
             <IconButton
-              onClick={() => navigate(`/questions/${params.row._id}`)}
+              onClick={() => navigate(`/exam-details/${params.row._id}`)}
             >
               <VisibilityIcon />
             </IconButton>

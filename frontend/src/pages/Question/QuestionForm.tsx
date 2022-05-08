@@ -195,7 +195,6 @@ const QuestionForm = () => {
                   name="file"
                   hidden
                   onChange={onUploadChange}
-                  required
                 />
               </Button>
             </div>

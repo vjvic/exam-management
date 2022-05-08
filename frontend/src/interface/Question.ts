@@ -8,4 +8,5 @@ export interface Question {
   kd: string;
   image?: string;
   questionBank?: string;
+  userAnswer?: string;
 }

@@ -7,7 +7,7 @@ import QuestionBank from "./Question/QuestionBank";
 import QuestionBankForm from "./Question/QuestionBankForm";
 import Questions from "./Question/Questions";
 import QuestionForm from "./Question/QuestionForm";
-import Results from "./Results/Result";
+import Results from "./Result";
 import Profile from "./Profile";
 import Home from "./Home";
 import Score from "./Score";

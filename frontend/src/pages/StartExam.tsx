@@ -9,36 +9,42 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
+import {
+  useAppDispatch,
+  useAppSelector /* , useAppDispatch */,
+} from "../app/hooks";
 import { RootState } from "../app/store";
-import { useParams, useNavigate } from "react-router-dom";
+import { /* useParams, */ useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { getExamDetails, reset } from "../features/exam/examSlice";
+/* import { getExamDetails, reset } from "../features/exam/examSlice"; */
 import { Loader, Error } from "../components";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { createResult } from "../features/result/resultSlice";
 
 const StartExam = () => {
   //Router hooks
 
-  const { id } = useParams();
+  /*   const { id } = useParams(); */
   const navigate = useNavigate();
 
   //Redux hooks
+  const dispatch = useAppDispatch();
   const { examDet, isLoading, isError } = useAppSelector(
     (state: RootState) => state.exam
   );
-  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state: RootState) => state.auth);
+  /*   const dispatch = useAppDispatch(); */
 
   //States
-  const [myAnswer, setMyAnswer] = useState("");
+  const [userAnswer, setUserAnswer] = useState("");
   const [currentExam, setCurrentExam] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMyAnswer((event.target as HTMLInputElement).value);
+    setUserAnswer((event.target as HTMLInputElement).value);
   };
   const examQuestions = examDet?.questions[currentExam]!;
   const imgPath = "http://localhost:5000/images/";
@@ -46,12 +52,9 @@ const StartExam = () => {
   const examLength = examDet?.questions!.length!;
 
   const handleNext = (answer: string, point: number) => {
-    console.log(currentExam + 1, examLength);
-    console.log(answer, myAnswer);
-
-    if (answer === myAnswer) {
+    if (answer === userAnswer) {
       setScore((score) => score + point);
-      setMyAnswer("");
+      setUserAnswer("");
     }
 
     if (currentExam + 1 < examLength) {
@@ -112,6 +115,16 @@ const StartExam = () => {
     if (showScore) {
       setMinutes(0);
       setSeconds(0);
+
+      const userResult = {
+        fName: user!?.fName!.toString(),
+        lName: user!?.lName!.toString(),
+        examTitle: examDet!?.title!.toString(),
+        score: Number(score),
+        questions: examDet!?.questions!,
+      };
+
+      dispatch(createResult(userResult!));
     }
   }, [showScore]);
 
@@ -157,7 +170,7 @@ const StartExam = () => {
 
           <div>
             <FormControl sx={{ my: 4 }}>
-              <RadioGroup value={myAnswer} onChange={handleChange}>
+              <RadioGroup value={userAnswer} onChange={handleChange}>
                 {examQuestions.choices.map((choice) => (
                   <FormControlLabel
                     value={choice.text}

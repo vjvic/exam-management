@@ -71,6 +71,8 @@ const deleteExam = AsyncHandler(async (req, res) => {
 const updateExam = AsyncHandler(async (req, res) => {
   const exam = await Exam.findById(req.params.id);
 
+  console.log(req.body);
+
   if (!exam) {
     res.status(404);
     throw new Error("Exam not found");
