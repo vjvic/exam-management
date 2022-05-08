@@ -91,3 +91,16 @@ module.exports = {
   updateExam,
   getExamByCode,
 };
+
+/* function CompareDate() {    
+  //            new Date(Year, Month, Date, Hr, Min, Sec);    
+  var dateOne = new Date(2022, 05, 08, 14, 11, 59);    
+  var dateTwo = new Date(2022, 05, 08, 14, 12, 20);    
+   //Note: 04 is month i.e. May    
+  if (dateOne > dateTwo) {    
+       alert("Date One is greater than Date Two.");    
+   }else {    
+       alert("Date Two is greater than Date One.");    
+   }    
+}    
+CompareDate();   */

@@ -10,7 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getExamByCode } from "../features/exam/examSlice";
 import { RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +33,29 @@ const Home = () => {
 
     if (code) {
       dispatch(getExamByCode(code));
+    }
+  };
+
+  //Enable if available
+  const examDateAvailable = () => {
+    const startDate = examDet
+      ? format(new Date(`${examDet!.dateAndTime!.from!}`), "yyyy MM dd k mm s")
+      : null;
+
+    const endDate = examDet
+      ? format(new Date(`${examDet!.dateAndTime!.to!}`), "yyyy MM dd k mm s")
+      : null;
+
+    const dateNow = format(new Date(), "yyyy MM dd k mm s");
+
+    if (dateNow >= endDate!) {
+      return false;
+    }
+
+    if (dateNow < startDate!) {
+      return false;
+    } else if (dateNow >= startDate!) {
+      return true;
     }
   };
 
@@ -105,7 +128,8 @@ const Home = () => {
           <CardActions>
             <Button
               size="small"
-              onClick={() => navigate(`/start-exam/${examDet._id}`)}
+              onClick={() => navigate(`/start-exam`)}
+              disabled={examDateAvailable() ? false : true}
             >
               Start Exam
             </Button>

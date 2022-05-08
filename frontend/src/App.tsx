@@ -119,7 +119,7 @@ const App = () => {
           <Route path="/profile" element={profileRoute} />
           <Route path="/home" element={homeRoute} />
           <Route path="/score" element={scoreRoute} />
-          <Route path="/start-exam/:id" element={startExamRoute} />
+          <Route path="/start-exam" element={startExamRoute} />
         </Routes>
       </Layout>
     </ThemeProvider>

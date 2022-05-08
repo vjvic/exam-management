@@ -91,16 +91,22 @@ const StartExam = () => {
   });
 
   useEffect(() => {
-    setMinutes(examDet?.timeLimit! - 1);
+    setMinutes(Number(examDet?.timeLimit! - 1));
   }, []);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     dispatch(getExamDetails(id!));
 
     return () => {
       dispatch(reset());
     };
-  }, [id, dispatch]);
+  }, [id, dispatch]); */
+
+  useEffect(() => {
+    if (!examDet) {
+      navigate("/home");
+    }
+  }, []);
 
   useEffect(() => {
     if (showScore) {
