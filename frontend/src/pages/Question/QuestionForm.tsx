@@ -123,9 +123,8 @@ const QuestionForm = () => {
         try {
           await axios.post("http://localhost:5000/api/upload", data);
         } catch (error) {}
-
-        dispatch(createQuestion(newQuestion));
       }
+      dispatch(createQuestion(newQuestion));
     }
   };
 
