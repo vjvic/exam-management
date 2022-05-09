@@ -78,9 +78,23 @@ const updateExam = AsyncHandler(async (req, res) => {
     throw new Error("Exam not found");
   }
 
-  const updatedExam = await Exam.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  const updatedExam = await Exam.findByIdAndUpdate(
+    req.params.id,
+    {
+      title: req.body.title,
+      description: req.body.description,
+      timeLimit: req.body.timeLimit,
+      dateAndTime: {
+        from: req.body.dateAndTime.from,
+        to: req.body.dateAndTime.to,
+      },
+      code: req.body.code,
+      questions: req.body.questions,
+    },
+    {
+      new: true,
+    }
+  );
 
   res.status(200).json(updatedExam);
 });

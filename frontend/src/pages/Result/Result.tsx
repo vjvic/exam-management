@@ -15,10 +15,11 @@ import {
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 /* import MoreHorizIcon from "@mui/icons-material/MoreHoriz"; */
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { RootState } from "../app/store";
-import { getAllResult } from "../features/result/resultSlice";
-import { Error, Loader } from "../components";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import { getAllResult } from "../../features/result/resultSlice";
+import { Error, Loader } from "../../components";
+import { useNavigate } from "react-router-dom";
 
 const Result = () => {
   /*   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); */
@@ -29,6 +30,8 @@ const Result = () => {
   const handleClose = () => {
     setAnchorEl(null);
   }; */
+
+  const navigate = useNavigate();
 
   //React hooks
   const { resultList, isLoading, isError } = useAppSelector(
@@ -89,7 +92,7 @@ const Result = () => {
             </Menu> */}
 
             <IconButton
-            /* onClick={() => navigate(`/exam-details/${params.row._id}`)} */
+              onClick={() => navigate(`/results-details/${params.row._id}`)}
             >
               <VisibilityIcon />
             </IconButton>

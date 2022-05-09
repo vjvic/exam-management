@@ -61,7 +61,7 @@ const ExamDetails = () => {
           End date:{" "}
           {examDet
             ? format(
-                new Date(`${examDet?.dateAndTime.from}`),
+                new Date(`${examDet?.dateAndTime.to}`),
                 "EEEE MMMM dd yyyy hh:mm aaa"
               )
             : ""}

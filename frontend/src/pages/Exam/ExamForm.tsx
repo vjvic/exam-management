@@ -85,22 +85,23 @@ const ExamForm = () => {
   const [to, setTo] = useState<Date | null>(new Date());
 
   //Question States
-  const [questionInputFields, setQuestionInputFields] = useState([
-    {
-      id: Math.floor(Math.random() * Math.floor(Math.random() * Date.now())),
-      questionText: "",
-      option1: "",
-      option2: "",
-      option3: "",
-      option4: "",
-      answer: "",
-      point: "",
-      cpd: "",
-      kd: "",
-      image: "",
-      file: new File([""], "filename"),
-    },
-  ]);
+  const [questionInputFields, setQuestionInputFields] = useState<
+    | {
+        id: any;
+        questionText: string;
+        option1: string;
+        option2: string;
+        option3: string;
+        option4: string;
+        answer: string;
+        point: string;
+        cpd: string;
+        kd: string;
+        image: string;
+        file: File;
+      }[]
+    | null
+  >([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -156,7 +157,7 @@ const ExamForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const questions = questionInputFields.map((question) => {
+    const questions = questionInputFields!.map((question) => {
       let filename;
 
       if (question.file && question.file.size > 0) {
@@ -193,7 +194,7 @@ const ExamForm = () => {
         description,
         code,
         dateAndTime: { from, to },
-        questions: [...examDet!?.questions!, ...questions, ...questionRandom],
+        questions: [...questions, ...questionRandom],
       };
 
       console.log(updatedExam);
@@ -214,7 +215,7 @@ const ExamForm = () => {
 
   const handleAddFields = () => {
     setQuestionInputFields([
-      ...questionInputFields,
+      ...questionInputFields!,
       {
         id: Math.floor(Math.random() * Math.floor(Math.random() * Date.now())),
         questionText: "",
@@ -239,7 +240,7 @@ const ExamForm = () => {
   };
 
   const handleChangeInput = (id: any, event: any) => {
-    const newInputFields = questionInputFields.map((i) => {
+    const newInputFields = questionInputFields!.map((i) => {
       if (id === i.id) {
         if (event.target.name === "file") {
           const file = event.target.files[0];
@@ -267,10 +268,8 @@ const ExamForm = () => {
     setQuestionInputFields(newInputFields);
   };
 
-  console.log(to);
-
   const handleRemoveFields = (id: number) => {
-    const values = [...questionInputFields];
+    const values = [...questionInputFields!];
     values.splice(
       values.findIndex((value) => value.id === id),
       1
@@ -319,6 +318,45 @@ const ExamForm = () => {
       setTimeLimit(examDet.timeLimit.toString());
       setDescription(examDet.description);
       setCode(examDet.code);
+      setFrom(examDet.dateAndTime.from);
+      setTo(examDet.dateAndTime.to);
+
+      /*    examDet!.questions!.map((question) => {
+        setQuestionInputFields([
+          ...questionInputFields!,
+          {
+            id: question._id!,
+            questionText: question.questionText!,
+            option1: question.choices[0].text!,
+            option2: question.choices[1].text!,
+            option3: question.choices[2].text!,
+            option4: question.choices[3].text!,
+            answer: question.answer!,
+            point: question.point!.toString(),
+            cpd: question.cpd!,
+            kd: question.kd!,
+            image: question.image!,
+            file: new File([""], "filename"),
+          },
+        ]);
+      }); */
+
+      setQuestionInputFields(
+        examDet!.questions!.map((question) => ({
+          id: question._id!,
+          questionText: question.questionText!,
+          option1: question.choices[0].text!,
+          option2: question.choices[1].text!,
+          option3: question.choices[2].text!,
+          option4: question.choices[3].text!,
+          answer: question.answer!,
+          point: question.point!.toString(),
+          cpd: question.cpd!,
+          kd: question.kd!,
+          image: question.image!,
+          file: new File([""], "filename"),
+        }))
+      );
     }
   }, [examDet, dispatch, isEdit]);
 
@@ -473,29 +511,39 @@ const ExamForm = () => {
             >
               <Typography sx={{ color: "primary.main" }}>Questions</Typography>
 
-              <Button variant="outlined" onClick={handleOpen}>
-                Question Bank
-              </Button>
+              <div>
+                <Button
+                  variant="outlined"
+                  sx={{ mr: 2 }}
+                  onClick={handleAddFields}
+                >
+                  Add Question
+                </Button>
+                <Button variant="outlined" onClick={handleOpen}>
+                  Question Bank
+                </Button>
+              </div>
             </Stack>
 
             <div>
-              {questionInputFields.map((input) => (
-                <Stack
-                  spacing={2}
-                  key={input.id}
-                  direction="row"
-                  sx={{ my: 5 }}
-                >
-                  <Stack spacing={2} sx={{ width: "100%" }}>
-                    {input.file.size > 0 && (
-                      <img
-                        src={URL.createObjectURL(input.file)}
-                        alt="pic"
-                        style={{ width: "100%" }}
-                      />
-                    )}
-                    <div>
-                      {/* <input
+              {questionInputFields &&
+                questionInputFields!.map((input) => (
+                  <Stack
+                    spacing={2}
+                    key={input.id}
+                    direction="row"
+                    sx={{ my: 5 }}
+                  >
+                    <Stack spacing={2} sx={{ width: "100%" }}>
+                      {input.file.size > 0 && (
+                        <img
+                          src={URL.createObjectURL(input.file)}
+                          alt="pic"
+                          style={{ width: "100%" }}
+                        />
+                      )}
+                      <div>
+                        {/* <input
                         name="file"
                         type="file"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -503,153 +551,153 @@ const ExamForm = () => {
                         }
                         required
                       /> */}
-                      <Button
-                        variant="outlined"
-                        component="label"
-                        startIcon={<FileUploadIcon />}
-                      >
-                        Upload Image
-                        <input
-                          type="file"
-                          name="file"
-                          hidden
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          startIcon={<FileUploadIcon />}
+                        >
+                          Upload Image
+                          <input
+                            type="file"
+                            name="file"
+                            hidden
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => handleChangeInput(input.id, e)}
+                          />
+                        </Button>
+                      </div>
+
+                      <TextField
+                        label="Question"
+                        name="questionText"
+                        value={input.questionText}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        label="Option1"
+                        name="option1"
+                        value={input.option1}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        label="Option2"
+                        name="option2"
+                        value={input.option2}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        label="Option3"
+                        name="option3"
+                        value={input.option3}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        label="Option4"
+                        name="option4"
+                        value={input.option4}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        label="Answer"
+                        name="answer"
+                        value={input.answer}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+                      <TextField
+                        label="Point"
+                        name="point"
+                        type="number"
+                        value={input.point}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          handleChangeInput(input.id, e)
+                        }
+                        fullWidth
+                        required
+                      />
+
+                      <FormControl fullWidth required>
+                        <InputLabel>Knowledge Dimension</InputLabel>
+                        <Select
+                          label="Knowledge Dimension"
+                          name="kd"
+                          value={input.kd}
+                          defaultValue=""
+                          onChange={(e: SelectChangeEvent) =>
                             handleChangeInput(input.id, e)
                           }
-                        />
-                      </Button>
-                    </div>
+                        >
+                          {kDimension.map((kd) => (
+                            <MenuItem value={kd} key={kd}>
+                              {kd}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
 
-                    <TextField
-                      label="Question"
-                      name="questionText"
-                      value={input.questionText}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
-                    <TextField
-                      label="Option1"
-                      name="option1"
-                      value={input.option1}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
-                    <TextField
-                      label="Option2"
-                      name="option2"
-                      value={input.option2}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
-                    <TextField
-                      label="Option3"
-                      name="option3"
-                      value={input.option3}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
-                    <TextField
-                      label="Option4"
-                      name="option4"
-                      value={input.option4}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
-                    <TextField
-                      label="Answer"
-                      name="answer"
-                      value={input.answer}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
-                    <TextField
-                      label="Point"
-                      name="point"
-                      type="number"
-                      value={input.point}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleChangeInput(input.id, e)
-                      }
-                      fullWidth
-                      required
-                    />
+                      <FormControl fullWidth required>
+                        <InputLabel>Cognitive Proccess Dimension</InputLabel>
+                        <Select
+                          label="Cognitive Proccess Dimension"
+                          name="cpd"
+                          value={input.cpd}
+                          defaultValue=""
+                          onChange={(e: SelectChangeEvent) =>
+                            handleChangeInput(input.id, e)
+                          }
+                        >
+                          {cpDimension.map((cpd) => (
+                            <MenuItem value={cpd} key={cpd}>
+                              {cpd}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Stack>
 
-                    <FormControl fullWidth required>
-                      <InputLabel>Knowledge Dimension</InputLabel>
-                      <Select
-                        label="Knowledge Dimension"
-                        name="kd"
-                        value={input.kd}
-                        defaultValue=""
-                        onChange={(e: SelectChangeEvent) =>
-                          handleChangeInput(input.id, e)
-                        }
+                    <Stack direction="row" alignItems="center">
+                      <IconButton
+                        disabled={questionInputFields!.length === 1}
+                        onClick={() => handleRemoveFields(input!?.id!)}
                       >
-                        {kDimension.map((kd) => (
-                          <MenuItem value={kd} key={kd}>
-                            {kd}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <FormControl fullWidth required>
-                      <InputLabel>Cognitive Proccess Dimension</InputLabel>
-                      <Select
-                        label="Cognitive Proccess Dimension"
-                        name="cpd"
-                        value={input.cpd}
-                        defaultValue=""
-                        onChange={(e: SelectChangeEvent) =>
-                          handleChangeInput(input.id, e)
-                        }
-                      >
-                        {cpDimension.map((cpd) => (
-                          <MenuItem value={cpd} key={cpd}>
-                            {cpd}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                        <RemoveIcon />
+                      </IconButton>
+                      <IconButton onClick={handleAddFields}>
+                        <AddIcon />
+                      </IconButton>
+                    </Stack>
                   </Stack>
-
-                  <Stack direction="row" alignItems="center">
-                    <IconButton
-                      disabled={questionInputFields.length === 1}
-                      onClick={() => handleRemoveFields(input.id)}
-                    >
-                      <RemoveIcon />
-                    </IconButton>
-                    <IconButton onClick={handleAddFields}>
-                      <AddIcon />
-                    </IconButton>
-                  </Stack>
-                </Stack>
-              ))}
+                ))}
             </div>
 
             <Button
               variant="contained"
               size="large"
-              sx={{ marginTop: 4 }}
+              sx={{ marginY: 3 }}
               type="submit"
             >
               Submit

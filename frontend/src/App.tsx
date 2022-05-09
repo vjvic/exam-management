@@ -13,7 +13,8 @@ import {
   QuestionBankForm,
   Questions,
   QuestionForm,
-  Results,
+  Result,
+  ResultDetails,
   Profile,
   Home,
   Score,
@@ -65,7 +66,13 @@ const App = () => {
 
   const resultsRoute = (
     <FacultyRoute>
-      <Results />
+      <Result />
+    </FacultyRoute>
+  );
+
+  const resultsDetailsRoute = (
+    <FacultyRoute>
+      <ResultDetails />
     </FacultyRoute>
   );
 
@@ -116,6 +123,7 @@ const App = () => {
           <Route path="/questions/" element={questionsRoute} />
           <Route path="/questions/:id" element={questionsRoute} />
           <Route path="/results" element={resultsRoute} />
+          <Route path="/results-details/:id" element={resultsDetailsRoute} />
           <Route path="/profile" element={profileRoute} />
           <Route path="/home" element={homeRoute} />
           <Route path="/score" element={scoreRoute} />
