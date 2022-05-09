@@ -6,9 +6,12 @@ import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { useEffect } from "react";
 import { RootState } from "../app/store";
 import { getAllExam, reset } from "../features/exam/examSlice";
-import { getAllUser } from "../features/auth/authSlice";
+import { getAllUser, reset as userReset } from "../features/auth/authSlice";
 import { PieChart, Loader, Error } from "../components";
-import { getAllQuestion } from "../features/question/question";
+import {
+  getAllQuestion,
+  reset as questionReset,
+} from "../features/question/question";
 
 const Dashboard = () => {
   //Redux hooks
@@ -85,6 +88,8 @@ const Dashboard = () => {
 
     return () => {
       dispatch(reset());
+      dispatch(userReset());
+      dispatch(questionReset());
     };
   }, [dispatch]);
 

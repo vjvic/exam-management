@@ -153,6 +153,13 @@ const QuestionForm = () => {
       setAnswer(questionDet.answer);
       setKd(questionDet.kd);
       setCpd(questionDet.cpd);
+
+      setChoices({
+        option1: questionDet?.choices[0]?.text,
+        option2: questionDet?.choices[1]?.text,
+        option3: questionDet?.choices[2]?.text,
+        option4: questionDet?.choices[3]?.text,
+      });
     }
   }, [questionDet, dispatch, isEdit]);
 

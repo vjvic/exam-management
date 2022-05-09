@@ -97,8 +97,8 @@ const ExamForm = () => {
         point: string;
         cpd: string;
         kd: string;
-        image: string;
-        file: File;
+        image?: string;
+        file?: File;
       }[]
     | null
   >([]);
@@ -159,6 +159,11 @@ const ExamForm = () => {
 
     const questions = questionInputFields!.map((question) => {
       let filename;
+
+      if (isEdit && question.image) {
+        console.log("hello");
+        filename = question.image;
+      }
 
       if (question.file && question.file.size > 0) {
         const data = new FormData();
@@ -235,7 +240,7 @@ const ExamForm = () => {
 
   const uploadHandler = async (data: FormData) => {
     try {
-      await axios.post("api/upload", data);
+      await axios.post("http://localhost:5000/api/upload", data);
     } catch (err) {}
   };
 
@@ -362,7 +367,7 @@ const ExamForm = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/");
+      navigate("/exam");
     }
   }, [isSuccess, navigate]);
 
@@ -532,12 +537,12 @@ const ExamForm = () => {
                     spacing={2}
                     key={input.id}
                     direction="row"
-                    sx={{ my: 5 }}
+                    sx={{ my: 3 }}
                   >
                     <Stack spacing={2} sx={{ width: "100%" }}>
-                      {input.file.size > 0 && (
+                      {input!?.file!.size > 0 && (
                         <img
-                          src={URL.createObjectURL(input.file)}
+                          src={URL.createObjectURL(input!?.file!)}
                           alt="pic"
                           style={{ width: "100%" }}
                         />
@@ -697,7 +702,7 @@ const ExamForm = () => {
             <Button
               variant="contained"
               size="large"
-              sx={{ marginY: 3 }}
+              sx={{ marginY: 1 }}
               type="submit"
             >
               Submit
