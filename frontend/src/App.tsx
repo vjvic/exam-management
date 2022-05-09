@@ -102,9 +102,9 @@ const App = () => {
   );
 
   const dashboardRoute = (
-    <PrivateRoute>
+    <FacultyRoute>
       <Dashboard />
-    </PrivateRoute>
+    </FacultyRoute>
   );
 
   return (

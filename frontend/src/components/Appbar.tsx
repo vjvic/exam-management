@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { logout } from "../features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "../app/store";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
@@ -57,6 +57,10 @@ const Appbar = ({
 }) => {
   //React router hooks
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const signupPath = location.pathname === "/signup";
+  const signinPath = location.pathname === "/signin";
 
   const { user } = useAppSelector((state: RootState) => state.auth);
   //Redux hooks
@@ -95,25 +99,36 @@ const Appbar = ({
     }
   };
 
+  const displayLogo = () => {
+    if (signupPath || signinPath || (user && user.role === "student")) {
+      return (
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+        >
+          EMS
+        </Typography>
+      );
+    }
+  };
+
   return (
     <AppBar
       position="fixed" /* sx={{ display: display ? "block" : "none" }} */
       sx={{
         displayPrint: "none",
-        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        width:
+          signupPath || signinPath || (user && user.role === "student")
+            ? "100%"
+            : { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
       }}
     >
       <Container>
         <Toolbar disableGutters>
-          {/*   <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            EMS
-          </Typography> */}
+          {displayLogo()}
 
           <Box
             sx={{
