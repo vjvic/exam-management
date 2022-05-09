@@ -90,6 +90,7 @@ const Appbar = ({ display }: { display: boolean }) => {
   return (
     <AppBar
       position="static" /* sx={{ display: display ? "block" : "none" }} */
+      sx={{ displayPrint: "none" }}
     >
       <Container>
         <Toolbar disableGutters>

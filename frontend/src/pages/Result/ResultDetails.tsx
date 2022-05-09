@@ -4,7 +4,9 @@ import { RootState } from "../../app/store";
 import { useEffect } from "react";
 import { getResultDetails, reset } from "../../features/result/resultSlice";
 import "./table.css";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography, IconButton } from "@mui/material";
+import { Error, Loader } from "../../components";
+import PrintIcon from "@mui/icons-material/Print";
 
 const tableHead = [
   "Remember",
@@ -15,7 +17,7 @@ const tableHead = [
   "Create",
   "Total",
 ];
-const kDimension = ["Factual", "Conceptual", "Procedural", "Metacognitive"];
+/* const kDimension = ["Factual", "Conceptual", "Procedural", "Metacognitive"]; */
 
 const ResultDetails = () => {
   //Router hooks
@@ -23,7 +25,9 @@ const ResultDetails = () => {
 
   //Redux hooks
   const dispatch = useAppDispatch();
-  const { resultDet } = useAppSelector((state: RootState) => state.result);
+  const { resultDet, isLoading, isError } = useAppSelector(
+    (state: RootState) => state.result
+  );
 
   //Crteate new result with index to get the number
   let newResult: { kd: string; cpd: string; index: number }[] = [];
@@ -184,6 +188,9 @@ const ResultDetails = () => {
     };
   }, [dispatch, id]);
 
+  if (isLoading) return <Loader />;
+  if (isError) return <Error />;
+
   return (
     <div className="tos">
       <Typography variant="h6" textAlign="center" mb={2} fontWeight="bold">
@@ -191,76 +198,84 @@ const ResultDetails = () => {
       </Typography>
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <table>
-          <tr>
-            <td></td>
-            {tableHead.map((cpd) => (
+        <div>
+          <IconButton
+            sx={{ displayPrint: "none" }}
+            onClick={() => window.print()}
+          >
+            <PrintIcon />
+          </IconButton>
+          <table>
+            <tr>
+              <td></td>
+              {tableHead.map((cpd) => (
+                <td>
+                  <Typography fontWeight="bold">{cpd}</Typography>
+                </td>
+              ))}
+            </tr>
+            <tr>
               <td>
-                <Typography fontWeight="bold">{cpd}</Typography>
+                <Typography fontWeight="bold">Factual</Typography>
               </td>
-            ))}
-          </tr>
-          <tr>
-            <td>
-              <Typography fontWeight="bold">Factual</Typography>
-            </td>
-            <td>{factualRemember.join(",")}</td>
-            <td>{factualUnderstand.join(",")} </td>
-            <td>{factualApply.join(",")}</td>
-            <td>{factualAnalyze.join(",")}</td>
-            <td>{factualEvaluate.join(",")}</td>
-            <td>{factualCreate.join(",")}</td>
-            <td>{factualTotal}</td>
-          </tr>
-          <tr>
-            <td>
-              <Typography fontWeight="bold">Conceptual</Typography>
-            </td>
-            <td>{conceptualRemember.join(",")}</td>
-            <td>{conceptualUnderstand.join(",")} </td>
-            <td>{conceptualApply.join(",")}</td>
-            <td>{conceptualAnalyze.join(",")}</td>
-            <td>{conceptualEvaluate.join(",")}</td>
-            <td>{conceptualCreate.join(",")}</td>
-            <td>{conceptualTotal}</td>
-          </tr>
-          <tr>
-            <td>
-              <Typography fontWeight="bold">Procedural</Typography>
-            </td>
-            <td>{proceduralRemember.join(",")}</td>
-            <td>{proceduralUnderstand.join(",")} </td>
-            <td>{proceduralApply.join(",")}</td>
-            <td>{proceduralAnalyze.join(",")}</td>
-            <td>{proceduralEvaluate.join(",")}</td>
-            <td>{proceduralCreate.join(",")}</td>
-            <td>{proceduralTotal}</td>
-          </tr>
-          <tr>
-            <td>
-              <Typography fontWeight="bold">Metacognitive</Typography>
-            </td>
-            <td>{metacognitiveRemember.join(",")}</td>
-            <td>{metacognitiveUnderstand.join(",")} </td>
-            <td>{metacognitiveApply.join(",")}</td>
-            <td>{metacognitiveAnalyze.join(",")}</td>
-            <td>{metacognitiveEvaluate.join(",")}</td>
-            <td>{metacognitiveCreate.join(",")}</td>
-            <td>{metacognitiveTotal}</td>
-          </tr>
-          <tr>
-            <td>
-              <Typography fontWeight="bold">Total</Typography>
-            </td>
-            <td>{rememberTotal}</td>
-            <td>{understandTotal} </td>
-            <td>{applyTotal}</td>
-            <td>{analyzeTotal}</td>
-            <td>{evaluateTotal}</td>
-            <td>{createTotal}</td>
-            <td>{total}</td>
-          </tr>
-        </table>
+              <td>{factualRemember.join(",")}</td>
+              <td>{factualUnderstand.join(",")} </td>
+              <td>{factualApply.join(",")}</td>
+              <td>{factualAnalyze.join(",")}</td>
+              <td>{factualEvaluate.join(",")}</td>
+              <td>{factualCreate.join(",")}</td>
+              <td>{factualTotal}</td>
+            </tr>
+            <tr>
+              <td>
+                <Typography fontWeight="bold">Conceptual</Typography>
+              </td>
+              <td>{conceptualRemember.join(",")}</td>
+              <td>{conceptualUnderstand.join(",")} </td>
+              <td>{conceptualApply.join(",")}</td>
+              <td>{conceptualAnalyze.join(",")}</td>
+              <td>{conceptualEvaluate.join(",")}</td>
+              <td>{conceptualCreate.join(",")}</td>
+              <td>{conceptualTotal}</td>
+            </tr>
+            <tr>
+              <td>
+                <Typography fontWeight="bold">Procedural</Typography>
+              </td>
+              <td>{proceduralRemember.join(",")}</td>
+              <td>{proceduralUnderstand.join(",")} </td>
+              <td>{proceduralApply.join(",")}</td>
+              <td>{proceduralAnalyze.join(",")}</td>
+              <td>{proceduralEvaluate.join(",")}</td>
+              <td>{proceduralCreate.join(",")}</td>
+              <td>{proceduralTotal}</td>
+            </tr>
+            <tr>
+              <td>
+                <Typography fontWeight="bold">Metacognitive</Typography>
+              </td>
+              <td>{metacognitiveRemember.join(",")}</td>
+              <td>{metacognitiveUnderstand.join(",")} </td>
+              <td>{metacognitiveApply.join(",")}</td>
+              <td>{metacognitiveAnalyze.join(",")}</td>
+              <td>{metacognitiveEvaluate.join(",")}</td>
+              <td>{metacognitiveCreate.join(",")}</td>
+              <td>{metacognitiveTotal}</td>
+            </tr>
+            <tr>
+              <td>
+                <Typography fontWeight="bold">Total</Typography>
+              </td>
+              <td>{rememberTotal}</td>
+              <td>{understandTotal} </td>
+              <td>{applyTotal}</td>
+              <td>{analyzeTotal}</td>
+              <td>{evaluateTotal}</td>
+              <td>{createTotal}</td>
+              <td>{total}</td>
+            </tr>
+          </table>
+        </div>
       </Box>
     </div>
   );
