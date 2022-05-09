@@ -365,6 +365,8 @@ const ExamForm = () => {
     }
   }, [examDet, dispatch, isEdit]);
 
+  console.log(questionInputFields);
+
   useEffect(() => {
     if (isSuccess) {
       navigate("/exam");
@@ -540,12 +542,28 @@ const ExamForm = () => {
                     sx={{ my: 3 }}
                   >
                     <Stack spacing={2} sx={{ width: "100%" }}>
-                      {input!?.file!.size > 0 && (
+                      {!isEdit && input!?.file!.size > 0 && (
                         <img
                           src={URL.createObjectURL(input!?.file!)}
                           alt="pic"
                           style={{ width: "100%" }}
                         />
+                      )}
+
+                      {isEdit && input!?.file!.size > 0 ? (
+                        <img
+                          src={URL.createObjectURL(input!?.file!)}
+                          alt="pic"
+                          style={{ width: "100%" }}
+                        />
+                      ) : input.image ? (
+                        <img
+                          src={`http://localhost:5000/images/${input.image}`}
+                          alt="pic"
+                          style={{ width: "100%" }}
+                        />
+                      ) : (
+                        ""
                       )}
                       <div>
                         {/* <input

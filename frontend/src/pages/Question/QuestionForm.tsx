@@ -65,7 +65,7 @@ const QuestionForm = () => {
     e.preventDefault();
 
     if (isEdit) {
-      const updatedQuestion = {
+      const updatedQuestion: Question = {
         _id: id,
         questionText,
         choices: [
@@ -87,6 +87,18 @@ const QuestionForm = () => {
         kd,
         cpd,
       };
+
+      if (file) {
+        const data = new FormData();
+        const filename = Date.now() + file.name;
+        data.append("name", filename);
+        data.append("file", file);
+        updatedQuestion.image = filename;
+
+        try {
+          await axios.post("http://localhost:5000/api/upload", data);
+        } catch (error) {}
+      }
 
       dispatch(updateQuestion(updatedQuestion));
     } else {
@@ -180,13 +192,30 @@ const QuestionForm = () => {
       <div>
         <form onSubmit={handleSubmit}>
           <Stack spacing={1}>
-            {file && (
+            {!isEdit && file && (
               <img
                 src={URL.createObjectURL(file)}
                 alt="pic"
                 style={{ width: "100%" }}
               />
             )}
+
+            {isEdit && file ? (
+              <img
+                src={URL.createObjectURL(file)}
+                alt="pic"
+                style={{ width: "100%" }}
+              />
+            ) : questionDet.image ? (
+              <img
+                src={`http://localhost:5000/images/${questionDet.image}`}
+                alt="pic"
+                style={{ width: "100%" }}
+              />
+            ) : (
+              ""
+            )}
+
             <div>
               {/*  <input type="file" onChange={onUploadChange} required /> */}
 
