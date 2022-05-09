@@ -1,6 +1,8 @@
 import { Box, CssBaseline, Toolbar, Container } from "@mui/material";
 import Appbar from "./Appbar";
 import { useLocation } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import { useState } from "react";
 
 const Layout = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
@@ -8,12 +10,28 @@ const Layout = ({ children }: { children: JSX.Element }) => {
   const signupPath = location.pathname === "/signup";
   const signinPath = location.pathname === "/signin";
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
-    <Box>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
 
       {/*  Appbar */}
-      <Appbar display={signupPath || signinPath ? false : true} />
+      <Appbar
+        display={signupPath || signinPath ? false : true}
+        handleDrawerToggle={handleDrawerToggle}
+      />
+
+      {/* Sidebar */}
+
+      <Sidebar
+        handleDrawerToggle={handleDrawerToggle}
+        mobileOpen={mobileOpen}
+      />
 
       {/*  Main */}
 
@@ -21,6 +39,9 @@ const Layout = ({ children }: { children: JSX.Element }) => {
         component="main"
         maxWidth={signupPath || signinPath ? false : "lg"}
       >
+        <Toolbar
+          sx={{ display: signupPath || signinPath ? "none" : "block" }}
+        />
         <Toolbar
           sx={{ display: signupPath || signinPath ? "none" : "block" }}
         />

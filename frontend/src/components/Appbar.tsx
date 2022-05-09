@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../app/store";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-const facultyPages = [
+/* const facultyPages = [
   {
     text: "Exams",
     path: "/",
@@ -43,10 +43,18 @@ const studentPages = [
     path: "/score",
   },
 ];
+ */
+const drawerWidth = 240;
 
 const settings = ["Profile", "Logout"];
 
-const Appbar = ({ display }: { display: boolean }) => {
+const Appbar = ({
+  display,
+  handleDrawerToggle,
+}: {
+  display: boolean;
+  handleDrawerToggle: () => void;
+}) => {
   //React router hooks
   const navigate = useNavigate();
 
@@ -54,24 +62,24 @@ const Appbar = ({ display }: { display: boolean }) => {
   //Redux hooks
 
   //Statets
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+  /* const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
-  );
+  ); */
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  /*   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
+  }; */
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (path: string) => {
+  /*   const handleCloseNavMenu = (path: string) => {
     navigate(path);
     setAnchorElNav(null);
-  };
+  }; */
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -89,19 +97,23 @@ const Appbar = ({ display }: { display: boolean }) => {
 
   return (
     <AppBar
-      position="static" /* sx={{ display: display ? "block" : "none" }} */
-      sx={{ displayPrint: "none" }}
+      position="fixed" /* sx={{ display: display ? "block" : "none" }} */
+      sx={{
+        displayPrint: "none",
+        width: { sm: `calc(100% - ${drawerWidth}px)` },
+        ml: { sm: `${drawerWidth}px` },
+      }}
     >
       <Container>
         <Toolbar disableGutters>
-          <Typography
+          {/*   <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
             EMS
-          </Typography>
+          </Typography> */}
 
           <Box
             sx={{
@@ -111,15 +123,14 @@ const Appbar = ({ display }: { display: boolean }) => {
           >
             <IconButton
               size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
+            {/*  <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -157,17 +168,17 @@ const Appbar = ({ display }: { display: boolean }) => {
                     <Typography textAlign="center">{page.text}</Typography>
                   </MenuItem>
                 ))}
-            </Menu>
+            </Menu> */}
           </Box>
-          <Typography
+          {/*   <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
             EMS
-          </Typography>
-          <Box
+          </Typography> */}
+          {/*      <Box
             sx={{
               flexGrow: 1,
               display: display ? { xs: "none", md: "flex" } : "none",
@@ -195,7 +206,9 @@ const Appbar = ({ display }: { display: boolean }) => {
                   {page.text}
                 </Button>
               ))}
-          </Box>
+          </Box> */}
+
+          <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ flexGrow: 0, display: display ? "block" : "none" }}>
             {user && (

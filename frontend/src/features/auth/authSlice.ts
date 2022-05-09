@@ -7,6 +7,7 @@ import { RootState } from "../../app/store";
 const user = JSON.parse(localStorage.getItem("user")!);
 
 interface InitialState {
+  userList: User[];
   user: User | null;
   profile: User;
   isError: boolean;
@@ -23,6 +24,7 @@ const profile = {
 };
 
 const initialState: InitialState = {
+  userList: [],
   user: user ? user : null,
   profile: profile,
   isLoading: false,
@@ -105,6 +107,26 @@ export const getProfile = createAsyncThunk<
     return rejectWithValue(message);
   }
 });
+
+//Get all user
+export const getAllUser = createAsyncThunk(
+  "auth/getAll",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const response = await axios.get(API_URL);
+
+      return response.data;
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return rejectWithValue(message);
+    }
+  }
+);
 
 //Update profile
 export const updateProfile = createAsyncThunk<User, User, { state: RootState }>(
@@ -207,6 +229,19 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
+      })
+      .addCase(getAllUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.userList = action.payload;
+      })
+      .addCase(getAllUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });

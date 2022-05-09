@@ -44,7 +44,9 @@ const Exam = () => {
             >
               <VisibilityIcon />
             </IconButton>
-            <IconButton onClick={() => navigate(`/edit/${params.row._id}`)}>
+            <IconButton
+              onClick={() => navigate(`/exam/edit/${params.row._id}`)}
+            >
               <EditIcon />
             </IconButton>
             <IconButton onClick={() => dispatch(deleteExam(params.row._id!))}>
@@ -84,7 +86,7 @@ const Exam = () => {
         <Button
           startIcon={<AddIcon />}
           variant="outlined"
-          onClick={() => navigate("/edit")}
+          onClick={() => navigate("/exam/edit")}
         >
           Add
         </Button>

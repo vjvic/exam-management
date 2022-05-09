@@ -93,6 +93,20 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc Get all user
+//@route GET /api/user
+//@access Private
+const getAllUser = asyncHandler(async (req, res) => {
+  const user = await User.find({});
+
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 //@desc Update user profile
 //@route PUT /api/user/profile
 //@access Private
@@ -137,4 +151,5 @@ module.exports = {
   loginUser,
   getUserProfile,
   updateUserProfile,
+  getAllUser,
 };
