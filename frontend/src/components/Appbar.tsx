@@ -32,7 +32,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
     path: "/results",
   },
 ];
-
+ */
 const studentPages = [
   {
     text: "Home",
@@ -43,7 +43,7 @@ const studentPages = [
     path: "/score",
   },
 ];
- */
+
 const drawerWidth = 240;
 
 const settings = ["Profile", "Logout"];
@@ -66,9 +66,9 @@ const Appbar = ({
   //Redux hooks
 
   //Statets
-  /* const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
-  ); */
+  );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -80,10 +80,10 @@ const Appbar = ({
     setAnchorElUser(event.currentTarget);
   };
 
-  /*   const handleCloseNavMenu = (path: string) => {
+  const handleCloseNavMenu = (path: string) => {
     navigate(path);
     setAnchorElNav(null);
-  }; */
+  };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -106,7 +106,7 @@ const Appbar = ({
           variant="h6"
           noWrap
           component="div"
-          sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+          sx={{ mr: 2, display: "flex" }}
         >
           OEMS
         </Typography>
@@ -136,15 +136,19 @@ const Appbar = ({
               display: display ? { xs: "flex", md: "none" } : "none",
             }}
           >
-            <IconButton
-              size="large"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
+            {user && user!.role === "student" ? (
+              ""
+            ) : (
+              <IconButton
+                size="large"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: "none" } }}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             {/*  <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -193,23 +197,12 @@ const Appbar = ({
           >
             EMS
           </Typography> */}
-          {/*      <Box
+          <Box
             sx={{
               flexGrow: 1,
-              display: display ? { xs: "none", md: "flex" } : "none",
+              display: "flex",
             }}
           >
-            {user &&
-              user.role === "faculty" &&
-              facultyPages.map((page) => (
-                <Button
-                  key={page.text}
-                  onClick={() => handleCloseNavMenu(page.path)}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page.text}
-                </Button>
-              ))}
             {user &&
               user.role === "student" &&
               studentPages.map((page) => (
@@ -221,7 +214,7 @@ const Appbar = ({
                   {page.text}
                 </Button>
               ))}
-          </Box> */}
+          </Box>
 
           <Box sx={{ flexGrow: 1 }} />
 

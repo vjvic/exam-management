@@ -32,6 +32,7 @@ const resultSchema = mongoose.Schema(
     score: { type: Number, required: true },
     examTitle: { type: String, required: true },
     questions: [questionSchema],
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
   },
   {
     timestamps: true,

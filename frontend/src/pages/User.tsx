@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { RootState } from "../app/store";
 import { Loader, Error } from "../components";
-import { getAllUser } from "../features/auth/authSlice";
+import { getAllUser, reset } from "../features/auth/authSlice";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 
@@ -42,6 +42,10 @@ const User = () => {
 
   useEffect(() => {
     dispatch(getAllUser());
+
+    return () => {
+      dispatch(reset());
+    };
   }, [dispatch]);
 
   if (isLoading) return <Loader />;

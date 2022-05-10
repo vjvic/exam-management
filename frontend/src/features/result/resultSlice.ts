@@ -6,6 +6,7 @@ import { Result } from "../../interface/Result";
 
 interface InitialState {
   resultList: Result[];
+  myResult: Result[];
   resultDet: Result | null;
   isError: boolean;
   isLoading: boolean;
@@ -15,6 +16,7 @@ interface InitialState {
 
 const initialState: InitialState = {
   resultList: [],
+  myResult: [],
   resultDet: null,
   isError: false,
   isLoading: false,
@@ -37,6 +39,30 @@ export const getAllResult = createAsyncThunk<
       },
     };
     const response = await axios.get(API_URL, config);
+
+    return response.data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return rejectWithValue(message);
+  }
+});
+
+export const getMyResult = createAsyncThunk<
+  Result[],
+  undefined,
+  { state: RootState }
+>("result/getMyResult", async (_, { getState, rejectWithValue }) => {
+  try {
+    const token = getState().auth.user!.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(API_URL + "myresult", config);
 
     return response.data;
   } catch (error: any) {
@@ -114,6 +140,19 @@ export const resultSlice = createSlice({
         state.resultList = action.payload;
       })
       .addCase(getAllResult.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getMyResult.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getMyResult.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.myResult = action.payload;
+      })
+      .addCase(getMyResult.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
