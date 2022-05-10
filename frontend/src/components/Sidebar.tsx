@@ -59,6 +59,10 @@ const Sidebar = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const activeColor = (path: string) => {
+    return location.pathname === path ? "#F5F5F5" : null;
+  };
+
   const signupPath = location.pathname === "/signup";
   const signinPath = location.pathname === "/signin";
 
@@ -78,7 +82,14 @@ const Sidebar = ({
       <Divider />
       <List>
         {sidebarMenu.map((menu) => (
-          <ListItem button key={menu.text} onClick={() => navigate(menu.path)}>
+          <ListItem
+            button
+            key={menu.text}
+            onClick={() => navigate(menu.path)}
+            sx={{
+              backgroundColor: activeColor(menu.path),
+            }}
+          >
             <ListItemIcon>{menu.icon}</ListItemIcon>
             <ListItemText primary={menu.text} />
           </ListItem>

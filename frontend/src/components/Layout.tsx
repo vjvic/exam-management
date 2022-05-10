@@ -3,8 +3,6 @@ import Appbar from "./Appbar";
 import { useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import { useAppSelector } from "../app/hooks";
-import { RootState } from "../app/store";
 
 const Layout = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
