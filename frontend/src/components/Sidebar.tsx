@@ -10,6 +10,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ArticleIcon from "@mui/icons-material/Article";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
+import GroupIcon from "@mui/icons-material/Group";
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -34,6 +35,11 @@ const sidebarMenu = [
     text: "Result",
     path: "/results",
     icon: <FactCheckIcon />,
+  },
+  {
+    text: "Users",
+    path: "/users",
+    icon: <GroupIcon />,
   },
 ];
 
