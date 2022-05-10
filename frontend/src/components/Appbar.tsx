@@ -108,7 +108,7 @@ const Appbar = ({
           component="div"
           sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
         >
-          EMS
+          OEMS
         </Typography>
       );
     }
