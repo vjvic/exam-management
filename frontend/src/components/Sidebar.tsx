@@ -11,7 +11,9 @@ import ArticleIcon from "@mui/icons-material/Article";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import GroupIcon from "@mui/icons-material/Group";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
+import { RootState } from "../app/store";
 
 const drawerWidth = 240;
 
@@ -50,8 +52,15 @@ const Sidebar = ({
   handleDrawerToggle: () => void;
   mobileOpen: boolean;
 }) => {
+  // Redux hooks
+  const { user } = useAppSelector((state: RootState) => state.auth);
+
   //Router hooks
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const signupPath = location.pathname === "/signup";
+  const signinPath = location.pathname === "/signin";
 
   const drawer = (
     <div>
@@ -77,6 +86,8 @@ const Sidebar = ({
       </List>
     </div>
   );
+
+  if (signupPath || signinPath || user?.role === "student") return null;
 
   return (
     <Box

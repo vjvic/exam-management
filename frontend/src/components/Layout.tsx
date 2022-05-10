@@ -14,8 +14,6 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const { user } = useAppSelector((state: RootState) => state.auth);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -36,19 +34,10 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 
       {/* Sidebar */}
 
-      <Box
-        sx={{
-          display:
-            signupPath || signinPath || (user && user.role === "student")
-              ? "none"
-              : "block",
-        }}
-      >
-        <Sidebar
-          handleDrawerToggle={handleDrawerToggle}
-          mobileOpen={mobileOpen}
-        />
-      </Box>
+      <Sidebar
+        handleDrawerToggle={handleDrawerToggle}
+        mobileOpen={mobileOpen}
+      />
 
       {/*  Main */}
 
