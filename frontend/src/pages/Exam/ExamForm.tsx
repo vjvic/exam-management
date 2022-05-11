@@ -97,8 +97,8 @@ const ExamForm = () => {
         point: string;
         cpd: string;
         kd: string;
-        image: string;
-        file: File;
+        image?: string;
+        file?: File;
       }[]
     | null
   >([]);
@@ -148,7 +148,6 @@ const ExamForm = () => {
       cpd: question.cpd,
       kd: question.kd,
     };
-
     return newQuestions;
   });
  */
@@ -159,6 +158,11 @@ const ExamForm = () => {
 
     const questions = questionInputFields!.map((question) => {
       let filename;
+
+      if (isEdit && question.image) {
+        console.log("hello");
+        filename = question.image;
+      }
 
       if (question.file && question.file.size > 0) {
         const data = new FormData();
@@ -235,7 +239,7 @@ const ExamForm = () => {
 
   const uploadHandler = async (data: FormData) => {
     try {
-      await axios.post("api/upload", data);
+      await axios.post("/api/upload", data);
     } catch (err) {}
   };
 
@@ -252,9 +256,7 @@ const ExamForm = () => {
           const filename = Date.now() + file.name;
           data.append("name", filename);
           data.append("file", file);
-
           i.images = filename;
-
           uploadHandler(data); */
 
           /* console.log(data); */
@@ -359,6 +361,8 @@ const ExamForm = () => {
       );
     }
   }, [examDet, dispatch, isEdit]);
+
+  console.log(questionInputFields);
 
   useEffect(() => {
     if (isSuccess) {
@@ -532,15 +536,31 @@ const ExamForm = () => {
                     spacing={2}
                     key={input.id}
                     direction="row"
-                    sx={{ my: 5 }}
+                    sx={{ my: 3 }}
                   >
                     <Stack spacing={2} sx={{ width: "100%" }}>
-                      {input.file.size > 0 && (
+                      {!isEdit && input!?.file!.size > 0 && (
                         <img
-                          src={URL.createObjectURL(input.file)}
+                          src={URL.createObjectURL(input!?.file!)}
                           alt="pic"
                           style={{ width: "100%" }}
                         />
+                      )}
+
+                      {isEdit && input!?.file!.size > 0 ? (
+                        <img
+                          src={URL.createObjectURL(input!?.file!)}
+                          alt="pic"
+                          style={{ width: "100%" }}
+                        />
+                      ) : input.image ? (
+                        <img
+                          src={`http://localhost:5000/images/${input.image}`}
+                          alt="pic"
+                          style={{ width: "100%" }}
+                        />
+                      ) : (
+                        ""
                       )}
                       <div>
                         {/* <input
@@ -697,7 +717,7 @@ const ExamForm = () => {
             <Button
               variant="contained"
               size="large"
-              sx={{ marginY: 3 }}
+              sx={{ marginY: 1 }}
               type="submit"
             >
               Submit

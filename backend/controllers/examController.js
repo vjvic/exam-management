@@ -71,8 +71,6 @@ const deleteExam = AsyncHandler(async (req, res) => {
 const updateExam = AsyncHandler(async (req, res) => {
   const exam = await Exam.findById(req.params.id);
 
-  console.log(req.body);
-
   if (!exam) {
     res.status(404);
     throw new Error("Exam not found");
@@ -99,6 +97,24 @@ const updateExam = AsyncHandler(async (req, res) => {
   res.status(200).json(updatedExam);
 });
 
+// @desc    update exam
+// @route   PUT /api/exam/finishedexam
+// @access  Private
+const FinishedExam = AsyncHandler(async (req, res) => {
+  const exam = await Exam.findById(req.body.id);
+
+  if (!exam) {
+    res.status(404);
+    throw new Error("Exam not found");
+  }
+
+  exam.users.push(req.user._id.toString());
+
+  await exam.save();
+
+  res.status(200).json(exam);
+});
+
 module.exports = {
   createExam,
   getAllExam,
@@ -106,8 +122,8 @@ module.exports = {
   deleteExam,
   updateExam,
   getExamByCode,
+  FinishedExam,
 };
-
 /* function CompareDate() {    
   //            new Date(Year, Month, Date, Hr, Min, Sec);    
   var dateOne = new Date(2022, 05, 08, 14, 11, 59);    

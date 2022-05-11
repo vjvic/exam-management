@@ -39,8 +39,8 @@ const studentPages = [
     path: "/home",
   },
   {
-    text: "Score",
-    path: "/score",
+    text: "MyResult",
+    path: "/myresult",
   },
 ];
 

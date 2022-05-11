@@ -4,7 +4,7 @@ import { RootState } from "../../app/store";
 import { useEffect } from "react";
 import { getResultDetails, reset } from "../../features/result/resultSlice";
 import "./table.css";
-import { Box, Button, Typography, IconButton } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import { Error, Loader } from "../../components";
 import PrintIcon from "@mui/icons-material/Print";
 

@@ -126,7 +126,7 @@ const App = () => {
           <Route path="/results-details/:id" element={resultsDetailsRoute} />
           <Route path="/profile" element={profileRoute} />
           <Route path="/home" element={homeRoute} />
-          <Route path="/score" element={scoreRoute} />
+          <Route path="/myresult" element={scoreRoute} />
           <Route path="/start-exam" element={startExamRoute} />
         </Routes>
       </Layout>
