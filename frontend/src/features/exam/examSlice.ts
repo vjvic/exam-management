@@ -120,6 +120,30 @@ export const createExam = createAsyncThunk<Exam, Exam, { state: RootState }>(
   }
 );
 
+export const finishedExam = createAsyncThunk<
+  Exam,
+  string,
+  { state: RootState }
+>("post/finishedexam", async (id: string, { getState, rejectWithValue }) => {
+  try {
+    const token = getState().auth.user!.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.post(API_URL + "finishedexam", { id }, config);
+
+    return response.data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return rejectWithValue(message);
+  }
+});
+
 export const deleteExam = createAsyncThunk<any, string, { state: RootState }>(
   "exam/delete",
   async (id: string, { getState, rejectWithValue }) => {

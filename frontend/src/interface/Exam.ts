@@ -8,4 +8,5 @@ export interface Exam {
   dateAndTime: { from: Date | null; to: Date | null };
   code: string;
   questions: Question[];
+  users?: string[];
 }

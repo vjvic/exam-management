@@ -22,6 +22,7 @@ import { Loader, Error } from "../components";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { createResult } from "../features/result/resultSlice";
+import { finishedExam, reset } from "../features/exam/examSlice";
 
 const StartExam = () => {
   //Router hooks
@@ -62,6 +63,11 @@ const StartExam = () => {
     } else {
       setShowScore(true);
     }
+  };
+
+  const handleExit = () => {
+    navigate("/home");
+    dispatch(reset());
   };
 
   //Timer
@@ -108,6 +114,7 @@ const StartExam = () => {
   useEffect(() => {
     if (!examDet) {
       navigate("/home");
+      dispatch(reset());
     }
   }, []);
 
@@ -125,6 +132,7 @@ const StartExam = () => {
       };
 
       dispatch(createResult(userResult!));
+      dispatch(finishedExam(examDet!._id!));
     }
   }, [showScore]);
 
@@ -219,7 +227,7 @@ const StartExam = () => {
               color="error"
               sx={{ margin: "auto" }}
               endIcon={<ExitToAppIcon />}
-              onClick={() => navigate("/home")}
+              onClick={handleExit}
             >
               Exit
             </Button>

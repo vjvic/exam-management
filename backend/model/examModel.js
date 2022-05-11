@@ -43,6 +43,7 @@ const examSchema = mongoose.Schema(
     dateAndTime: { from: Date, to: Date },
     code: { type: String, required: true },
     questions: [questionSchema],
+    users: [],
   },
   {
     timestamps: true,
