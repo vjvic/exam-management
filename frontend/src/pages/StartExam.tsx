@@ -15,7 +15,7 @@ import {
 } from "../app/hooks";
 import { RootState } from "../app/store";
 import { /* useParams, */ useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 /* import { getExamDetails, reset } from "../features/exam/examSlice"; */
 import { Loader, Error } from "../components";
@@ -23,6 +23,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { createResult } from "../features/result/resultSlice";
 import { finishedExam, reset } from "../features/exam/examSlice";
+/* import { Question } from "../interface/Question"; */
 
 const StartExam = () => {
   //Router hooks
@@ -44,10 +45,31 @@ const StartExam = () => {
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
 
+  /*   function shuffle(array: Question[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  } */
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer((event.target as HTMLInputElement).value);
   };
-  const examQuestions = examDet?.questions[currentExam]!;
+
+  let shuffled = useMemo(
+    () =>
+      examDet!
+        .questions!.map((value) => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value),
+    []
+  );
+
+  /* const shuffleQuestion = useMemo(() => shuffle([...examDet!?.questions!]), []); */
+  /*   console.log(shuffled); */
+
+  /*   console.log("shuff", shuffleQuestion[currentExam]); */
+
+  const examQuestions = shuffled[currentExam]!;
   const imgPath = "http://localhost:5000/images/";
 
   const examLength = examDet?.questions!.length!;
@@ -128,7 +150,7 @@ const StartExam = () => {
         lName: user!?.lName!.toString(),
         examTitle: examDet!?.title!.toString(),
         score: Number(score),
-        questions: examDet!?.questions!,
+        questions: shuffled,
       };
 
       dispatch(createResult(userResult!));
@@ -179,7 +201,7 @@ const StartExam = () => {
           <div>
             <FormControl sx={{ my: 4 }}>
               <RadioGroup value={userAnswer} onChange={handleChange}>
-                {examQuestions.choices.map((choice) => (
+                {examQuestions.choices.map((choice: any) => (
                   <FormControlLabel
                     value={choice.text}
                     key={choice.text}
