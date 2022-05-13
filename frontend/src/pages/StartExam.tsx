@@ -2,12 +2,13 @@ import {
   Paper,
   Typography,
   Stack,
-  FormControl,
+  /*   FormControl,
   RadioGroup,
   Radio,
-  FormControlLabel,
+  FormControlLabel, */
   Button,
   Box,
+  Grid,
 } from "@mui/material";
 import {
   useAppDispatch,
@@ -16,11 +17,11 @@ import {
 import { RootState } from "../app/store";
 import { /* useParams, */ useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+/* import NavigateNextIcon from "@mui/icons-material/NavigateNext"; */
 /* import { getExamDetails, reset } from "../features/exam/examSlice"; */
 import { Loader, Error } from "../components";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+/* import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp"; */
 import { createResult } from "../features/result/resultSlice";
 import { finishedExam, reset } from "../features/exam/examSlice";
 /* import { Question } from "../interface/Question"; */
@@ -40,10 +41,13 @@ const StartExam = () => {
   /*   const dispatch = useAppDispatch(); */
 
   //States
-  const [userAnswer, setUserAnswer] = useState("");
+  /*   const [userAnswer, setUserAnswer] = useState(""); */
   const [currentExam, setCurrentExam] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+
+  const [correctAnswer, setCorrectAnswer] = useState(0);
+  const [wrongAnswer, setWrongAnswer] = useState(0);
 
   /*   function shuffle(array: Question[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -51,9 +55,9 @@ const StartExam = () => {
       [array[i], array[j]] = [array[j], array[i]];
     }
   } */
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  /*   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer((event.target as HTMLInputElement).value);
-  };
+  }; */
 
   let shuffled = useMemo(
     () =>
@@ -74,10 +78,18 @@ const StartExam = () => {
 
   const examLength = examDet?.questions!.length!;
 
-  const handleNext = (answer: string, point: number) => {
-    if (answer === userAnswer) {
+  const handleNext = (answer: string, point: number, text: string) => {
+    /*   setUserAnswer(text);
+    console.log(userAnswer); */
+
+    if (answer !== text) {
+      setWrongAnswer((wrongAnswer) => wrongAnswer + 1);
+    }
+
+    if (answer === text) {
+      setCorrectAnswer((correctAnswer) => correctAnswer + 1);
       setScore((score) => score + point);
-      setUserAnswer("");
+      /*    setUserAnswer(""); */
     }
 
     if (currentExam + 1 < examLength) {
@@ -88,8 +100,8 @@ const StartExam = () => {
   };
 
   const handleExit = () => {
-    navigate("/home");
     dispatch(reset());
+    navigate("/home");
   };
 
   //Timer
@@ -169,8 +181,10 @@ const StartExam = () => {
   return (
     <div>
       {!showScore && (
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Typography variant="h5" mb={2}>{`${minutes}:${seconds}`}</Typography>
+        <Box>
+          <Typography variant="body1" fontWeight="bold" mb={2}>
+            Time Limit: {`${minutes}:${seconds}`}
+          </Typography>
         </Box>
       )}
       {!showScore && examDet && (
@@ -180,10 +194,10 @@ const StartExam = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h5">
+            <Typography variant="h6" fontWeight="bold">
               {currentExam + 1}. {examQuestions.questionText}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body1" color="green">
               {examQuestions.point}{" "}
               {examQuestions.point <= 1 ? "point" : "points"}
             </Typography>
@@ -193,64 +207,61 @@ const StartExam = () => {
             <img
               src={`${imgPath}${examQuestions.image}`}
               alt="question"
-              style={{ display: "block", margin: "1rem 0", width: "300px" }}
+              style={{
+                display: "block",
+                margin: "1rem 0",
+                width: "300px",
+                borderRadius: "10px",
+              }}
             />
           )}
 
-          <div>
-            <FormControl sx={{ my: 4 }}>
-              <RadioGroup value={userAnswer} onChange={handleChange}>
-                {examQuestions.choices.map((choice: any) => (
-                  <FormControlLabel
-                    value={choice.text}
-                    key={choice.text}
-                    control={<Radio />}
-                    label={choice.text}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
+          <Box sx={{ my: 3 }}>
+            <Grid container spacing={2}>
+              {examQuestions.choices.map((choice: any) => (
+                <Grid item lg={6} md={6} sm={6} xs={6}>
+                  <Button
+                    size="large"
+                    variant="outlined"
+                    fullWidth
+                    onClick={() =>
+                      handleNext(
+                        examQuestions.answer,
+                        examQuestions.point,
+                        choice.text
+                      )
+                    }
+                  >
+                    {choice.text}
+                  </Button>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
 
-          <Button
-            variant="contained"
-            endIcon={<NavigateNextIcon />}
+          {/*   <Button
             onClick={() =>
               handleNext(examQuestions.answer, examQuestions.point)
             }
           >
             Next
-          </Button>
+          </Button> */}
         </Paper>
       )}
 
       {showScore && (
         <Paper sx={{ p: 4 }}>
-          <Typography sx={{ color: "green", textAlign: "center" }}>
-            <CheckCircleIcon fontSize="large" />
-          </Typography>
-          <Typography
-            variant="h4"
-            color="green"
-            textAlign="center"
-            sx={{ mb: 3 }}
-          >
-            Congratulations
+          <Typography mb={2} variant="h5" fontWeight="bold">
+            Results
           </Typography>
 
-          <Typography variant="h2" textAlign="center">
-            Your Score: {score}
-          </Typography>
+          <Typography variant="h6">Correct answer: {correctAnswer}</Typography>
+          <Typography variant="h6">Wrong answer: {wrongAnswer}</Typography>
+          <Typography variant="h6">Final Score: {score}</Typography>
 
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ margin: "auto" }}
-              endIcon={<ExitToAppIcon />}
-              onClick={handleExit}
-            >
-              Exit
+          <Box sx={{ mt: 3 }}>
+            <Button sx={{ margin: "auto" }} onClick={handleExit}>
+              Back to home
             </Button>
           </Box>
         </Paper>

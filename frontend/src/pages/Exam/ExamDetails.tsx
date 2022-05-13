@@ -12,6 +12,8 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  Box,
+  Grid,
 } from "@mui/material";
 import { format } from "date-fns";
 
@@ -38,61 +40,49 @@ const ExamDetails = () => {
   if (isError) return <Error />;
   return (
     <div>
-      <Paper sx={{ p: 3 }}>
-        <Typography variant="h5" mb={2}>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h5" fontWeight="bold" mb={2}>
           {examDet?.title}
         </Typography>
 
         <Typography mb={2}>Description: {examDet?.description}</Typography>
 
-        <Typography mb={2}>Time Limit : {examDet?.timeLimit} mins</Typography>
+        <Typography mb={2}>TimeLimit {examDet?.timeLimit} mins</Typography>
 
+        <Typography mb={2}>Code:{examDet?.code} </Typography>
         <Typography mb={2}>
-          Start date:{" "}
+          Start:
           {examDet
             ? format(
                 new Date(`${examDet?.dateAndTime.from}`),
-                "EEEE MMMM dd yyyy hh:mm aaa"
+                " mm/dd/yyyy hh:mm aaa"
               )
             : ""}
         </Typography>
 
         <Typography mb={2}>
-          End date:{" "}
+          End:{" "}
           {examDet
             ? format(
                 new Date(`${examDet?.dateAndTime.to}`),
-                "EEEE MMMM dd yyyy hh:mm aaa"
+                " mm/dd/yyyy hh:mm aaa"
               )
             : ""}
         </Typography>
 
-        <Typography mb={2}>Code: {examDet?.code} </Typography>
-
-        <Typography color="text.secondary">
+        {/*    <Typography color="text.secondary">
           {" "}
           {examDet?.questions.length}{" "}
           {examDet?.questions!.length! > 1 ? "Questions" : "Question"}
-        </Typography>
-      </Paper>
+        </Typography> */}
+      </Box>
 
-      <Typography variant="h5" my={2}>
+      {/*    <Typography variant="h5"  my={2}>
         Questions
-      </Typography>
+      </Typography> */}
 
-      {examDet?.questions.map((question) => (
-        <Paper sx={{ p: 4, my: 2 }} key={question._id}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Typography variant="h5">{question.questionText}</Typography>
-            <Typography variant="body1" color="text.secondary">
-              {question.point} {question.point <= 1 ? "point" : "points"}
-            </Typography>
-          </Stack>
-
+      {examDet?.questions.map((question, index) => (
+        <Box sx={{ p: 4, my: 2 }} key={question._id}>
           {question.image && (
             <img
               src={`${imgPath}${question.image}`}
@@ -100,26 +90,25 @@ const ExamDetails = () => {
               style={{ display: "block", margin: "1rem 0", width: "300px" }}
             />
           )}
+          <Typography variant="h5">
+            {index + 1}. {question.questionText}
+          </Typography>
+          <Typography variant="body1" my={1}>
+            {question.point} {question.point <= 1 ? "point" : "points"}
+          </Typography>
 
-          <div>
-            <FormControl sx={{ my: 4 }}>
-              <RadioGroup defaultValue={question.answer}>
-                {question.choices.map((choice) => (
-                  <FormControlLabel
-                    value={choice.text}
-                    key={choice.text}
-                    control={<Radio />}
-                    label={choice.text}
-                    disabled
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
+          <Typography fontWeight="bold">Choices:</Typography>
+          <ul>
+            {question.choices.map((option) => (
+              <li>{option.text}</li>
+            ))}
+          </ul>
+
+          <Typography>Answer: {question.answer}</Typography>
 
           <Typography>Knowledge Dimension: {question.kd}</Typography>
           <Typography>Cognitive Process Dimension: {question.cpd}</Typography>
-        </Paper>
+        </Box>
       ))}
     </div>
   );

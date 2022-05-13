@@ -11,6 +11,8 @@ import {
   Modal,
   Box,
   List,
+  Paper,
+  Divider,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useEffect, useState } from "react";
@@ -362,8 +364,6 @@ const ExamForm = () => {
     }
   }, [examDet, dispatch, isEdit]);
 
-  console.log(questionInputFields);
-
   useEffect(() => {
     if (isSuccess) {
       navigate("/");
@@ -396,24 +396,24 @@ const ExamForm = () => {
             Question Bank
           </Typography>
 
-          <Box sx={searchStyle} component="form" /* onSubmit={handleSearch} */>
-            <input
+          <Box component="form" /* onSubmit={handleSearch} */>
+            <TextField
+              variant="standard"
               type="text"
-              placeholder="Search question bank"
+              placeholder="Search..."
               value={searchTerm}
+              fullWidth
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setSearchTerm(e.target.value)
               }
             />
-
-            <SearchIcon sx={{ color: "text.secondary", bgColor: "#ffff" }} />
           </Box>
 
-          {questionBankList.length > 0 && (
+          {/*  {questionBankList.length > 0 && (
             <Typography variant="body1" sx={{ mb: 2, color: "text.secondary" }}>
               Input a number that will randomly pull from the question bank
             </Typography>
-          )}
+          )} */}
 
           <Box sx={{ overflowY: "auto", height: "400px" }}>
             {questionBankList.length <= 0 && (
@@ -429,121 +429,234 @@ const ExamForm = () => {
       </Modal>
 
       <Container maxWidth="sm">
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>
-          Create Exam
-        </Typography>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={3}>
-              <TextField
-                label="Title"
-                value={title}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(e.target.value)
-                }
-                required
-              />
-
-              <TextField
-                type="number"
-                label="Time Limit(mins)"
-                value={timeLimit}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setTimeLimit(e.target.value)
-                }
-                required
-              />
-
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Typography sx={{ color: "primary.main" }}>
-                  Available Date and Time
-                </Typography>
-                <Stack spacing={2} direction="row">
-                  <DateTimePicker
-                    label="From"
-                    value={from}
-                    onChange={(newValue: Date | null) => setFrom(newValue)}
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                  <DateTimePicker
-                    label="To"
-                    value={to}
-                    onChange={(newValue: Date | null) => setTo(newValue)}
-                    renderInput={(params) => (
-                      <TextField {...params} fullWidth />
-                    )}
-                  />
-                </Stack>
-              </LocalizationProvider>
-
-              <Stack direction="row">
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h5" fontWeight="bold">
+            Create Exam
+          </Typography>
+          <Divider sx={{ marginBottom: 3 }} />
+          <div>
+            <form onSubmit={handleSubmit}>
+              <Stack spacing={3}>
                 <TextField
-                  label="Code"
-                  value={code}
+                  variant="standard"
+                  label="Title"
+                  value={title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setCode(e.target.value)
+                    setTitle(e.target.value)
                   }
-                  fullWidth
                   required
                 />
-                <Button variant="contained" onClick={generateCode}>
+
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Stack spacing={2}>
+                    <DateTimePicker
+                      label="Start Date"
+                      value={from}
+                      onChange={(newValue: Date | null) => setFrom(newValue)}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth variant="standard" />
+                      )}
+                    />
+                    <DateTimePicker
+                      label="End Date"
+                      value={to}
+                      onChange={(newValue: Date | null) => setTo(newValue)}
+                      renderInput={(params) => (
+                        <TextField {...params} fullWidth variant="standard" />
+                      )}
+                    />
+                  </Stack>
+                </LocalizationProvider>
+
+                <TextField
+                  variant="standard"
+                  type="number"
+                  label="Time Limit(minutes)"
+                  value={timeLimit}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setTimeLimit(e.target.value)
+                  }
+                  required
+                />
+
+                <Stack direction="row">
+                  <TextField
+                    variant="standard"
+                    label="Code"
+                    value={code}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setCode(e.target.value)
+                    }
+                    fullWidth
+                    required
+                  />
+                  {/*   <Button variant="contained" onClick={generateCode}>
                   Generate
-                </Button>
+                </Button> */}
+                </Stack>
+
+                <TextField
+                  variant="standard"
+                  label="Description"
+                  multiline
+                  rows={3}
+                  value={description}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setDescription(e.target.value)
+                  }
+                  required
+                />
               </Stack>
 
-              <TextField
-                label="Description"
-                multiline
-                rows={3}
-                value={description}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDescription(e.target.value)
-                }
-                required
-              />
-            </Stack>
+              {/*  Question Form */}
 
-            {/*  Question Form */}
-
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ my: 2 }}
-            >
-              <Typography sx={{ color: "primary.main" }}>Questions</Typography>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{ my: 2 }}
+              >
+                <div>
+                  <Button sx={{ mr: 2 }} onClick={handleAddFields}>
+                    Add Question
+                  </Button>
+                  <Button onClick={handleOpen}>Question Bank</Button>
+                </div>
+              </Stack>
 
               <div>
-                <Button
-                  variant="outlined"
-                  sx={{ mr: 2 }}
-                  onClick={handleAddFields}
-                >
-                  Add Question
-                </Button>
-                <Button variant="outlined" onClick={handleOpen}>
-                  Question Bank
-                </Button>
-              </div>
-            </Stack>
+                {questionInputFields &&
+                  questionInputFields!.map((input) => (
+                    <Stack
+                      spacing={2}
+                      key={input.id}
+                      /* direction="row" */
+                      sx={{ my: 3 }}
+                    >
+                      <Stack spacing={2} sx={{ width: "100%" }}>
+                        <TextField
+                          variant="standard"
+                          label="Question"
+                          name="questionText"
+                          value={input.questionText}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
+                        <TextField
+                          variant="standard"
+                          label="Option1"
+                          name="option1"
+                          value={input.option1}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
+                        <TextField
+                          variant="standard"
+                          label="Option2"
+                          name="option2"
+                          value={input.option2}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
+                        <TextField
+                          variant="standard"
+                          label="Option3"
+                          name="option3"
+                          value={input.option3}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
+                        <TextField
+                          variant="standard"
+                          label="Option4"
+                          name="option4"
+                          value={input.option4}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
+                        <TextField
+                          variant="standard"
+                          label="Answer"
+                          name="answer"
+                          value={input.answer}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
+                        <TextField
+                          variant="standard"
+                          label="Point"
+                          name="point"
+                          type="number"
+                          value={input.point}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleChangeInput(input.id, e)
+                          }
+                          fullWidth
+                          required
+                        />
 
-            <div>
-              {questionInputFields &&
-                questionInputFields!.map((input) => (
-                  <Stack
-                    spacing={2}
-                    key={input.id}
-                    direction="row"
-                    sx={{ my: 3 }}
-                  >
-                    <Stack spacing={2} sx={{ width: "100%" }}>
+                        <FormControl fullWidth variant="standard" required>
+                          <InputLabel>Knowledge Dimension</InputLabel>
+                          <Select
+                            label="Knowledge Dimension"
+                            name="kd"
+                            value={input.kd}
+                            defaultValue=""
+                            onChange={(e: SelectChangeEvent) =>
+                              handleChangeInput(input.id, e)
+                            }
+                          >
+                            {kDimension.map((kd) => (
+                              <MenuItem value={kd} key={kd}>
+                                {kd}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+
+                        <FormControl fullWidth variant="standard" required>
+                          <InputLabel>Cognitive Proccess Dimension</InputLabel>
+                          <Select
+                            label="Cognitive Proccess Dimension"
+                            name="cpd"
+                            value={input.cpd}
+                            defaultValue=""
+                            onChange={(e: SelectChangeEvent) =>
+                              handleChangeInput(input.id, e)
+                            }
+                          >
+                            {cpDimension.map((cpd) => (
+                              <MenuItem value={cpd} key={cpd}>
+                                {cpd}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Stack>
+
                       {!isEdit && input!?.file!.size > 0 && (
                         <img
                           src={URL.createObjectURL(input!?.file!)}
                           alt="pic"
-                          style={{ width: "100%" }}
+                          style={{ width: "100%", borderRadius: "10px" }}
                         />
                       )}
 
@@ -551,13 +664,13 @@ const ExamForm = () => {
                         <img
                           src={URL.createObjectURL(input!?.file!)}
                           alt="pic"
-                          style={{ width: "100%" }}
+                          style={{ width: "100%", borderRadius: "10px" }}
                         />
                       ) : input.image ? (
                         <img
                           src={`http://localhost:5000/images/${input.image}`}
                           alt="pic"
-                          style={{ width: "100%" }}
+                          style={{ width: "100%", borderRadius: "10px" }}
                         />
                       ) : (
                         ""
@@ -571,11 +684,7 @@ const ExamForm = () => {
                         }
                         required
                       /> */}
-                        <Button
-                          variant="outlined"
-                          component="label"
-                          startIcon={<FileUploadIcon />}
-                        >
+                        <Button component="label">
                           Upload Image
                           <input
                             type="file"
@@ -588,142 +697,31 @@ const ExamForm = () => {
                         </Button>
                       </div>
 
-                      <TextField
-                        label="Question"
-                        name="questionText"
-                        value={input.questionText}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        label="Option1"
-                        name="option1"
-                        value={input.option1}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        label="Option2"
-                        name="option2"
-                        value={input.option2}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        label="Option3"
-                        name="option3"
-                        value={input.option3}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        label="Option4"
-                        name="option4"
-                        value={input.option4}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        label="Answer"
-                        name="answer"
-                        value={input.answer}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-                      <TextField
-                        label="Point"
-                        name="point"
-                        type="number"
-                        value={input.point}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          handleChangeInput(input.id, e)
-                        }
-                        fullWidth
-                        required
-                      />
-
-                      <FormControl fullWidth required>
-                        <InputLabel>Knowledge Dimension</InputLabel>
-                        <Select
-                          label="Knowledge Dimension"
-                          name="kd"
-                          value={input.kd}
-                          defaultValue=""
-                          onChange={(e: SelectChangeEvent) =>
-                            handleChangeInput(input.id, e)
-                          }
+                      <Stack direction="row" alignItems="center">
+                        <Button
+                          disabled={questionInputFields!.length === 1}
+                          onClick={() => handleRemoveFields(input!?.id!)}
                         >
-                          {kDimension.map((kd) => (
-                            <MenuItem value={kd} key={kd}>
-                              {kd}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-
-                      <FormControl fullWidth required>
-                        <InputLabel>Cognitive Proccess Dimension</InputLabel>
-                        <Select
-                          label="Cognitive Proccess Dimension"
-                          name="cpd"
-                          value={input.cpd}
-                          defaultValue=""
-                          onChange={(e: SelectChangeEvent) =>
-                            handleChangeInput(input.id, e)
-                          }
-                        >
-                          {cpDimension.map((cpd) => (
-                            <MenuItem value={cpd} key={cpd}>
-                              {cpd}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                          Remove
+                        </Button>
+                        <Button onClick={handleAddFields}>Add</Button>
+                      </Stack>
                     </Stack>
+                  ))}
+              </div>
 
-                    <Stack direction="row" alignItems="center">
-                      <IconButton
-                        disabled={questionInputFields!.length === 1}
-                        onClick={() => handleRemoveFields(input!?.id!)}
-                      >
-                        <RemoveIcon />
-                      </IconButton>
-                      <IconButton onClick={handleAddFields}>
-                        <AddIcon />
-                      </IconButton>
-                    </Stack>
-                  </Stack>
-                ))}
-            </div>
-
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ marginY: 1 }}
-              type="submit"
-            >
-              Submit
-            </Button>
-          </form>
-        </div>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ marginY: 1 }}
+                type="submit"
+                fullWidth
+              >
+                Submit
+              </Button>
+            </form>
+          </div>
+        </Paper>
       </Container>
     </>
   );

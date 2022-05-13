@@ -1,14 +1,24 @@
 import { useEffect } from "react";
-import { Typography, Button, Box, IconButton } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Box,
+  /*   IconButton, */
+  Grid,
+  Card,
+  CardContent,
+  /*  CardActions, */
+  Stack,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { getAllExam, deleteExam, reset } from "../../features/exam/examSlice";
-import DeleteIcon from "@mui/icons-material/Delete";
+/* import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid"; */
 import { Loader, Error } from "../../components";
 
 const Exam = () => {
@@ -23,7 +33,7 @@ const Exam = () => {
   );
   const dispatch = useAppDispatch();
 
-  const columns: GridColDef[] = [
+  /*   const columns: GridColDef[] = [
     {
       field: "title",
       headerName: "Exam",
@@ -54,7 +64,7 @@ const Exam = () => {
         );
       },
     },
-  ];
+  ]; */
 
   useEffect(() => {
     dispatch(getAllExam());
@@ -77,19 +87,15 @@ const Exam = () => {
           mb: 2,
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>
+        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
           Exams
         </Typography>
 
-        <Button
-          startIcon={<AddIcon />}
-          variant="outlined"
-          onClick={() => navigate("/edit")}
-        >
-          Add
+        <Button startIcon={<AddIcon />} onClick={() => navigate("/edit")}>
+          Add Exam
         </Button>
       </Box>
-      <div style={{ height: 400, width: "100%" }}>
+      {/*    <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={examList}
           columns={columns}
@@ -97,7 +103,45 @@ const Exam = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </div> */}
+      <Grid container spacing={3}>
+        {examList.map((exam) => (
+          <Grid item lg={4} md={4} sm={6} xs={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5" mb={1}>
+                  {exam.title}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {exam.description}
+                </Typography>
+
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{ mt: 3 }}
+                >
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={() => navigate(`/exam-details/${exam._id}`)}
+                  >
+                    More Details
+                  </Button>
+                  <div>
+                    <Button onClick={() => navigate(`/edit/${exam._id}`)}>
+                      Edit
+                    </Button>
+                    <Button onClick={() => dispatch(deleteExam(exam._id!))}>
+                      Delete
+                    </Button>
+                  </div>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

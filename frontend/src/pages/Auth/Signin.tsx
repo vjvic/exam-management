@@ -2,12 +2,11 @@ import {
   Stack,
   Typography,
   FormControl,
-  OutlinedInput,
-  InputLabel,
   Button,
   Box,
   FormHelperText,
   Alert,
+  TextField,
 } from "@mui/material";
 import { FormContainer, Wrapper } from "./styles";
 import { Link } from "react-router-dom";
@@ -66,13 +65,7 @@ const Signin = () => {
             <Typography variant="h5" fontWeight="bold">
               Sign in
             </Typography>
-            <Typography
-              variant="body1"
-              component="p"
-              sx={{ marginY: 1, color: "#808080" }}
-            >
-              Enter your details below.
-            </Typography>
+
             {message && (
               <Alert severity="error">
                 {typeof message === "string" && message}
@@ -84,8 +77,8 @@ const Signin = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
               <FormControl>
-                <InputLabel>Email</InputLabel>
-                <OutlinedInput
+                <TextField
+                  variant="standard"
                   label="Email"
                   {...reg("email")}
                   error={errors!?.email!?.message!?.length > 0}
@@ -94,8 +87,8 @@ const Signin = () => {
               </FormControl>
 
               <FormControl>
-                <InputLabel>Password</InputLabel>
-                <OutlinedInput
+                <TextField
+                  variant="standard"
                   label="Password"
                   type="password"
                   {...reg("password")}

@@ -1,4 +1,4 @@
-import { TextField, Button, Typography, Container } from "@mui/material";
+import { TextField, Button, Typography, Container, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
@@ -64,30 +64,34 @@ const QuestionBankForm = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" sx={{ marginBottom: 3 }}>
-        Create Question Bank
-      </Typography>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Title"
-            value={title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTitle(e.target.value)
-            }
-            fullWidth
-          />
+      <Paper sx={{ p: 3 }}>
+        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
+          Create Question Bank
+        </Typography>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              variant="standard"
+              label="Title"
+              value={title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
+              fullWidth
+            />
 
-          <Button
-            variant="contained"
-            size="large"
-            sx={{ marginTop: 4 }}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </form>
-      </div>
+            <Button
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{ marginTop: 4 }}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </Paper>
     </Container>
   );
 };

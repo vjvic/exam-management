@@ -2,13 +2,13 @@ import {
   Stack,
   Typography,
   FormControl,
-  OutlinedInput,
   InputLabel,
   Button,
   Box,
   MenuItem,
   FormHelperText,
   Alert,
+  TextField,
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import { FormContainer, Wrapper } from "./styles";
@@ -82,13 +82,7 @@ const Signup = () => {
             <Typography variant="h5" fontWeight="bold">
               Sign up
             </Typography>
-            <Typography
-              variant="body1"
-              component="p"
-              sx={{ marginY: 1, color: "#808080" }}
-            >
-              Enter your details below.
-            </Typography>
+
             {message && (
               <Alert severity="error">
                 {typeof message === "string" && message}
@@ -101,8 +95,8 @@ const Signup = () => {
             <Stack spacing={2}>
               <Stack direction="row" spacing={2}>
                 <FormControl fullWidth>
-                  <InputLabel>First Name</InputLabel>
-                  <OutlinedInput
+                  <TextField
+                    variant="standard"
                     label="First Name"
                     {...reg("fName")}
                     error={errors!?.fName!?.message!?.length > 0}
@@ -113,8 +107,8 @@ const Signup = () => {
                 </FormControl>
 
                 <FormControl fullWidth>
-                  <InputLabel>Last Name</InputLabel>
-                  <OutlinedInput
+                  <TextField
+                    variant="standard"
                     label="Last Name"
                     {...reg("lName")}
                     error={errors!?.lName!?.message!?.length > 0}
@@ -126,8 +120,8 @@ const Signup = () => {
               </Stack>
 
               <FormControl>
-                <InputLabel>Email</InputLabel>
-                <OutlinedInput
+                <TextField
+                  variant="standard"
                   label="Email"
                   {...reg("email")}
                   error={errors!?.email!?.message!?.length > 0}
@@ -138,8 +132,8 @@ const Signup = () => {
               </FormControl>
 
               <FormControl>
-                <InputLabel>Password</InputLabel>
-                <OutlinedInput
+                <TextField
+                  variant="standard"
                   label="Password"
                   type="password"
                   {...reg("password")}
@@ -151,8 +145,8 @@ const Signup = () => {
               </FormControl>
 
               <FormControl>
-                <InputLabel>Confirm Password</InputLabel>
-                <OutlinedInput
+                <TextField
+                  variant="standard"
                   label="Confirm Password"
                   type="password"
                   {...reg("confirmPassword")}
@@ -163,7 +157,7 @@ const Signup = () => {
                 </FormHelperText>
               </FormControl>
 
-              <FormControl fullWidth>
+              <FormControl variant="standard" fullWidth>
                 <InputLabel>Role</InputLabel>
                 <Select
                   label="Role"

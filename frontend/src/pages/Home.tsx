@@ -65,13 +65,11 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box component="form" sx={{ mb: 4 }} onSubmit={handleSubmit}>
-        <Typography textAlign="center" variant="h5" sx={{ mb: 4 }}>
-          {" "}
-          Enter exam code here
-        </Typography>
         <TextField
+          variant="standard"
+          label="Exam Code"
           fullWidth
           value={code}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -89,7 +87,21 @@ const Home = () => {
       {examDet && (
         <Card sx={{ minWidth: 275, mt: 5 }}>
           <CardContent>
-            <Typography variant="h5" component="div" sx={{ mb: 2 }}>
+            <Box mb={2}>
+              <Typography variant="body2" color="text.secondary">
+                {examDet.timeLimit} mins
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                {examDet.questions.length} questions
+              </Typography>
+            </Box>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              component="div"
+              sx={{ mb: 2 }}
+            >
               {examDet.title}
             </Typography>
 
@@ -97,25 +109,15 @@ const Home = () => {
               {examDet.description}
             </Typography>
 
-            <Box mb={2}>
-              <Typography variant="body2" color="text.secondary">
-                {examDet.questions.length} questions
-              </Typography>
-
-              <Typography variant="body2" color="text.secondary">
-                {examDet.timeLimit} mins
-              </Typography>
-            </Box>
-
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              Start at{" "}
+              Available -{" "}
               {format(
                 new Date(`${examDet.dateAndTime.from}`),
-                "EEEE MMMM dd yyyy hh:mm aaa"
+                "mm/dd/yyyy hh:mm aaa"
               )}
             </Typography>
             <Typography
@@ -123,43 +125,25 @@ const Home = () => {
               color="text.secondary"
               gutterBottom
             >
-              End at{" "}
+              Closed -{" "}
               {format(
                 new Date(`${examDet.dateAndTime.to}`),
-                "EEEE MMMM dd yyyy hh:mm aaa"
+                "mm/dd/yyyy hh:mm aaa"
               )}
             </Typography>
-          </CardContent>
-          <CardActions>
+
             <Button
-              size="small"
+              variant="contained"
+              size="large"
+              sx={{ mt: 2 }}
               onClick={() => navigate(`/start-exam`)}
               disabled={examDateAvailable() ? false : true}
             >
-              Start Exam
+              Start
             </Button>
-          </CardActions>
+          </CardContent>
         </Card>
       )}
-
-      <Paper sx={{ mt: 4, py: 2, px: 4 }}>
-        <Typography variant="h5" textAlign="center">
-          General Instructions
-        </Typography>
-
-        <Box component="ul" sx={{ li: { margin: "1rem 0" } }}>
-          <li>
-            You can answer the exam once by entering the exam code with the
-            available date of the exam.
-          </li>
-
-          <li>By clicking "start exam " the exam will start</li>
-
-          <li>The exam will be automatically submitted if time runs out</li>
-
-          <li>Score will be given after the exam is submitted</li>
-        </Box>
-      </Paper>
     </Container>
   );
 };

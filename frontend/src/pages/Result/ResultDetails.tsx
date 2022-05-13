@@ -4,7 +4,7 @@ import { RootState } from "../../app/store";
 import { useEffect } from "react";
 import { getResultDetails, reset } from "../../features/result/resultSlice";
 import "./table.css";
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography, IconButton, Button } from "@mui/material";
 import { Error, Loader } from "../../components";
 import PrintIcon from "@mui/icons-material/Print";
 
@@ -193,18 +193,12 @@ const ResultDetails = () => {
 
   return (
     <div className="tos">
-      <Typography variant="h6" textAlign="center" mb={2} fontWeight="bold">
+      <Typography variant="h4" textAlign="center" mb={2} fontWeight="bold">
         Two Dimensional Table of Specifications
       </Typography>
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <div>
-          <IconButton
-            sx={{ displayPrint: "none" }}
-            onClick={() => window.print()}
-          >
-            <PrintIcon />
-          </IconButton>
           <table>
             <tr>
               <td></td>
@@ -275,6 +269,9 @@ const ResultDetails = () => {
               <td>{total}</td>
             </tr>
           </table>
+          <Button sx={{ displayPrint: "none" }} onClick={() => window.print()}>
+            Print
+          </Button>
         </div>
       </Box>
     </div>

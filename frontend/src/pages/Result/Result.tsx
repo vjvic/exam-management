@@ -11,6 +11,14 @@ import {
   CardActions,
   Paper, */
   IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
 } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 /* import MoreHorizIcon from "@mui/icons-material/MoreHoriz"; */
@@ -111,11 +119,11 @@ const Result = () => {
 
   return (
     <div>
-      <Typography variant="h4" sx={{ mb: 2 }}>
+      <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
         Results
       </Typography>
 
-      <div style={{ height: 400, width: "100%" }}>
+      {/*  <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={resultList}
           columns={columns}
@@ -123,7 +131,40 @@ const Result = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </div> */}
+
+      <TableContainer component={Paper} sx={{ mb: 4 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Exam Title</TableCell>
+              <TableCell>Exam Score</TableCell>
+              <TableCell align="right">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          {resultList.map((result) => (
+            <TableBody>
+              <TableCell component="th" scope="row">
+                {result.fName}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {result.examTitle}
+              </TableCell>
+              <TableCell component="th" scope="row">
+                {result.score}
+              </TableCell>
+              <TableCell component="th" align="right">
+                <Button
+                  onClick={() => navigate(`/results-details/${result._id}`)}
+                >
+                  2d tos
+                </Button>
+              </TableCell>
+            </TableBody>
+          ))}
+        </Table>
+      </TableContainer>
     </div>
   );
 };

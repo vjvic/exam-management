@@ -3,7 +3,7 @@ import { RootState } from "../app/store";
 import { useEffect } from "react";
 import { getMyResult, reset } from "../features/result/resultSlice";
 import { Loader, Error } from "../components";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Typography } from "@mui/material";
 
 const Score = () => {

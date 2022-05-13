@@ -1,5 +1,14 @@
 import { useEffect } from "react";
-import { Typography, Button, Box, IconButton } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Box,
+  IconButton,
+  Grid,
+  Card,
+  CardContent,
+  Stack,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -82,20 +91,19 @@ const QuestionBank = () => {
           mb: 2,
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>
+        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
           Question Bank
         </Typography>
 
         <Button
           startIcon={<AddIcon />}
-          variant="outlined"
           onClick={() => navigate("/questionbank/edit")}
         >
-          Add
+          Add Question Bank
         </Button>
       </Box>
 
-      <div style={{ height: 400, width: "100%" }}>
+      {/*  <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={questionBankList}
           columns={columns}
@@ -103,7 +111,50 @@ const QuestionBank = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </div> */}
+      <Grid container spacing={3}>
+        {questionBankList.map((questionBank) => (
+          <Grid item lg={4} md={4} sm={6} xs={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5" mb={1}>
+                  {questionBank.title}
+                </Typography>
+
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{ mt: 3 }}
+                >
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={() => navigate(`/questions/${questionBank._id}`)}
+                  >
+                    View Question
+                  </Button>
+                  <div>
+                    <Button
+                      onClick={() =>
+                        navigate(`/questionbank/edit/${questionBank._id}`)
+                      }
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        dispatch(deleteQuestionBank(questionBank._id!))
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

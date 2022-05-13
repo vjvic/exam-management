@@ -1,4 +1,16 @@
-import { Typography, Box, Button, IconButton } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Button,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useEffect } from "react";
@@ -99,20 +111,19 @@ const Questions = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>
+        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
           Questions
         </Typography>
 
         <Button
           startIcon={<AddIcon />}
-          variant="outlined"
           onClick={() => navigate(`/questions/edit/${id}`)}
         >
-          Add
+          Add Question
         </Button>
       </Box>
 
-      <div style={{ height: 400, width: "100%" }}>
+      {/*  <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={questionList}
           columns={columns}
@@ -120,7 +131,37 @@ const Questions = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </div> */}
+
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Question</TableCell>
+              <TableCell align="right">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          {questionList.map((question) => (
+            <TableBody>
+              <TableCell component="th" scope="row">
+                {question.questionText}
+              </TableCell>
+              <TableCell component="th" align="right">
+                <Button
+                  onClick={() =>
+                    navigate(`/questions/edit/${id}/${question._id}`)
+                  }
+                >
+                  Edit
+                </Button>
+                <Button onClick={() => dispatch(deleteQuestion(question._id!))}>
+                  Delete
+                </Button>
+              </TableCell>
+            </TableBody>
+          ))}
+        </Table>
+      </TableContainer>
     </div>
   );
 };

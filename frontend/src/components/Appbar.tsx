@@ -33,7 +33,7 @@ const facultyPages = [
   },
 ];
 
-const studentPages = [
+/* const studentPages = [
   {
     text: "Home",
     path: "/home",
@@ -42,7 +42,7 @@ const studentPages = [
     text: "MyResult",
     path: "/myresult",
   },
-];
+]; */
 
 const settings = ["Profile", "Logout"];
 
@@ -98,7 +98,13 @@ const Appbar = ({ display }: { display: boolean }) => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            onClick={() => navigate("/")}
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              color: "primary.main",
+              cursor: "pointer",
+            }}
           >
             EMS
           </Typography>
@@ -147,7 +153,7 @@ const Appbar = ({ display }: { display: boolean }) => {
                     <Typography textAlign="center">{page.text}</Typography>
                   </MenuItem>
                 ))}
-              {user &&
+              {/*  {user &&
                 user.role === "student" &&
                 studentPages.map((page) => (
                   <MenuItem
@@ -156,14 +162,20 @@ const Appbar = ({ display }: { display: boolean }) => {
                   >
                     <Typography textAlign="center">{page.text}</Typography>
                   </MenuItem>
-                ))}
+                ))} */}
             </Menu>
           </Box>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            onClick={() => navigate("/")}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+              color: "primary.main",
+              cursor: "pointer",
+            }}
           >
             EMS
           </Typography>
@@ -179,32 +191,32 @@ const Appbar = ({ display }: { display: boolean }) => {
                 <Button
                   key={page.text}
                   onClick={() => handleCloseNavMenu(page.path)}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: "inherit", display: "block" }}
                 >
                   {page.text}
                 </Button>
               ))}
-            {user &&
+            {/*  {user &&
               user.role === "student" &&
               studentPages.map((page) => (
                 <Button
                   key={page.text}
                   onClick={() => handleCloseNavMenu(page.path)}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: "inherit", display: "block" }}
                 >
                   {page.text}
                 </Button>
-              ))}
+              ))} */}
           </Box>
 
           <Box sx={{ flexGrow: 0, display: display ? "block" : "none" }}>
             {user && (
               <Tooltip title="Open settings">
                 <Button
+                  variant="outlined"
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0 }}
-                  color="inherit"
-                  endIcon={<ArrowDropDownIcon />}
+                  size="small"
                 >
                   {user!.fName!}
                 </Button>

@@ -91,10 +91,10 @@ declare module "@mui/material/styles" {
 export const themeOptions: ThemeOptions = createTheme({
   palette: {
     primary: {
-      main: "#2196f3",
+      main: "#33a689",
     },
     secondary: {
-      main: "#F75A54",
+      main: "#a63350",
     },
     background: {
       default: "#f1f5f8",
@@ -104,24 +104,24 @@ export const themeOptions: ThemeOptions = createTheme({
     MuiAppBar: {
       defaultProps: {
         elevation: 1,
-        color: "primary",
+        color: "transparent",
       },
     },
     MuiButton: {
       defaultProps: {
-        /* disableRipple: true, */
-        /* disableElevation: true, */
+        disableRipple: true,
+        disableElevation: true,
       },
     },
     MuiCard: {
       defaultProps: {
         raised: false,
-        elevation: 1,
+        elevation: 0,
       },
     },
     MuiPaper: {
       defaultProps: {
-        elevation: 1,
+        elevation: 0,
       },
     },
   },

@@ -63,15 +63,15 @@ const Profile = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        Profile
-      </Typography>
       <Paper sx={{ p: 4 }}>
+        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
+          Profile
+        </Typography>
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <Stack spacing={2} direction="row">
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="First Name"
                 fullWidth
                 value={fName}
@@ -80,7 +80,7 @@ const Profile = () => {
                 }
               />
               <TextField
-                variant="outlined"
+                variant="standard"
                 label="Last Name"
                 fullWidth
                 value={lName}
@@ -90,7 +90,7 @@ const Profile = () => {
               />
             </Stack>
             <TextField
-              variant="outlined"
+              variant="standard"
               label="Email"
               type="email"
               fullWidth
@@ -100,7 +100,7 @@ const Profile = () => {
               }
             />
             <TextField
-              variant="outlined"
+              variant="standard"
               label="New Password"
               type="password"
               fullWidth
@@ -110,7 +110,7 @@ const Profile = () => {
               }
             />
             <TextField
-              variant="outlined"
+              variant="standard"
               label="Confirm New Password"
               type="password"
               fullWidth
