@@ -108,16 +108,17 @@ const Appbar = ({
           component="div"
           sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
         >
-          EMS
+          EXAMAN
         </Typography>
       );
     }
   };
 
   return (
-    <AppBar
+    <AppBar 
       position="fixed" /* sx={{ display: display ? "block" : "none" }} */
       sx={{
+        bgcolor: "#FFC0CB",
         displayPrint: "none",
         width:
           signupPath || signinPath || (user && user.role === "student")

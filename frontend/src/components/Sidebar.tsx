@@ -58,7 +58,7 @@ const Sidebar = ({
           alignItems: "center",
         }}
       >
-        <Typography variant="h5">EMS</Typography>
+        <Typography variant="h5">EXAMAN</Typography>
       </Box>
       <Divider />
       <List>
