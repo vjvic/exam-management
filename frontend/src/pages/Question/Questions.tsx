@@ -1,4 +1,4 @@
-import { Typography, Box, Button, IconButton } from "@mui/material";
+import { Typography, Box, Button, IconButton, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useEffect } from "react";
@@ -112,7 +112,7 @@ const Questions = () => {
         </Button>
       </Box>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <Paper style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={questionList}
           columns={columns}
@@ -120,7 +120,7 @@ const Questions = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </Paper>
     </div>
   );
 };

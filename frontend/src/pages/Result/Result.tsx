@@ -11,6 +11,7 @@ import {
   CardActions,
   Paper, */
   IconButton,
+  Paper,
 } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 /* import MoreHorizIcon from "@mui/icons-material/MoreHoriz"; */
@@ -115,7 +116,7 @@ const Result = () => {
         Results
       </Typography>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <Paper style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={resultList}
           columns={columns}
@@ -123,7 +124,7 @@ const Result = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </Paper>
     </div>
   );
 };

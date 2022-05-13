@@ -65,7 +65,7 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Box component="form" sx={{ mb: 4 }} onSubmit={handleSubmit}>
         <Typography textAlign="center" variant="h5" sx={{ mb: 4 }}>
           {" "}

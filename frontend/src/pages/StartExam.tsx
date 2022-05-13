@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Button,
   Box,
+  Grid,
 } from "@mui/material";
 import {
   useAppDispatch,
@@ -24,6 +25,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { createResult } from "../features/result/resultSlice";
 import { finishedExam, reset } from "../features/exam/examSlice";
 /* import { Question } from "../interface/Question"; */
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
 const StartExam = () => {
   //Router hooks
@@ -170,8 +172,18 @@ const StartExam = () => {
   return (
     <div>
       {!showScore && (
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Typography variant="h5" mb={2}>{`${minutes}:${seconds}`}</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            mb: 2,
+            gridGap: 2,
+          }}
+        >
+          <AccessAlarmIcon />
+
+          <Typography variant="h5">{`${minutes}:${seconds}`}</Typography>
         </Box>
       )}
       {!showScore && examDet && (
@@ -190,28 +202,32 @@ const StartExam = () => {
             </Typography>
           </Stack>
 
-          {examQuestions.image && (
-            <img
-              src={`${imgPath}${examQuestions.image}`}
-              alt="question"
-              style={{ display: "block", margin: "1rem 0", width: "300px" }}
-            />
-          )}
+          <Grid container spacing={2}>
+            <Grid item lg={6}>
+              <FormControl sx={{ my: 4 }}>
+                <RadioGroup value={userAnswer} onChange={handleChange}>
+                  {examQuestions.choices.map((choice: any) => (
+                    <FormControlLabel
+                      value={choice.text}
+                      key={choice.text}
+                      control={<Radio />}
+                      label={choice.text}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </Grid>
 
-          <div>
-            <FormControl sx={{ my: 4 }}>
-              <RadioGroup value={userAnswer} onChange={handleChange}>
-                {examQuestions.choices.map((choice: any) => (
-                  <FormControlLabel
-                    value={choice.text}
-                    key={choice.text}
-                    control={<Radio />}
-                    label={choice.text}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
+            <Grid item lg={6}>
+              {examQuestions.image && (
+                <img
+                  src={`${imgPath}${examQuestions.image}`}
+                  alt="question"
+                  style={{ display: "block", margin: "1rem 0", width: "300px" }}
+                />
+              )}
+            </Grid>
+          </Grid>
 
           <Button
             variant="contained"

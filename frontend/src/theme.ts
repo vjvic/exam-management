@@ -96,9 +96,9 @@ export const themeOptions: ThemeOptions = createTheme({
     secondary: {
       main: "#F75A54",
     },
-    /*   background: {
-      default: "#f1f5f8",
-    }, */
+    background: {
+      default: "#F5F5F5",
+    },
   },
   components: {
     MuiAppBar: {

@@ -4,7 +4,7 @@ import { RootState } from "../app/store";
 import { Loader, Error } from "../components";
 import { getAllUser, reset } from "../features/auth/authSlice";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { Typography } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 
 const User = () => {
   //Redux hooks
@@ -57,7 +57,7 @@ const User = () => {
         Users
       </Typography>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <Paper style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={userList}
           columns={columns}
@@ -65,7 +65,7 @@ const User = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </Paper>
     </div>
   );
 };

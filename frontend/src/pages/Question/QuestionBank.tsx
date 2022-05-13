@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Typography, Button, Box, IconButton } from "@mui/material";
+import { Typography, Button, Box, IconButton, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -88,14 +88,14 @@ const QuestionBank = () => {
 
         <Button
           startIcon={<AddIcon />}
-          variant="outlined"
+          variant="contained"
           onClick={() => navigate("/questionbank/edit")}
         >
           Add
         </Button>
       </Box>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <Paper style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={questionBankList}
           columns={columns}
@@ -103,7 +103,7 @@ const QuestionBank = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </Paper>
     </div>
   );
 };

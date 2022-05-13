@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getMyResult, reset } from "../features/result/resultSlice";
 import { Loader, Error } from "../components";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { Typography } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 
 const Score = () => {
   //Redux hooks
@@ -43,7 +43,7 @@ const Score = () => {
         My Score
       </Typography>
 
-      <div style={{ height: 400, width: "100%" }}>
+      <Paper style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={myResult}
           columns={columns}
@@ -51,7 +51,7 @@ const Score = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </Paper>
     </div>
   );
 };
