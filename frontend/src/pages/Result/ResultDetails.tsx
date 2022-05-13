@@ -193,7 +193,7 @@ const ResultDetails = () => {
 
   return (
     <div className="tos">
-      <Typography variant="h6" textAlign="center" mb={2} fontWeight="bold">
+      <Typography variant="h5" textAlign="center" mb={2} fontWeight="bold">
         Two Dimensional Table of Specifications
       </Typography>
 
@@ -209,7 +209,7 @@ const ResultDetails = () => {
             <tr>
               <td></td>
               {tableHead.map((cpd) => (
-                <td>
+                <td key={cpd}>
                   <Typography fontWeight="bold">{cpd}</Typography>
                 </td>
               ))}
