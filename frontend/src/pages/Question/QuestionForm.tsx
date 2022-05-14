@@ -194,50 +194,9 @@ const QuestionForm = () => {
         <div>
           <form onSubmit={handleSubmit}>
             <Stack spacing={1}>
-              {!isEdit && file && (
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="pic"
-                  style={{ width: "100%" }}
-                />
-              )}
-
-              {isEdit && file ? (
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="pic"
-                  style={{ width: "100%" }}
-                />
-              ) : questionDet.image ? (
-                <img
-                  src={`http://localhost:5000/images/${questionDet.image}`}
-                  alt="pic"
-                  style={{ width: "100%" }}
-                />
-              ) : (
-                ""
-              )}
-
-              <div>
-                {/*  <input type="file" onChange={onUploadChange} required /> */}
-
-                <Button
-                  variant="outlined"
-                  component="label"
-                  startIcon={<FileUploadIcon />}
-                >
-                  Upload Image
-                  <input
-                    type="file"
-                    name="file"
-                    hidden
-                    onChange={onUploadChange}
-                  />
-                </Button>
-              </div>
               <TextField
                 variant="standard"
-                label="Question Text"
+                label="Question "
                 value={questionText}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setQuestionText(e.target.value)
@@ -339,6 +298,44 @@ const QuestionForm = () => {
                   ))}
                 </Select>
               </FormControl>
+
+              {!isEdit && file && (
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt="pic"
+                  style={{ width: "100%", borderRadius: "10px" }}
+                />
+              )}
+
+              {isEdit && file ? (
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt="pic"
+                  style={{ width: "100%", borderRadius: "10px" }}
+                />
+              ) : questionDet.image ? (
+                <img
+                  src={`http://localhost:5000/images/${questionDet.image}`}
+                  alt="pic"
+                  style={{ width: "100%", borderRadius: "10px" }}
+                />
+              ) : (
+                ""
+              )}
+
+              <div>
+                {/*  <input type="file" onChange={onUploadChange} required /> */}
+
+                <Button component="label">
+                  Upload Image
+                  <input
+                    type="file"
+                    name="file"
+                    hidden
+                    onChange={onUploadChange}
+                  />
+                </Button>
+              </div>
             </Stack>
 
             <Button

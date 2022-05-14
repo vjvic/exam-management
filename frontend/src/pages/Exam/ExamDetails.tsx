@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   Box,
   Grid,
+  Divider,
 } from "@mui/material";
 import { format } from "date-fns";
 
@@ -77,6 +78,8 @@ const ExamDetails = () => {
         </Typography> */}
       </Box>
 
+      <Divider />
+
       {/*    <Typography variant="h5"  my={2}>
         Questions
       </Typography> */}
@@ -100,14 +103,16 @@ const ExamDetails = () => {
           <Typography fontWeight="bold">Choices:</Typography>
           <ul>
             {question.choices.map((option) => (
-              <li>{option.text}</li>
+              <li key={option.text}>{option.text}</li>
             ))}
           </ul>
 
           <Typography>Answer: {question.answer}</Typography>
 
-          <Typography>Knowledge Dimension: {question.kd}</Typography>
-          <Typography>Cognitive Process Dimension: {question.cpd}</Typography>
+          <Typography>
+            {" "}
+            {question.kd} - {question.cpd}
+          </Typography>
         </Box>
       ))}
     </div>

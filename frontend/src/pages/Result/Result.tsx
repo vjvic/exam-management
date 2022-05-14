@@ -118,12 +118,13 @@ const Result = () => {
   if (isError) return <Error />;
 
   return (
-    <div>
-      <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
-        Results
-      </Typography>
+    <>
+      <div>
+        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
+          Results
+        </Typography>
 
-      {/*  <div style={{ height: 400, width: "100%" }}>
+        {/*  <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={resultList}
           columns={columns}
@@ -133,39 +134,40 @@ const Result = () => {
         />
       </div> */}
 
-      <TableContainer component={Paper} sx={{ mb: 4 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Exam Title</TableCell>
-              <TableCell>Exam Score</TableCell>
-              <TableCell align="right">Action</TableCell>
-            </TableRow>
-          </TableHead>
-          {resultList.map((result) => (
-            <TableBody>
-              <TableCell component="th" scope="row">
-                {result.fName}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {result.examTitle}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {result.score}
-              </TableCell>
-              <TableCell component="th" align="right">
-                <Button
-                  onClick={() => navigate(`/results-details/${result._id}`)}
-                >
-                  2d tos
-                </Button>
-              </TableCell>
-            </TableBody>
-          ))}
-        </Table>
-      </TableContainer>
-    </div>
+        <TableContainer component={Paper} sx={{ mb: 4 }}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Exam Title</TableCell>
+                <TableCell>Exam Score</TableCell>
+                <TableCell align="right">Action</TableCell>
+              </TableRow>
+            </TableHead>
+            {resultList.map((result) => (
+              <TableBody key={result._id}>
+                <TableCell component="th" scope="row">
+                  {result.fName}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.examTitle}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {result.score}
+                </TableCell>
+                <TableCell component="th" align="right">
+                  <Button
+                    onClick={() => navigate(`/results-details/${result._id}`)}
+                  >
+                    2d tos
+                  </Button>
+                </TableCell>
+              </TableBody>
+            ))}
+          </Table>
+        </TableContainer>
+      </div>
+    </>
   );
 };
 

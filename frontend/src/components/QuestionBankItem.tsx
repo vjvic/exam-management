@@ -5,6 +5,11 @@ import {
   Button,
   Typography,
   Box,
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { QuestionBank } from "../interface/QuestionBank";
 import { useState } from "react";
@@ -14,6 +19,7 @@ import question, { getRandomQuestion } from "../features/question/question";
 import { RootState } from "../app/store";
 import axios, { Axios } from "axios";
 import { Question } from "../interface/Question";
+import { SelectChangeEvent } from "@mui/material/Select";
 
 const QuestionBankItem = ({ title, _id }: QuestionBank) => {
   const [size, setSize] = useState("");
@@ -55,25 +61,31 @@ const QuestionBankItem = ({ title, _id }: QuestionBank) => {
     setQuestionList(data);
   };
 
-  const questionSize = questionList?.length;
+  const questionSize = questionList!?.length!;
+  const questionSize2 = questionList!?.length!;
+
+  console.log(Array.from(Array(questionSize2).keys()));
+  console.log(questionSize + 1);
 
   useEffect(() => {
     getQuestions();
   }, []);
 
+  if (!questionList) return <div></div>;
+
   return (
-    <ListItem sx={{ bgcolor: "#fff", my: 1 }}>
+    <ListItem>
       <ListItemText
         primary={title}
         /*   secondary={secondary ? "Secondary text" : null} */
       />
 
-      <Typography variant="body2" sx={{ color: "text.secondary" }}>
+      {/*   <Typography variant="body2" sx={{ color: "text.secondary" }}>
         {questionList?.length}{" "}
         {questionList?.length! <= 1 ? "Question" : "Questions"}
-      </Typography>
+      </Typography> */}
 
-      <TextField
+      {/* <TextField
         size="small"
         type="number"
         value={size}
@@ -83,8 +95,34 @@ const QuestionBankItem = ({ title, _id }: QuestionBank) => {
         InputProps={{ inputProps: { min: 1, max: questionSize } }}
         sx={{ width: "80px", mx: 2 }}
         disabled={alreadyExist || questionSize! <= 0}
-      />
+      /> */}
+
+      <FormControl
+        size="small"
+        variant="standard"
+        sx={{ mx: 2, width: "100px" }}
+      >
+        <InputLabel id="demo-simple-select-label">Question</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label="Question"
+          value={size}
+          onChange={(e: SelectChangeEvent) => setSize(e.target.value)}
+        >
+          {[...Array(questionSize + 1).keys()].map((x) => (
+            <MenuItem key={x} value={x}>
+              {x}
+            </MenuItem>
+          ))}
+          {/*  <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem> */}
+        </Select>
+      </FormControl>
+
       <Button
+        variant="contained"
         onClick={() => handleClick(_id!)}
         disabled={alreadyExist || questionSize! <= 0}
       >

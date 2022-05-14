@@ -13,6 +13,7 @@ import {
   List,
   Paper,
   Divider,
+  Alert,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useEffect, useState } from "react";
@@ -54,7 +55,7 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: 900,
   bgcolor: "background.default",
   borderRadius: 1,
   boxShadow: 24,
@@ -162,7 +163,6 @@ const ExamForm = () => {
       let filename;
 
       if (isEdit && question.image) {
-        console.log("hello");
         filename = question.image;
       }
 
@@ -390,6 +390,7 @@ const ExamForm = () => {
           <Typography
             id="modal-modal-title"
             variant="h5"
+            fontWeight="bold"
             component="h2"
             sx={{ mb: 2 }}
           >
@@ -417,11 +418,13 @@ const ExamForm = () => {
 
           <Box sx={{ overflowY: "auto", height: "400px" }}>
             {questionBankList.length <= 0 && (
-              <Box sx={{ textAlign: "center", mt: 3 }}>No Items</Box>
+              <Box sx={{ textAlign: "center" }}>No Question Bank</Box>
             )}
             <List /* dense={dense} */>
-              {filterQuestionBank(questionBankList).map((qb) => (
-                <QuestionBankItem title={qb.title} _id={qb._id} key={qb._id} />
+              {filterQuestionBank(questionBankList).map((qb, index) => (
+                <div key={qb._id}>
+                  <QuestionBankItem title={qb.title} _id={qb._id} />
+                </div>
               ))}
             </List>
           </Box>
@@ -430,10 +433,10 @@ const ExamForm = () => {
 
       <Container maxWidth="sm">
         <Paper sx={{ p: 3 }}>
-          <Typography variant="h5" fontWeight="bold">
+          <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
             Create Exam
           </Typography>
-          <Divider sx={{ marginBottom: 3 }} />
+
           <div>
             <form onSubmit={handleSubmit}>
               <Stack spacing={3}>
@@ -517,10 +520,10 @@ const ExamForm = () => {
                 sx={{ my: 2 }}
               >
                 <div>
+                  <Button onClick={handleOpen}>Question Bank</Button>
                   <Button sx={{ mr: 2 }} onClick={handleAddFields}>
                     Add Question
                   </Button>
-                  <Button onClick={handleOpen}>Question Bank</Button>
                 </div>
               </Stack>
 
@@ -699,7 +702,7 @@ const ExamForm = () => {
 
                       <Stack direction="row" alignItems="center">
                         <Button
-                          disabled={questionInputFields!.length === 1}
+                          /*  disabled={questionInputFields!.length === 1} */
                           onClick={() => handleRemoveFields(input!?.id!)}
                         >
                           Remove

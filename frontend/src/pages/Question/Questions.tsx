@@ -142,7 +142,7 @@ const Questions = () => {
             </TableRow>
           </TableHead>
           {questionList.map((question) => (
-            <TableBody>
+            <TableBody key={question._id}>
               <TableCell component="th" scope="row">
                 {question.questionText}
               </TableCell>

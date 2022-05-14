@@ -114,7 +114,7 @@ const QuestionBank = () => {
       </div> */}
       <Grid container spacing={3}>
         {questionBankList.map((questionBank) => (
-          <Grid item lg={4} md={4} sm={6} xs={12}>
+          <Grid item lg={4} md={4} sm={6} xs={12} key={questionBank._id}>
             <Card>
               <CardContent>
                 <Typography variant="h5" mb={1}>

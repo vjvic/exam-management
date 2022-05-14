@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ const tableHead = [
 const ResultDetails = () => {
   //Router hooks
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //Redux hooks
   const dispatch = useAppDispatch();
@@ -188,11 +189,17 @@ const ResultDetails = () => {
     };
   }, [dispatch, id]);
 
+  useEffect(() => {
+    window.print();
+
+    navigate("/results");
+  }, []);
+
   if (isLoading) return <Loader />;
   if (isError) return <Error />;
 
   return (
-    <div className="tos">
+    <Box className="tos" sx={{ display: "none", displayPrint: "block" }}>
       <Typography variant="h4" textAlign="center" mb={2} fontWeight="bold">
         Two Dimensional Table of Specifications
       </Typography>
@@ -274,7 +281,7 @@ const ResultDetails = () => {
           </Button>
         </div>
       </Box>
-    </div>
+    </Box>
   );
 };
 

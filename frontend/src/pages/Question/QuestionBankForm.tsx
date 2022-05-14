@@ -72,7 +72,7 @@ const QuestionBankForm = () => {
           <form onSubmit={handleSubmit}>
             <TextField
               variant="standard"
-              label="Title"
+              label="Question Bank Name"
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setTitle(e.target.value)
