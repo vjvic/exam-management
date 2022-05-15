@@ -7,13 +7,13 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  IconButton,
+  /*   IconButton, */
   Modal,
   Box,
   List,
   Paper,
-  Divider,
-  Alert,
+  /*   Divider,
+  Alert, */
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useEffect, useState } from "react";
@@ -28,17 +28,17 @@ import {
 } from "../../features/exam/examSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
+/* import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add"; */
 import { Loader, Error } from "../../components";
-import SearchIcon from "@mui/icons-material/Search";
+/* import SearchIcon from "@mui/icons-material/Search"; */
 import { getAllQuestionBank } from "../../features/questionBank/questionBankSlice";
 import { QuestionBankItem } from "../../components";
 import { reset as questionReset } from "../../features/question/question";
 import { reset as questionBankReset } from "../../features/questionBank/questionBankSlice";
 import { QuestionBank } from "../../interface/QuestionBank";
 import axios from "axios";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
+/* import FileUploadIcon from "@mui/icons-material/FileUpload"; */
 
 const cpDimension = [
   "Remember",
@@ -61,7 +61,7 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
 };
-
+/* 
 const searchStyle = {
   display: "flex",
   alignItems: "center",
@@ -76,7 +76,7 @@ const searchStyle = {
     padding: "10px 16px",
     "&:focus": { outline: "none" },
   },
-};
+}; */
 
 const ExamForm = () => {
   //Exam States
@@ -128,14 +128,14 @@ const ExamForm = () => {
   const isEdit = id ? true : false;
 
   //Generate code
-  const generateCode = () => {
+  /*  const generateCode = () => {
     setCode(
       Math.random()
         .toString(36)
         .replace(/[^a-z]+/g, "")
         .substr(0, 9)
     );
-  };
+  }; */
 
   /*  const questions = questionInputFields.map((question) => {
     const newQuestions = {
@@ -428,8 +428,14 @@ const ExamForm = () => {
               ))}
             </List>
           </Box>
+
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button onClick={handleClose}>Cancel</Button>
+          </Box>
         </Box>
       </Modal>
+
+      <Button onClick={() => navigate("/")}>Back</Button>
 
       <Container maxWidth="sm">
         <Paper sx={{ p: 3 }}>

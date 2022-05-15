@@ -63,36 +63,39 @@ const QuestionBankForm = () => {
   if (isError) return <Error />;
 
   return (
-    <Container maxWidth="sm">
-      <Paper sx={{ p: 3 }}>
-        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
-          Create Question Bank
-        </Typography>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              variant="standard"
-              label="Question Bank Name"
-              value={title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTitle(e.target.value)
-              }
-              fullWidth
-            />
+    <>
+      <Button onClick={() => navigate("/questionbank")}>Back</Button>
+      <Container maxWidth="sm">
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
+            Create Question Bank
+          </Typography>
+          <div>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                variant="standard"
+                label="Question Bank Name"
+                value={title}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
+                fullWidth
+              />
 
-            <Button
-              fullWidth
-              variant="contained"
-              size="large"
-              sx={{ marginTop: 4 }}
-              type="submit"
-            >
-              Submit
-            </Button>
-          </form>
-        </div>
-      </Paper>
-    </Container>
+              <Button
+                fullWidth
+                variant="contained"
+                size="large"
+                sx={{ marginTop: 4 }}
+                type="submit"
+              >
+                Submit
+              </Button>
+            </form>
+          </div>
+        </Paper>
+      </Container>
+    </>
   );
 };
 

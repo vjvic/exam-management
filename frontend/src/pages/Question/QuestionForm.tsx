@@ -23,7 +23,7 @@ import {
 import { Loader, Error } from "../../components";
 import axios from "axios";
 import { Question } from "../../interface/Question";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
+/* import FileUploadIcon from "@mui/icons-material/FileUpload"; */
 
 const cpDimension = [
   "Remember",
@@ -186,171 +186,174 @@ const QuestionForm = () => {
   if (isError) return <Error />;
 
   return (
-    <Container maxWidth="sm">
-      <Paper sx={{ p: 3 }}>
-        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
-          Create Question
-        </Typography>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={1}>
-              <TextField
-                variant="standard"
-                label="Question "
-                value={questionText}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setQuestionText(e.target.value)
-                }
-                fullWidth
-                required
-              />
-
-              <TextField
-                variant="standard"
-                label="Option1"
-                value={choices.option1}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setChoices({ ...choices, option1: e.target.value })
-                }
-                fullWidth
-                required
-              />
-              <TextField
-                variant="standard"
-                label="Option2"
-                value={choices.option2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setChoices({ ...choices, option2: e.target.value })
-                }
-                fullWidth
-                required
-              />
-              <TextField
-                variant="standard"
-                label="Option3"
-                value={choices.option3}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setChoices({ ...choices, option3: e.target.value })
-                }
-                fullWidth
-                required
-              />
-              <TextField
-                variant="standard"
-                label="Option4"
-                value={choices.option4}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setChoices({ ...choices, option4: e.target.value })
-                }
-                fullWidth
-                required
-              />
-
-              <TextField
-                variant="standard"
-                label="Answer"
-                value={answer}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAnswer(e.target.value)
-                }
-                fullWidth
-                required
-              />
-
-              <TextField
-                variant="standard"
-                label="Points"
-                value={point}
-                type="number"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPoint(e.target.value)
-                }
-                fullWidth
-                required
-              />
-
-              <FormControl fullWidth required variant="standard">
-                <InputLabel>Knowledge Dimension</InputLabel>
-                <Select
-                  label="Knowledge Dimension"
-                  value={kd}
-                  onChange={(e: SelectChangeEvent) => setKd(e.target.value)}
-                >
-                  {kDimension.map((kd) => (
-                    <MenuItem value={kd} key={kd}>
-                      {kd}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth required variant="standard">
-                <InputLabel>Cognitive Proccess Dimension</InputLabel>
-                <Select
-                  label="Cognitive Proccess Dimension"
-                  value={cpd}
-                  onChange={(e: SelectChangeEvent) => setCpd(e.target.value)}
-                >
-                  {cpDimension.map((cpd) => (
-                    <MenuItem value={cpd} key={cpd}>
-                      {cpd}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              {!isEdit && file && (
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="pic"
-                  style={{ width: "100%", borderRadius: "10px" }}
+    <>
+      <Button onClick={() => navigate(`/questions/${bank}`)}>Back</Button>
+      <Container maxWidth="sm">
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
+            Create Question
+          </Typography>
+          <div>
+            <form onSubmit={handleSubmit}>
+              <Stack spacing={1}>
+                <TextField
+                  variant="standard"
+                  label="Question "
+                  value={questionText}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setQuestionText(e.target.value)
+                  }
+                  fullWidth
+                  required
                 />
-              )}
 
-              {isEdit && file ? (
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="pic"
-                  style={{ width: "100%", borderRadius: "10px" }}
+                <TextField
+                  variant="standard"
+                  label="Option1"
+                  value={choices.option1}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setChoices({ ...choices, option1: e.target.value })
+                  }
+                  fullWidth
+                  required
                 />
-              ) : questionDet.image ? (
-                <img
-                  src={`http://localhost:5000/images/${questionDet.image}`}
-                  alt="pic"
-                  style={{ width: "100%", borderRadius: "10px" }}
+                <TextField
+                  variant="standard"
+                  label="Option2"
+                  value={choices.option2}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setChoices({ ...choices, option2: e.target.value })
+                  }
+                  fullWidth
+                  required
                 />
-              ) : (
-                ""
-              )}
+                <TextField
+                  variant="standard"
+                  label="Option3"
+                  value={choices.option3}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setChoices({ ...choices, option3: e.target.value })
+                  }
+                  fullWidth
+                  required
+                />
+                <TextField
+                  variant="standard"
+                  label="Option4"
+                  value={choices.option4}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setChoices({ ...choices, option4: e.target.value })
+                  }
+                  fullWidth
+                  required
+                />
 
-              <div>
-                {/*  <input type="file" onChange={onUploadChange} required /> */}
+                <TextField
+                  variant="standard"
+                  label="Answer"
+                  value={answer}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setAnswer(e.target.value)
+                  }
+                  fullWidth
+                  required
+                />
 
-                <Button component="label">
-                  Upload Image
-                  <input
-                    type="file"
-                    name="file"
-                    hidden
-                    onChange={onUploadChange}
+                <TextField
+                  variant="standard"
+                  label="Points"
+                  value={point}
+                  type="number"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPoint(e.target.value)
+                  }
+                  fullWidth
+                  required
+                />
+
+                <FormControl fullWidth required variant="standard">
+                  <InputLabel>Knowledge Dimension</InputLabel>
+                  <Select
+                    label="Knowledge Dimension"
+                    value={kd}
+                    onChange={(e: SelectChangeEvent) => setKd(e.target.value)}
+                  >
+                    {kDimension.map((kd) => (
+                      <MenuItem value={kd} key={kd}>
+                        {kd}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                <FormControl fullWidth required variant="standard">
+                  <InputLabel>Cognitive Proccess Dimension</InputLabel>
+                  <Select
+                    label="Cognitive Proccess Dimension"
+                    value={cpd}
+                    onChange={(e: SelectChangeEvent) => setCpd(e.target.value)}
+                  >
+                    {cpDimension.map((cpd) => (
+                      <MenuItem value={cpd} key={cpd}>
+                        {cpd}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                {!isEdit && file && (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="pic"
+                    style={{ width: "100%", borderRadius: "10px" }}
                   />
-                </Button>
-              </div>
-            </Stack>
+                )}
 
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ marginTop: 4 }}
-              type="submit"
-              fullWidth
-            >
-              Submit
-            </Button>
-          </form>
-        </div>
-      </Paper>
-    </Container>
+                {isEdit && file ? (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="pic"
+                    style={{ width: "100%", borderRadius: "10px" }}
+                  />
+                ) : questionDet.image ? (
+                  <img
+                    src={`http://localhost:5000/images/${questionDet.image}`}
+                    alt="pic"
+                    style={{ width: "100%", borderRadius: "10px" }}
+                  />
+                ) : (
+                  ""
+                )}
+
+                <div>
+                  {/*  <input type="file" onChange={onUploadChange} required /> */}
+
+                  <Button component="label">
+                    Upload Image
+                    <input
+                      type="file"
+                      name="file"
+                      hidden
+                      onChange={onUploadChange}
+                    />
+                  </Button>
+                </div>
+              </Stack>
+
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ marginTop: 4 }}
+                type="submit"
+                fullWidth
+              >
+                Submit
+              </Button>
+            </form>
+          </div>
+        </Paper>
+      </Container>
+    </>
   );
 };
 

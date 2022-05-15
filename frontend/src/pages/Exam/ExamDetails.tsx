@@ -1,25 +1,27 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { getExamDetails, reset } from "../../features/exam/examSlice";
 import { Error, Loader } from "../../components";
 import {
-  Paper,
+  /*   Paper, */
   Typography,
-  Stack,
+  /*   Stack,
   FormControl,
   RadioGroup,
   Radio,
-  FormControlLabel,
+  FormControlLabel, */
   Box,
-  Grid,
+  /*   Grid, */
   Divider,
+  Button,
 } from "@mui/material";
 import { format } from "date-fns";
 
 const ExamDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //Redux hooks
   const dispatch = useAppDispatch();
@@ -41,6 +43,7 @@ const ExamDetails = () => {
   if (isError) return <Error />;
   return (
     <div>
+      <Button onClick={() => navigate("/")}>Back</Button>
       <Box sx={{ p: 3 }}>
         <Typography variant="h5" fontWeight="bold" mb={2}>
           {examDet?.title}
