@@ -3,8 +3,6 @@ import Appbar from "./Appbar";
 import { useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import { useAppSelector } from "../app/hooks";
-import { RootState } from "../app/store";
 
 const Layout = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
@@ -13,8 +11,6 @@ const Layout = ({ children }: { children: JSX.Element }) => {
   const signinPath = location.pathname === "/signin";
 
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const { user } = useAppSelector((state: RootState) => state.auth);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -36,19 +32,10 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 
       {/* Sidebar */}
 
-      <Box
-        sx={{
-          display:
-            signupPath || signinPath || (user && user.role === "student")
-              ? "none"
-              : "block",
-        }}
-      >
-        <Sidebar
-          handleDrawerToggle={handleDrawerToggle}
-          mobileOpen={mobileOpen}
-        />
-      </Box>
+      <Sidebar
+        handleDrawerToggle={handleDrawerToggle}
+        mobileOpen={mobileOpen}
+      />
 
       {/*  Main */}
 

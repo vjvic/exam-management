@@ -12,6 +12,7 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  Grid,
 } from "@mui/material";
 import { format } from "date-fns";
 
@@ -76,8 +77,8 @@ const ExamDetails = () => {
         </Typography>
       </Paper>
 
-      <Typography variant="h5" my={2}>
-        Questions
+      <Typography variant="h5" mb={3} mt={5}>
+        Questions:
       </Typography>
 
       {examDet?.questions.map((question) => (
@@ -93,29 +94,33 @@ const ExamDetails = () => {
             </Typography>
           </Stack>
 
-          {question.image && (
-            <img
-              src={`${imgPath}${question.image}`}
-              alt="question"
-              style={{ display: "block", margin: "1rem 0", width: "300px" }}
-            />
-          )}
+          <Grid container spacing={2}>
+            <Grid item lg={6} md={6} sm={6} xs={6}>
+              <FormControl sx={{ my: 4 }}>
+                <RadioGroup defaultValue={question.answer}>
+                  {question.choices.map((choice) => (
+                    <FormControlLabel
+                      value={choice.text}
+                      key={choice.text}
+                      control={<Radio />}
+                      label={choice.text}
+                      disabled
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </Grid>
 
-          <div>
-            <FormControl sx={{ my: 4 }}>
-              <RadioGroup defaultValue={question.answer}>
-                {question.choices.map((choice) => (
-                  <FormControlLabel
-                    value={choice.text}
-                    key={choice.text}
-                    control={<Radio />}
-                    label={choice.text}
-                    disabled
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
+            <Grid item lg={6} md={6} sm={6} xs={6}>
+              {question.image && (
+                <img
+                  src={`${imgPath}${question.image}`}
+                  alt="question"
+                  style={{ display: "block", margin: "1rem 0", width: "300px" }}
+                />
+              )}
+            </Grid>
+          </Grid>
 
           <Typography>Knowledge Dimension: {question.kd}</Typography>
           <Typography>Cognitive Process Dimension: {question.cpd}</Typography>

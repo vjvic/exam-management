@@ -25,6 +25,7 @@ const Home = () => {
 
   //Redux Hooks
   const { examDet, message } = useAppSelector((state: RootState) => state.exam);
+  const { user } = useAppSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
 
   //Handlers
@@ -48,6 +49,10 @@ const Home = () => {
 
     const dateNow = format(new Date(), "yyyy MM dd k mm s");
 
+    if (examDet!?.users!.includes(user!?._id!)) {
+      return false;
+    }
+
     if (dateNow >= endDate!) {
       return false;
     }
@@ -60,7 +65,7 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Box component="form" sx={{ mb: 4 }} onSubmit={handleSubmit}>
         <Typography textAlign="center" variant="h5" sx={{ mb: 4 }}>
           {" "}

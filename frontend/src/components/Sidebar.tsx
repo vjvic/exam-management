@@ -10,7 +10,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ArticleIcon from "@mui/icons-material/Article";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-import { useNavigate } from "react-router-dom";
+import GroupIcon from "@mui/icons-material/Group";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
+import { RootState } from "../app/store";
 
 const drawerWidth = 240;
 
@@ -35,6 +38,11 @@ const sidebarMenu = [
     path: "/results",
     icon: <FactCheckIcon />,
   },
+  {
+    text: "Users",
+    path: "/users",
+    icon: <GroupIcon />,
+  },
 ];
 
 const Sidebar = ({
@@ -44,8 +52,19 @@ const Sidebar = ({
   handleDrawerToggle: () => void;
   mobileOpen: boolean;
 }) => {
+  // Redux hooks
+  const { user } = useAppSelector((state: RootState) => state.auth);
+
   //Router hooks
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const activeColor = (path: string) => {
+    return location.pathname === path ? "#F5F5F5" : null;
+  };
+
+  const signupPath = location.pathname === "/signup";
+  const signinPath = location.pathname === "/signin";
 
   const drawer = (
     <div>
@@ -63,7 +82,14 @@ const Sidebar = ({
       <Divider />
       <List>
         {sidebarMenu.map((menu) => (
-          <ListItem button key={menu.text} onClick={() => navigate(menu.path)}>
+          <ListItem
+            button
+            key={menu.text}
+            onClick={() => navigate(menu.path)}
+            sx={{
+              backgroundColor: activeColor(menu.path),
+            }}
+          >
             <ListItemIcon>{menu.icon}</ListItemIcon>
             <ListItemText primary={menu.text} />
           </ListItem>
@@ -71,6 +97,8 @@ const Sidebar = ({
       </List>
     </div>
   );
+
+  if (signupPath || signinPath || user?.role === "student") return null;
 
   return (
     <Box

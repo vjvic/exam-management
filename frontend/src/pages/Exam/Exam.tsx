@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Typography, Button, Box, IconButton } from "@mui/material";
+import { Typography, Button, Box, IconButton, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -85,13 +85,13 @@ const Exam = () => {
 
         <Button
           startIcon={<AddIcon />}
-          variant="outlined"
+          variant="contained"
           onClick={() => navigate("/exam/edit")}
         >
           Add
         </Button>
       </Box>
-      <div style={{ height: 400, width: "100%" }}>
+      <Paper style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={examList}
           columns={columns}
@@ -99,7 +99,7 @@ const Exam = () => {
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div>
+      </Paper>
     </div>
   );
 };

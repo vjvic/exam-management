@@ -1,11 +1,26 @@
 const AsyncHandler = require("express-async-handler");
 const Result = require("../model/resultModel");
+/* fName: { type: String, required: true },
+lName: { type: String, required: true },
+score: { type: Number, required: true },
+examTitle: { type: String, required: true },
+questions: [questionSchema],
+user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" }, */
 
 // @desc    create result
 // @route   POST /api/result
 // @access  Private
 const createResult = AsyncHandler(async (req, res) => {
-  const result = await Result.create(req.body);
+  const { fName, lName, score, examTitle, questions } = req.body;
+
+  const result = await Result.create({
+    fName,
+    lName,
+    score,
+    examTitle,
+    questions,
+    user: req.user._id,
+  });
 
   res.status(200).json(result);
 });
@@ -15,6 +30,15 @@ const createResult = AsyncHandler(async (req, res) => {
 // @access  Private
 const getAllResult = AsyncHandler(async (req, res) => {
   const result = await Result.find({});
+
+  res.status(200).json(result);
+});
+
+// @desc    get all result
+// @route   GET /api/result/myresult
+// @access  Private
+const getMyResult = AsyncHandler(async (req, res) => {
+  const result = await Result.find({ user: req.user._id });
 
   res.status(200).json(result);
 });
@@ -37,4 +61,5 @@ module.exports = {
   createResult,
   getAllResult,
   getResultById,
+  getMyResult,
 };

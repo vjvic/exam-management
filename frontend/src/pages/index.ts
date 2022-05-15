@@ -14,6 +14,7 @@ import Home from "./Home";
 import Score from "./Score";
 import StartExam from "./StartExam";
 import Dashboard from "./Dashboard";
+import User from "./User";
 
 export {
   Signin,
@@ -32,4 +33,5 @@ export {
   Score,
   StartExam,
   Dashboard,
+  User,
 };

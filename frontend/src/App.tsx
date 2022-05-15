@@ -20,6 +20,7 @@ import {
   Score,
   StartExam,
   Dashboard,
+  User,
 } from "./pages";
 
 const App = () => {
@@ -107,6 +108,12 @@ const App = () => {
     </FacultyRoute>
   );
 
+  const userRoute = (
+    <FacultyRoute>
+      <User />
+    </FacultyRoute>
+  );
+
   return (
     <ThemeProvider theme={themeOptions}>
       <CssBaseline />
@@ -135,6 +142,7 @@ const App = () => {
           <Route path="/home" element={homeRoute} />
           <Route path="/score" element={scoreRoute} />
           <Route path="/start-exam" element={startExamRoute} />
+          <Route path="/users" element={userRoute} />
           <Route path="/" element={dashboardRoute} />
         </Routes>
       </Layout>
