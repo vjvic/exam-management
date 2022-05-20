@@ -112,7 +112,7 @@ const Result = () => {
 
   return (
     <div>
-      <Typography variant="h4" sx={{ mb: 2 }}>
+      <Typography variant="h4" sx={{ mb: 2 ,mt: 5 , }}>
         Results
       </Typography>
 

@@ -9,6 +9,8 @@ import {
   MenuItem,
   FormHelperText,
   Alert,
+  Grid,
+  Container,
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import { FormContainer, Wrapper } from "./styles";
@@ -75,126 +77,146 @@ const Signup = () => {
   }, [isSuccess, dispatch, navigate]);
 
   return (
-    <section>
-      <FormContainer>
-        <Wrapper>
-          <Box sx={{ marginBottom: 5 }}>
-            <Typography variant="h5" fontWeight="bold">
-              Sign up
-            </Typography>
-            <Typography
-              variant="body1"
-              component="p"
-              sx={{ marginY: 1, color: "#808080" }}
-            >
-              Enter your details below.
-            </Typography>
-            {message && (
-              <Alert severity="error">
-                {typeof message === "string" && message}
-              </Alert>
-            )}
-          </Box>
+    <Container>
+      <Grid
+        container
+        spacing={25}
+        sx={{ alignItems: "center", height: "100vh" }}
+      >
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <img
+            src="/logosample.png"
+            alt="logo"
+            style={{
+              height: "125%",
+              width: "125%",
+              borderRadius: "10px",
+            }}
+          />
+        </Grid>
 
-          {/*  Form  */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2}>
-              <Stack direction="row" spacing={2}>
-                <FormControl fullWidth>
-                  <InputLabel>First Name</InputLabel>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Wrapper>
+            <Box sx={{ marginBottom: 5 }}>
+              <Typography variant="h5" fontWeight="bold">
+                Sign up
+              </Typography>
+              <Typography
+                variant="body1"
+                component="p"
+                sx={{ marginY: 1, color: "#808080" }}
+              >
+                Enter your details below.
+              </Typography>
+              {message && (
+                <Alert severity="error">
+                  {typeof message === "string" && message}
+                </Alert>
+              )}
+            </Box>
+
+            {/*  Form  */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Stack spacing={2}>
+                <Stack direction="row" spacing={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>First Name</InputLabel>
+                    <OutlinedInput
+                      label="First Name"
+                      {...reg("fName")}
+                      error={errors!?.fName!?.message!?.length > 0}
+                    />
+                    <FormHelperText error>
+                      {errors!?.fName!?.message}
+                    </FormHelperText>
+                  </FormControl>
+
+                  <FormControl fullWidth>
+                    <InputLabel>Last Name</InputLabel>
+                    <OutlinedInput
+                      label="Last Name"
+                      {...reg("lName")}
+                      error={errors!?.lName!?.message!?.length > 0}
+                    />
+                    <FormHelperText error>
+                      {errors!?.lName!?.message}
+                    </FormHelperText>
+                  </FormControl>
+                </Stack>
+
+                <FormControl>
+                  <InputLabel>Email</InputLabel>
                   <OutlinedInput
-                    label="First Name"
-                    {...reg("fName")}
-                    error={errors!?.fName!?.message!?.length > 0}
+                    label="Email"
+                    {...reg("email")}
+                    error={errors!?.email!?.message!?.length > 0}
                   />
                   <FormHelperText error>
-                    {errors!?.fName!?.message}
+                    {errors!?.email!?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl>
+                  <InputLabel>Password</InputLabel>
+                  <OutlinedInput
+                    label="Password"
+                    type="password"
+                    {...reg("password")}
+                    error={errors!?.password!?.message!?.length > 0}
+                  />
+                  <FormHelperText error>
+                    {errors!?.password!?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl>
+                  <InputLabel>Confirm Password</InputLabel>
+                  <OutlinedInput
+                    label="Confirm Password"
+                    type="password"
+                    {...reg("confirmPassword")}
+                    error={errors!?.confirmPassword!?.message!?.length > 0}
+                  />
+                  <FormHelperText error>
+                    {errors!?.confirmPassword!?.message}
                   </FormHelperText>
                 </FormControl>
 
                 <FormControl fullWidth>
-                  <InputLabel>Last Name</InputLabel>
-                  <OutlinedInput
-                    label="Last Name"
-                    {...reg("lName")}
-                    error={errors!?.lName!?.message!?.length > 0}
-                  />
+                  <InputLabel>Role</InputLabel>
+                  <Select
+                    label="Role"
+                    {...reg("role")}
+                    defaultValue={""}
+                    error={errors!?.role!?.message!?.length > 0}
+                  >
+                    <MenuItem value="faculty">Faculty</MenuItem>
+                    <MenuItem value="student">Student</MenuItem>
+                  </Select>
+
                   <FormHelperText error>
-                    {errors!?.lName!?.message}
+                    {errors!?.role!?.message}
                   </FormHelperText>
                 </FormControl>
               </Stack>
 
-              <FormControl>
-                <InputLabel>Email</InputLabel>
-                <OutlinedInput
-                  label="Email"
-                  {...reg("email")}
-                  error={errors!?.email!?.message!?.length > 0}
-                />
-                <FormHelperText error>
-                  {errors!?.email!?.message}
-                </FormHelperText>
-              </FormControl>
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ marginTop: 5 }}
+                type="submit"
+              >
+                Sign up
+              </Button>
+            </form>
 
-              <FormControl>
-                <InputLabel>Password</InputLabel>
-                <OutlinedInput
-                  label="Password"
-                  type="password"
-                  {...reg("password")}
-                  error={errors!?.password!?.message!?.length > 0}
-                />
-                <FormHelperText error>
-                  {errors!?.password!?.message}
-                </FormHelperText>
-              </FormControl>
-
-              <FormControl>
-                <InputLabel>Confirm Password</InputLabel>
-                <OutlinedInput
-                  label="Confirm Password"
-                  type="password"
-                  {...reg("confirmPassword")}
-                  error={errors!?.confirmPassword!?.message!?.length > 0}
-                />
-                <FormHelperText error>
-                  {errors!?.confirmPassword!?.message}
-                </FormHelperText>
-              </FormControl>
-
-              <FormControl fullWidth>
-                <InputLabel>Role</InputLabel>
-                <Select
-                  label="Role"
-                  {...reg("role")}
-                  defaultValue={""}
-                  error={errors!?.role!?.message!?.length > 0}
-                >
-                  <MenuItem value="faculty">Faculty</MenuItem>
-                  <MenuItem value="student">Student</MenuItem>
-                </Select>
-
-                <FormHelperText error>{errors!?.role!?.message}</FormHelperText>
-              </FormControl>
-            </Stack>
-
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ marginTop: 5 }}
-              type="submit"
-            >
-              Sign up
-            </Button>
-          </form>
-
-          <Typography sx={{ marginY: 2 }}>
-            Already have an account? <Link to="/signin">Login</Link>
-          </Typography>
-        </Wrapper>
-      </FormContainer>
-    </section>
+            <Typography sx={{ marginY: 2 }}>
+              Already have an account? <Link to="/signin">Login</Link>
+            </Typography>
+          </Wrapper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

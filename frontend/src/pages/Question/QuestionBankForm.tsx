@@ -64,8 +64,8 @@ const QuestionBankForm = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" sx={{ marginBottom: 3 }}>
-        Create Question Bank
+      <Typography variant="h4" sx={{ marginBottom: 3 , marginTop: 5}}>
+      { isEdit ?"Edit Question Bank": "Create Question Bank"}
       </Typography>
       <div>
         <form onSubmit={handleSubmit}>

@@ -118,7 +118,6 @@ const Appbar = ({
     <AppBar 
       position="fixed" /* sx={{ display: display ? "block" : "none" }} */
       sx={{
-        bgcolor: "#FFC0CB",
         displayPrint: "none",
         width:
           signupPath || signinPath || (user && user.role === "student")

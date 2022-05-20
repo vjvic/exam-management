@@ -99,7 +99,7 @@ const Questions = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>
+        <Typography variant="h4" sx={{ marginBottom: 3, marginTop:5}}>
           Questions
         </Typography>
 

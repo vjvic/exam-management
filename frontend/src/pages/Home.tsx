@@ -66,7 +66,7 @@ const Home = () => {
 
   return (
     <Container maxWidth="md">
-      <Box component="form" sx={{ mb: 4 }} onSubmit={handleSubmit}>
+      <Box component="form" sx={{ mb: 4 ,mt: 10}} onSubmit={handleSubmit}>
         <Typography textAlign="center" variant="h5" sx={{ mb: 4 }}>
           {" "}
           Enter exam code here

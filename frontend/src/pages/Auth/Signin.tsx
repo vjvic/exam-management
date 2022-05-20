@@ -9,6 +9,7 @@ import {
   FormHelperText,
   Alert,
   Grid,
+  Container,
 } from "@mui/material";
 import { FormContainer, Wrapper } from "./styles";
 import { Link } from "react-router-dom";
@@ -60,70 +61,91 @@ const Signin = () => {
   }, [isSuccess, dispatch, navigate]);
 
   return (
-    <Box component="section">
-      <FormContainer>
-        <Wrapper>
-          <Box sx={{ marginBottom: 5 }}>
-            <Typography variant="h5" fontWeight="bold">
-              Sign in
+    <Container>
+      <Grid
+        container
+        spacing={25}
+        sx={{ alignItems: "center", height: "100vh" }}
+      >
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <img
+            src="/logosample.png"
+            alt="logo"
+            style={{
+              height: "125%",
+              width: "125%",
+              
+              borderRadius: "10px",
+            }}
+          />
+        </Grid>
+
+        <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Wrapper>
+            <Box sx={{ marginBottom: 5 }}>
+              <Typography variant="h5" fontWeight="bold">
+                Sign in
+              </Typography>
+              <Typography
+                variant="body1"
+                component="p"
+                sx={{ marginY: 1, color: "#808080" }}
+              >
+                Enter your details below.
+              </Typography>
+              {message && (
+                <Alert severity="error">
+                  {typeof message === "string" && message}
+                </Alert>
+              )}
+            </Box>
+
+            {/*  Form  */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Stack spacing={2}>
+                <FormControl>
+                  <InputLabel>Email</InputLabel>
+                  <OutlinedInput
+                    label="Email"
+                    {...reg("email")}
+                    error={errors!?.email!?.message!?.length > 0}
+                  />
+                  <FormHelperText error>
+                    {errors!?.email?.message}
+                  </FormHelperText>
+                </FormControl>
+
+                <FormControl>
+                  <InputLabel>Password</InputLabel>
+                  <OutlinedInput
+                    label="Password"
+                    type="password"
+                    {...reg("password")}
+                    error={errors!?.password!?.message!?.length > 0}
+                  />
+                  <FormHelperText error>
+                    {errors!?.password?.message}
+                  </FormHelperText>
+                </FormControl>
+              </Stack>
+
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ marginTop: 5 }}
+                type="submit"
+              >
+                Login
+              </Button>
+            </form>
+
+            <Typography sx={{ marginY: 2 }}>
+              Don't have an account? <Link to="/signup">Get Started</Link>
             </Typography>
-            <Typography
-              variant="body1"
-              component="p"
-              sx={{ marginY: 1, color: "#808080" }}
-            >
-              Enter your details below.
-            </Typography>
-            {message && (
-              <Alert severity="error">
-                {typeof message === "string" && message}
-              </Alert>
-            )}
-          </Box>
-
-          {/*  Form  */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2}>
-              <FormControl>
-                <InputLabel>Email</InputLabel>
-                <OutlinedInput
-                  label="Email"
-                  {...reg("email")}
-                  error={errors!?.email!?.message!?.length > 0}
-                />
-                <FormHelperText error>{errors!?.email?.message}</FormHelperText>
-              </FormControl>
-
-              <FormControl>
-                <InputLabel>Password</InputLabel>
-                <OutlinedInput
-                  label="Password"
-                  type="password"
-                  {...reg("password")}
-                  error={errors!?.password!?.message!?.length > 0}
-                />
-                <FormHelperText error>
-                  {errors!?.password?.message}
-                </FormHelperText>
-              </FormControl>
-            </Stack>
-
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ marginTop: 5 }}
-              type="submit"
-            >
-              Login
-            </Button>
-          </form>
-
-          <Typography sx={{ marginY: 2 }}>
-            Don't have an account? <Link to="/signup">Get Started</Link>
-          </Typography>
-        </Wrapper>
-      </FormContainer>
-    </Box>
+          </Wrapper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
