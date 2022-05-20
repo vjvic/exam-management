@@ -44,6 +44,9 @@ const Layout = ({ children }: { children: JSX.Element }) => {
         maxWidth={signupPath || signinPath ? false : "lg"}
       >
         <Toolbar />
+        <Toolbar
+          sx={{ display: signupPath || signinPath ? "none" : "block" }}
+        />
 
         {children}
       </Container>

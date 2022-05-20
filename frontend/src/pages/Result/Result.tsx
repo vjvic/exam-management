@@ -12,6 +12,7 @@ import {
   Paper, */
   IconButton,
   Paper,
+  Button,
 } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 /* import MoreHorizIcon from "@mui/icons-material/MoreHoriz"; */
@@ -92,11 +93,14 @@ const Result = () => {
               <MenuItem onClick={handleClose}>Details</MenuItem>
             </Menu> */}
 
-            <IconButton
+            <Button onClick={() => navigate(`/exam-result/${params.row._id}`)}>
+              Exam
+            </Button>
+            <Button
               onClick={() => navigate(`/results-details/${params.row._id}`)}
             >
-              <VisibilityIcon />
-            </IconButton>
+              2D Table
+            </Button>
           </div>
         );
       },

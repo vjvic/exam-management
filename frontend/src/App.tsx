@@ -21,6 +21,7 @@ import {
   StartExam,
   Dashboard,
   User,
+  ExamResult,
 } from "./pages";
 
 const App = () => {
@@ -75,6 +76,12 @@ const App = () => {
   const resultsDetailsRoute = (
     <FacultyRoute>
       <ResultDetails />
+    </FacultyRoute>
+  );
+
+  const examResultRoute = (
+    <FacultyRoute>
+      <ExamResult />
     </FacultyRoute>
   );
 
@@ -138,6 +145,7 @@ const App = () => {
           <Route path="/questions/:id" element={questionsRoute} />
           <Route path="/results" element={resultsRoute} />
           <Route path="/results-details/:id" element={resultsDetailsRoute} />
+          <Route path="/exam-result/:id" element={examResultRoute} />
           <Route path="/profile" element={profileRoute} />
           <Route path="/home" element={homeRoute} />
           <Route path="/score" element={scoreRoute} />
