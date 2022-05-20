@@ -68,7 +68,7 @@ const QuestionBankForm = () => {
       <Container maxWidth="sm">
         <Paper sx={{ p: 3 }}>
           <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
-            Create Question Bank
+            {isEdit ? "Update Question Bank" : "Create Question Bank"}
           </Typography>
           <div>
             <form onSubmit={handleSubmit}>

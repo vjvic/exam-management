@@ -440,7 +440,7 @@ const ExamForm = () => {
       <Container maxWidth="sm">
         <Paper sx={{ p: 3 }}>
           <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
-            Create Exam
+            {isEdit ? "Update Exam" : "Create Exam"}
           </Typography>
 
           <div>
