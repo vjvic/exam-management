@@ -1,4 +1,4 @@
-import { IconButton, Typography, capitalize } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,13 +38,15 @@ const ExamResult = () => {
         </IconButton>
       </Box>
       {resultDet?.questions?.map((question, index) => (
-        <Box>
+        <Box key={index}>
           <Typography variant="h6">
             {index + 1}. {question.questionText}
           </Typography>
           <ul>
             {question.choices.map((c) => (
-              <li style={{ listStyle: "none" }}>{c.text}</li>
+              <li style={{ listStyle: "none" }} key={c.text}>
+                {c.text}
+              </li>
             ))}
           </ul>
         </Box>
