@@ -77,7 +77,7 @@ const Sidebar = ({
           alignItems: "center",
         }}
       >
-        <Typography variant="h5">OEMS</Typography>
+        <Typography variant="h5">EXAMAN</Typography>
       </Box>
       <Divider />
       <List>

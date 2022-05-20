@@ -64,17 +64,17 @@ const Signin = () => {
     <Container>
       <Grid
         container
-        spacing={2}
+        spacing={25}
         sx={{ alignItems: "center", height: "100vh" }}
       >
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <img
-            src="/logosample.jpg"
+            src="/logosample.png"
             alt="logo"
             style={{
-              height: "500px",
-              width: "100%",
-              objectFit: "cover",
+              height: "125%",
+              width: "125%",
+              
               borderRadius: "10px",
             }}
           />

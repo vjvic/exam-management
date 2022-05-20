@@ -431,9 +431,9 @@ const ExamForm = () => {
         </Box>
       </Modal>
 
-      <Container maxWidth="sm">
-        <Typography variant="h4" sx={{ marginBottom: 3 }}>
-          Create Exam
+      <Container maxWidth="sm" >
+        <Typography variant="h4" sx={{ marginBottom: 3,marginTop: 5 }}>
+          { isEdit ?"Edit Exam": "Create Exam"}
         </Typography>
         <div>
           <form onSubmit={handleSubmit}>

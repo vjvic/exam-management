@@ -192,7 +192,7 @@ const ResultDetails = () => {
   if (isError) return <Error />;
 
   return (
-    <div className="tos">
+    <div className="tos" style={{marginTop:50}} >
       <Typography variant="h5" textAlign="center" mb={2} fontWeight="bold">
         Two Dimensional Table of Specifications
       </Typography>

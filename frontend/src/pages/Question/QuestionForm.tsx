@@ -186,8 +186,8 @@ const QuestionForm = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" sx={{ marginBottom: 3 }}>
-        Create Question
+      <Typography variant="h4" sx={{ marginBottom: 3, marginTop:5 }}>
+      { isEdit ?"Edit Question": "Create Question"}
       </Typography>
       <div>
         <form onSubmit={handleSubmit}>

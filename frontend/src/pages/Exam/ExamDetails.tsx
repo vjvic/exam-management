@@ -39,7 +39,7 @@ const ExamDetails = () => {
   if (isError) return <Error />;
   return (
     <div>
-      <Paper sx={{ p: 3 }}>
+      <Paper sx={{ p: 3 , mt:5}}>
         <Typography variant="h5" mb={2}>
           {examDet?.title}
         </Typography>

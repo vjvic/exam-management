@@ -77,6 +77,7 @@ const Exam = () => {
           justifyContent: "space-between",
           alignItems: "center",
           mb: 2,
+          mt: 5,
         }}
       >
         <Typography variant="h4" sx={{ marginBottom: 3 }}>

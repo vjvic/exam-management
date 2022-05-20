@@ -108,14 +108,14 @@ const Appbar = ({
           component="div"
           sx={{ mr: 2, display: "flex" }}
         >
-          OEMS
+          EXAMAN
         </Typography>
       );
     }
   };
 
   return (
-    <AppBar
+    <AppBar 
       position="fixed" /* sx={{ display: display ? "block" : "none" }} */
       sx={{
         displayPrint: "none",

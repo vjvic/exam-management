@@ -97,7 +97,7 @@ const Dashboard = () => {
   if (isError) return <Error />;
 
   return (
-    <div>
+    <div style={{marginTop:50}}>
       <Typography variant="h4" mb={3}>
         Dashboard
       </Typography>
