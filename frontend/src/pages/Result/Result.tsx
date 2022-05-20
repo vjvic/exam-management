@@ -156,6 +156,9 @@ const Result = () => {
                   {result.score}
                 </TableCell>
                 <TableCell component="th" align="right">
+                  <Button onClick={() => navigate(`/generated/${result._id}`)}>
+                    Exam
+                  </Button>
                   <Button
                     onClick={() => navigate(`/results-details/${result._id}`)}
                   >

@@ -19,6 +19,7 @@ import {
   Home,
   Score,
   StartExam,
+  GeneratedExam,
 } from "./pages";
 
 const App = () => {
@@ -76,6 +77,12 @@ const App = () => {
     </FacultyRoute>
   );
 
+  const generatedExamRoute = (
+    <FacultyRoute>
+      <GeneratedExam />
+    </FacultyRoute>
+  );
+
   const profileRoute = (
     <PrivateRoute>
       <Profile />
@@ -124,6 +131,7 @@ const App = () => {
           <Route path="/questions/:id" element={questionsRoute} />
           <Route path="/results" element={resultsRoute} />
           <Route path="/results-details/:id" element={resultsDetailsRoute} />
+          <Route path="/generated/:id" element={generatedExamRoute} />
           <Route path="/profile" element={profileRoute} />
           <Route path="/home" element={homeRoute} />
           <Route path="/myresult" element={scoreRoute} />
