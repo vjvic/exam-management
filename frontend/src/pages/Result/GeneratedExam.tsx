@@ -32,13 +32,13 @@ const GeneratedExam = () => {
   return (
     <Box sx={{ displayPrint: "block", display: "none" }}>
       {resultDet?.questions?.map((question, index) => (
-        <Box>
+        <Box key={index}>
           <Typography>
             {index + 1}. {question.questionText}
           </Typography>
           <ul>
             {question.choices.map((c) => (
-              <li>{c.text}</li>
+              <li key={c.text}>{c.text}</li>
             ))}
           </ul>
         </Box>
