@@ -431,9 +431,9 @@ const ExamForm = () => {
         </Box>
       </Modal>
 
-      <Container maxWidth="sm" >
-        <Typography variant="h4" sx={{ marginBottom: 3,marginTop: 5 }}>
-          { isEdit ?"Edit Exam": "Create Exam"}
+      <Container maxWidth="sm">
+        <Typography variant="h4" sx={{ marginBottom: 3, marginTop: 5 }}>
+          {isEdit ? "Edit Exam" : "Create Exam"}
         </Typography>
         <div>
           <form onSubmit={handleSubmit}>
@@ -641,7 +641,7 @@ const ExamForm = () => {
                         fullWidth
                         required
                       />
-                      <TextField
+                      {/*  <TextField
                         label="Answer"
                         name="answer"
                         value={input.answer}
@@ -650,7 +650,32 @@ const ExamForm = () => {
                         }
                         fullWidth
                         required
-                      />
+                      /> */}
+
+                      <FormControl fullWidth required>
+                        <InputLabel>Answer</InputLabel>
+                        <Select
+                          label="Answer"
+                          name="answer"
+                          value={input.answer}
+                          defaultValue=""
+                          onChange={(e: SelectChangeEvent) =>
+                            handleChangeInput(input.id, e)
+                          }
+                        >
+                          {[
+                            input.option1,
+                            input.option2,
+                            input.option3,
+                            input.option4,
+                          ].map((o) => (
+                            <MenuItem value={o} key={o}>
+                              {o}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
                       <TextField
                         label="Point"
                         name="point"
