@@ -77,6 +77,7 @@ const Sidebar = ({
           alignItems: "center",
         }}
       >
+        <img src="/logo.png" alt="logo" style={{ width: "30px" }} />
         <Typography variant="h5">EXAMAN</Typography>
       </Box>
       <Divider />
