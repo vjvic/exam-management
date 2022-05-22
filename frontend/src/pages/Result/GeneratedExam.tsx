@@ -31,6 +31,9 @@ const GeneratedExam = () => {
 
   return (
     <Box sx={{ displayPrint: "block", display: "none" }}>
+      <Typography variant="h5" mb={5} fontWeight="bold">
+        {resultDet?.examTitle}
+      </Typography>
       {resultDet?.questions?.map((question, index) => (
         <Box key={index}>
           <Typography>
