@@ -178,6 +178,7 @@ const StartExam = () => {
             justifyContent: "flex-end",
             alignItems: "center",
             mb: 2,
+            mt: 5,
             gridGap: 2,
           }}
         >

@@ -29,7 +29,7 @@ const sidebarMenu = [
     icon: <ArticleIcon />,
   },
   {
-    text: "Qustion Bank",
+    text: "Question Bank",
     path: "/questionbank",
     icon: <HelpCenterIcon />,
   },

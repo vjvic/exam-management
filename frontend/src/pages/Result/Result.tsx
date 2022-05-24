@@ -99,7 +99,7 @@ const Result = () => {
             <Button
               onClick={() => navigate(`/results-details/${params.row._id}`)}
             >
-              2D Table
+              2D Tos
             </Button>
           </div>
         );
