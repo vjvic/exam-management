@@ -102,20 +102,29 @@ const Appbar = ({
   const displayLogo = () => {
     if (signupPath || signinPath || (user && user.role === "student")) {
       return (
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ mr: 2, display: "flex" }}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          EXAMAN
-        </Typography>
+          <img src="/logo.png" alt="logo" style={{ width: "30px" }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: "flex" }}
+          >
+            EXAMAN
+          </Typography>
+        </Box>
       );
     }
   };
 
   return (
-    <AppBar 
+    <AppBar
       position="fixed" /* sx={{ display: display ? "block" : "none" }} */
       sx={{
         displayPrint: "none",
