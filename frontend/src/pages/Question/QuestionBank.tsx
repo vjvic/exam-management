@@ -127,7 +127,6 @@ const QuestionBank = () => {
                   sx={{ mt: 3 }}
                 >
                   <Button
-                    variant="outlined"
                     size="small"
                     onClick={() => navigate(`/questions/${questionBank._id}`)}
                   >

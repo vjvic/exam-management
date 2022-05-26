@@ -43,36 +43,54 @@ const ExamDetails = () => {
   if (isError) return <Error />;
   return (
     <div>
-      <Button onClick={() => navigate("/")}>Back</Button>
-      <Box sx={{ p: 3 }}>
-        <Typography variant="h5" fontWeight="bold" mb={2}>
-          {examDet?.title}
-        </Typography>
+      <Button onClick={() => navigate("/")} sx={{ displayPrint: "none" }}>
+        Back
+      </Button>
+      <Box
+        sx={{
+          p: 3,
+          displayPrint: "none",
+        }}
+      >
+        <div>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h5" fontWeight="bold" mb={2}>
+              {examDet?.title}
+            </Typography>
+            <Button onClick={() => window.print()}>Print</Button>
+          </Box>
 
-        <Typography mb={2}>Description: {examDet?.description}</Typography>
+          <Typography mb={2}>Description: {examDet?.description}</Typography>
 
-        <Typography mb={2}>TimeLimit {examDet?.timeLimit} mins</Typography>
+          <Typography mb={2}>TimeLimit {examDet?.timeLimit} mins</Typography>
 
-        <Typography mb={2}>Code:{examDet?.code} </Typography>
-        <Typography mb={2}>
-          Start:
-          {examDet
-            ? format(
-                new Date(`${examDet?.dateAndTime.from}`),
-                " mm/dd/yyyy hh:mm aaa"
-              )
-            : ""}
-        </Typography>
+          <Typography mb={2}>Code:{examDet?.code} </Typography>
+          <Typography mb={2}>
+            Start:
+            {examDet
+              ? format(
+                  new Date(`${examDet?.dateAndTime.from}`),
+                  " mm/dd/yyyy hh:mm aaa"
+                )
+              : ""}
+          </Typography>
 
-        <Typography mb={2}>
-          End:{" "}
-          {examDet
-            ? format(
-                new Date(`${examDet?.dateAndTime.to}`),
-                " mm/dd/yyyy hh:mm aaa"
-              )
-            : ""}
-        </Typography>
+          <Typography mb={2}>
+            End:{" "}
+            {examDet
+              ? format(
+                  new Date(`${examDet?.dateAndTime.to}`),
+                  " mm/dd/yyyy hh:mm aaa"
+                )
+              : ""}
+          </Typography>
+        </div>
 
         {/*    <Typography color="text.secondary">
           {" "}
@@ -81,14 +99,23 @@ const ExamDetails = () => {
         </Typography> */}
       </Box>
 
-      <Divider />
+      <Divider sx={{ displayPrint: "none" }} />
 
       {/*    <Typography variant="h5"  my={2}>
         Questions
       </Typography> */}
 
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        mb={2}
+        sx={{ display: "none", displayPrint: "block" }}
+      >
+        {examDet?.title}
+      </Typography>
+
       {examDet?.questions.map((question, index) => (
-        <Box sx={{ p: 4, my: 2 }} key={question._id}>
+        <Box sx={{ my: 1 }} key={question._id}>
           {question.image && (
             <img
               src={`${imgPath}${question.image}`}

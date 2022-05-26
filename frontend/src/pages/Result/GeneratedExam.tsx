@@ -24,10 +24,11 @@ const GeneratedExam = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    window.print();
-
-    navigate("/results");
-  }, []);
+    if (resultDet) {
+      window.print();
+      navigate("/results");
+    }
+  }, [navigate, resultDet]);
 
   return (
     <Box sx={{ displayPrint: "block", display: "none" }}>

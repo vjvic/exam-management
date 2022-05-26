@@ -122,7 +122,6 @@ const Exam = () => {
                   sx={{ mt: 3 }}
                 >
                   <Button
-                    variant="outlined"
                     size="small"
                     onClick={() => navigate(`/exam-details/${exam._id}`)}
                   >
