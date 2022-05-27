@@ -12,9 +12,17 @@ import {
 import Appbar from "./Appbar";
 import { useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { RootState } from "../app/store";
+import {
+  getSettings,
+  updateSettings,
+} from "../features/settings/settingsSlice";
+import Loader from "./Loader";
+import axios from "axios";
 
 const modalStyle = {
   position: "absolute" as "absolute",
@@ -37,17 +45,51 @@ const Layout = ({ children }: { children: JSX.Element }) => {
 
   //modal
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    if (settings) {
+      setText(settings!?.text!);
+      setColor(settings!?.color!);
+    }
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
 
-  const [text, setText] = useState("");
-  const [color, setColor] = useState("");
+  const [text, setText] = useState("Examan");
+  const [color, setColor] = useState("#191970");
+  const [image, setImage] = useState("image");
   const [file, setFile] = useState<File>();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+  const { settings, isLoading } = useAppSelector(
+    (state: RootState) => state.settings
+  );
+  const { user } = useAppSelector((state: RootState) => state.auth);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(text, color);
+    let id;
+
+    if (settings) id = settings!?._id!;
+
+    const updatedSettings = { _id: id, text, color, image };
+
+    if (file) {
+      const data = new FormData();
+      const filename = Date.now() + file.name;
+      data.append("name", filename);
+      data.append("file", file);
+      updatedSettings.image = filename;
+
+      try {
+        await axios.post("http://localhost:5000/api/upload", data);
+      } catch (error) {}
+    }
+
+    console.log(updatedSettings);
+    dispatch(updateSettings(updatedSettings));
+
+    handleClose();
   };
 
   const onUploadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +103,19 @@ const Layout = ({ children }: { children: JSX.Element }) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    dispatch(getSettings());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (settings) {
+      setText(settings!?.text!);
+      setColor(settings!?.color!);
+    }
+  }, [settings]);
+
+  if (isLoading) return <Loader />;
 
   return (
     <Box
@@ -101,7 +156,19 @@ const Layout = ({ children }: { children: JSX.Element }) => {
                 Logo
               </Typography>
               <Box sx={{ width: "100px", m: "auto" }}>
-                <img src="/logo.png" alt="logo" style={{ width: "100%" }} />
+                {file ? (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="logo"
+                    style={{ width: "100%" }}
+                  />
+                ) : (
+                  <img
+                    src={`http://localhost:5000/images/${settings.image}`}
+                    alt="logo"
+                    style={{ width: "100%" }}
+                  />
+                )}
               </Box>
               <Button
                 variant="outlined"
@@ -170,11 +237,13 @@ const Layout = ({ children }: { children: JSX.Element }) => {
         />
         {children}
 
-        <Box sx={{ position: "fixed", right: "3%", bottom: "3%" }}>
-          <Button variant="contained" onClick={handleOpen}>
-            <SettingsIcon />
-          </Button>
-        </Box>
+        {user && user.role === "admin" && (
+          <Box sx={{ position: "fixed", right: "3%", bottom: "3%" }}>
+            <Button variant="contained" onClick={handleOpen}>
+              <SettingsIcon />
+            </Button>
+          </Box>
+        )}
       </Container>
     </Box>
   );

@@ -22,6 +22,7 @@ app.use("/api/exam", require("./routes/examRoutes"));
 app.use("/api/question", require("./routes/questionRoutes"));
 app.use("/api/questionbank", require("./routes/questionBankRoutes"));
 app.use("/api/result", require("./routes/resultRoutes"));
+app.use("/api/settings", require("./routes/settingsRoutes"));
 
 app.use(errorHandler);
 

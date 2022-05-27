@@ -4,6 +4,7 @@ import examReducer from "../features/exam/examSlice";
 import questionBankReducer from "../features/questionBank/questionBankSlice";
 import questionReducer from "../features/question/question";
 import resultReducer from "../features/result/resultSlice";
+import settingsReducer from "../features/settings/settingsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     questionBank: questionBankReducer,
     question: questionReducer,
     result: resultReducer,
+    settings: settingsReducer,
   },
 });
 

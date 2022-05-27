@@ -63,6 +63,9 @@ const Appbar = ({
   const signinPath = location.pathname === "/signin";
 
   const { user } = useAppSelector((state: RootState) => state.auth);
+  const { settings: set } = useAppSelector(
+    (state: RootState) => state.settings
+  );
   //Redux hooks
 
   //Statets
@@ -109,14 +112,18 @@ const Appbar = ({
             alignItems: "center",
           }}
         >
-          <img src="/logo.png" alt="logo" style={{ width: "30px" }} />
+          <img
+            src={`http://localhost:5000/images/${set.image}`}
+            alt="logo"
+            style={{ width: "30px" }}
+          />
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ mr: 2, display: "flex" }}
           >
-            EXAMAN
+            {set && set.text}
           </Typography>
         </Box>
       );

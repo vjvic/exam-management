@@ -54,6 +54,7 @@ const Sidebar = ({
 }) => {
   // Redux hooks
   const { user } = useAppSelector((state: RootState) => state.auth);
+  const { settings } = useAppSelector((state: RootState) => state.settings);
 
   //Router hooks
   const navigate = useNavigate();
@@ -77,8 +78,12 @@ const Sidebar = ({
           alignItems: "center",
         }}
       >
-        <img src="/logo.png" alt="logo" style={{ width: "30px" }} />
-        <Typography variant="h5">EXAMAN</Typography>
+        <img
+          src={`http://localhost:5000/images/${settings.image}`}
+          alt="logo"
+          style={{ width: "30px" }}
+        />
+        <Typography variant="h5">{settings.text}</Typography>
       </Box>
       <Divider />
       <List>

@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { themeOptions } from "./theme";
+
 import { Layout, PrivateRoute, FacultyRoute } from "./components";
 import { Routes, Route } from "react-router-dom";
 import {
@@ -23,8 +23,103 @@ import {
   User,
   ExamResult,
 } from "./pages";
+import { createTheme } from "@mui/material/styles";
+import { useAppSelector } from "./app/hooks";
+import { RootState } from "./app/store";
+
+/* declare module "@mui/material/styles" {
+  interface Theme {
+    paletteOptions: {
+      type: string;
+      primary: {
+        main?: string;
+      };
+      secondary: {
+        main: string;
+      };
+      background: {
+        default: string;
+      };
+    };
+    Components: {
+      MuiAppBar: {
+        elevation: number;
+        color: string;
+      };
+      MuiButton: {
+        disableRipple: boolean;
+        disableElevation: boolean;
+      };
+      MuiCard: {
+        raised: boolean;
+        elevation: number;
+      };
+      MuiPaper: {
+        elevation: number;
+      };
+    };
+    overrides: {
+      MuiAppBar: {
+        colorInherit: {
+          backgroundColor: string;
+          color: string;
+        };
+      };
+    };
+    shape: {
+      borderRadius: number;
+    };
+  } */
+
+// allow configuration using `createTheme`
+interface ThemeOptions {
+  paletteOptions?: {
+    type?: string;
+    primary?: {
+      main?: string;
+    };
+    secondary?: {
+      main?: string;
+    };
+    background?: {
+      default?: string;
+    };
+  };
+  Components?: {
+    MuiAppBar?: {
+      elevation?: number;
+      color?: string;
+    };
+    MuiButton?: {
+      disableRipple?: boolean;
+      disableElevation?: boolean;
+    };
+    MuiCard?: {
+      raised?: boolean;
+      elevation: number;
+    };
+    MuiPaper?: {
+      elevation?: number;
+    };
+  };
+  overrides?: {
+    MuiAppBar?: {
+      colorInherit?: {
+        backgroundColor?: string;
+        color?: string;
+      };
+    };
+  };
+  shape?: {
+    borderRadius?: number;
+  };
+}
 
 const App = () => {
+  const { settings, isLoading } = useAppSelector(
+    (state: RootState) => state.settings
+  );
+
   const examRoute = (
     <FacultyRoute>
       <Exam />
@@ -120,6 +215,55 @@ const App = () => {
       <User />
     </FacultyRoute>
   );
+
+  const themeOptions: ThemeOptions = createTheme({
+    palette: {
+      primary: {
+        main: settings.color,
+      },
+      secondary: {
+        main: "#F75A54",
+      },
+      background: {
+        default: "#F5F5F5",
+      },
+    },
+    components: {
+      MuiAppBar: {
+        defaultProps: {
+          elevation: 1,
+          color: "primary",
+        },
+      },
+      MuiButton: {
+        defaultProps: {
+          /* disableRipple: true, */
+          /* disableElevation: true, */
+        },
+      },
+      MuiCard: {
+        defaultProps: {
+          raised: false,
+          elevation: 1,
+        },
+      },
+      MuiPaper: {
+        defaultProps: {
+          elevation: 1,
+        },
+      },
+    },
+    overrides: {
+      MuiAppBar: {
+        colorInherit: {
+          color: "#333",
+        },
+      },
+    },
+    shape: {
+      borderRadius: 5,
+    },
+  });
 
   return (
     <ThemeProvider theme={themeOptions}>

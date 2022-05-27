@@ -43,6 +43,9 @@ const Signin = () => {
   const { isSuccess, message } = useAppSelector(
     (state: RootState) => state.auth
   );
+  const { settings } = useAppSelector(
+    (state: RootState) => state.settings
+  );
 
   const onSubmit: SubmitHandler<User> = (data, e) => {
     const user = { email: data.email, password: data.password };
@@ -69,7 +72,7 @@ const Signin = () => {
       >
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <img
-            src="/logosample.png"
+            src={`http://localhost:5000/images/${settings.image}`}
             alt="logo"
             style={{
               height: "125%",
