@@ -1,25 +1,5 @@
-import { useEffect } from "react";
-import {
-  Typography,
-  /*   Button,
-  Menu,
-  MenuItem,
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-  Paper, */
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-} from "@mui/material";
+import { useEffect, useState } from "react";
+import { Button, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 /* import MoreHorizIcon from "@mui/icons-material/MoreHoriz"; */
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -99,16 +79,40 @@ const Result = () => {
               <MenuItem onClick={handleClose}>Details</MenuItem>
             </Menu> */}
 
-            <IconButton
+            <Button
+              sx={{ mr: 2 }}
+              variant="contained"
               onClick={() => navigate(`/results-details/${params.row._id}`)}
             >
-              <VisibilityIcon />
-            </IconButton>
+              2D TOS
+            </Button>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => navigate(`/generated/${params.row._id}`)}
+            >
+              Details
+            </Button>
           </div>
         );
       },
     },
   ];
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   useEffect(() => {
     dispatch(getAllResult());
@@ -118,59 +122,20 @@ const Result = () => {
   if (isError) return <Error />;
 
   return (
-    <>
-      <div>
-        <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
-          Results
-        </Typography>
-
-        {/*  <div style={{ height: 400, width: "100%" }}>
+    <div>
+      <Typography variant="h5" fontWeight="bold" sx={{ marginBottom: 3 }}>
+        Results
+      </Typography>
+      <div style={{ height: 650, width: "100%" }}>
         <DataGrid
           rows={resultList}
           columns={columns}
-          pageSize={5}
+          pageSize={10}
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
         />
-      </div> */}
-
-        <TableContainer component={Paper} sx={{ mb: 4 }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Exam Title</TableCell>
-                <TableCell>Exam Score</TableCell>
-                <TableCell align="right">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            {resultList.map((result) => (
-              <TableBody key={result._id}>
-                <TableCell component="th" scope="row">
-                  {result.fName}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {result.examTitle}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {result.score}
-                </TableCell>
-                <TableCell component="th" align="right">
-                  <Button onClick={() => navigate(`/generated/${result._id}`)}>
-                    Exam
-                  </Button>
-                  <Button
-                    onClick={() => navigate(`/results-details/${result._id}`)}
-                  >
-                    2d tos
-                  </Button>
-                </TableCell>
-              </TableBody>
-            ))}
-          </Table>
-        </TableContainer>
       </div>
-    </>
+    </div>
   );
 };
 

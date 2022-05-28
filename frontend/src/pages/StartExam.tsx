@@ -181,27 +181,43 @@ const StartExam = () => {
   return (
     <div>
       {!showScore && (
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography variant="body1" fontWeight="bold" mb={2}>
             Time Limit: {`${minutes}:${seconds}`}
+          </Typography>
+          <Typography variant="body1" fontWeight="bold" mb={2}>
+            {currentExam + 1}/{examDet!.questions.length}
           </Typography>
         </Box>
       )}
       {!showScore && examDet && (
         <Paper sx={{ p: 4 }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
+          <Box
+            sx={{
+              backgroundColor: "rgba(51, 166, 137,0.1)",
+              p: 2,
+            }}
           >
-            <Typography variant="h6" fontWeight="bold">
-              {currentExam + 1}. {examQuestions.questionText}
-            </Typography>
-            <Typography variant="body1" color="green">
-              {examQuestions.point}{" "}
-              {examQuestions.point <= 1 ? "point" : "points"}
-            </Typography>
-          </Stack>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography variant="h6" fontWeight="bold">
+                {currentExam + 1}. {examQuestions.questionText}
+              </Typography>
+              <Typography variant="body1" color="green">
+                {examQuestions.point}{" "}
+                {examQuestions.point <= 1 ? "point" : "points"}
+              </Typography>
+            </Stack>
+          </Box>
 
           {examQuestions.image && (
             <img
