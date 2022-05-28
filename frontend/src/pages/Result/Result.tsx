@@ -29,10 +29,16 @@ const Result = () => {
 
   const columns: GridColDef[] = [
     {
+      field: "_id",
+      headerName: "Result ID",
+
+      flex: 1,
+    },
+    {
       field: "fullName",
-      headerName: "Full name",
+      headerName: "Student",
       description: "This column has a value getter and is not sortable.",
-      sortable: false,
+
       flex: 1,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.fName || ""} ${params.row.lName || ""}`,
