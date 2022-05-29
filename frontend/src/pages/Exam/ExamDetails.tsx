@@ -66,7 +66,9 @@ const ExamDetails = () => {
             <Button onClick={() => window.print()}>Print</Button>
           </Box>
 
-          <Typography mb={2}>Description: {examDet?.description}</Typography>
+          <Typography mb={2}>
+            Description/Instructions: {examDet?.description}
+          </Typography>
 
           <Typography mb={2}>TimeLimit {examDet?.timeLimit} mins</Typography>
 

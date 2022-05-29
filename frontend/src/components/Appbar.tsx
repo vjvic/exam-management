@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { logout } from "../features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { RootState } from "../app/store";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
@@ -49,6 +49,7 @@ const settings = ["Profile", "Logout"];
 const Appbar = ({ display }: { display: boolean }) => {
   //React router hooks
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { user } = useAppSelector((state: RootState) => state.auth);
   //Redux hooks
@@ -191,9 +192,23 @@ const Appbar = ({ display }: { display: boolean }) => {
                 <Button
                   key={page.text}
                   onClick={() => handleCloseNavMenu(page.path)}
-                  sx={{ my: 2, color: "inherit", display: "block" }}
+                  sx={{
+                    my: 2,
+                    color: "inherit",
+                    display: "block",
+                  }}
                 >
-                  {page.text}
+                  <Box
+                    sx={{
+                      color: location.pathname === page.path ? "#33a689" : "",
+                      borderBottom:
+                        location.pathname === page.path
+                          ? "2px solid #33a689"
+                          : "",
+                    }}
+                  >
+                    {page.text}
+                  </Box>
                 </Button>
               ))}
             {/*  {user &&

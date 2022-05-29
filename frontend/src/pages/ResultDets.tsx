@@ -72,12 +72,14 @@ const ResultDets = () => {
             </Typography>
             <Typography color="text.secondary">
               {" "}
-              {examDet?.questions.length}{" "}
-              {examDet?.questions!.length! > 1 ? "Questions" : "Question"}
+              ({examDet?.questions.length}{" "}
+              {examDet?.questions!.length! > 1 ? "Questions" : "Question"})
             </Typography>
           </Box>
 
-          <Typography mb={2}>Description: {examDet?.description}</Typography>
+          <Typography mb={2}>
+            Description/Instructions: {examDet?.description}
+          </Typography>
 
           <Typography mb={2}>Time Limit: {examDet?.timeLimit} mins</Typography>
 

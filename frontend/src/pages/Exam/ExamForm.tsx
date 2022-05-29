@@ -506,7 +506,7 @@ const ExamForm = () => {
 
                 <TextField
                   variant="standard"
-                  label="Description"
+                  label="Description/Instructions"
                   multiline
                   rows={3}
                   value={description}
@@ -556,7 +556,7 @@ const ExamForm = () => {
                         />
                         <TextField
                           variant="standard"
-                          label="Option1"
+                          label="Option 1"
                           name="option1"
                           value={input.option1}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -567,7 +567,7 @@ const ExamForm = () => {
                         />
                         <TextField
                           variant="standard"
-                          label="Option2"
+                          label="Option 2"
                           name="option2"
                           value={input.option2}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -578,7 +578,7 @@ const ExamForm = () => {
                         />
                         <TextField
                           variant="standard"
-                          label="Option3"
+                          label="Option 3"
                           name="option3"
                           value={input.option3}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -589,7 +589,7 @@ const ExamForm = () => {
                         />
                         <TextField
                           variant="standard"
-                          label="Option4"
+                          label="Option 4"
                           name="option4"
                           value={input.option4}
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

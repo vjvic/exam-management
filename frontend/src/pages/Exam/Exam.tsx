@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   Button,
@@ -9,6 +9,7 @@ import {
   CardContent,
   /*  CardActions, */
   Stack,
+  TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -20,12 +21,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataGrid, GridColDef } from "@mui/x-data-grid"; */
 import { Loader, Error } from "../../components";
+import { Exam as ExamInterface } from "../../interface/Exam";
 
 const Exam = () => {
   //React router hooks
   const navigate = useNavigate();
 
   //States
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   //Selector and dispatch
   const { examList, isLoading, isError } = useAppSelector(
@@ -66,6 +70,23 @@ const Exam = () => {
     },
   ]; */
 
+  //Filter exam
+
+  const filterExam = (examList: ExamInterface[]) => {
+    if (searchTerm !== "") {
+      const newExam = examList.filter((qb) => {
+        return Object.values(qb)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+
+      return newExam;
+    }
+
+    return examList;
+  };
+
   useEffect(() => {
     dispatch(getAllExam());
 
@@ -104,8 +125,18 @@ const Exam = () => {
           getRowId={(row) => row._id}
         />
       </div> */}
+      <Box sx={{ my: 2 }}>
+        <TextField
+          variant="standard"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchTerm(e.target.value)
+          }
+        />
+      </Box>
       <Grid container spacing={3}>
-        {examList.map((exam) => (
+        {filterExam(examList).map((exam) => (
           <Grid item lg={4} md={4} sm={6} xs={12} key={exam._id}>
             <Card>
               <CardContent>

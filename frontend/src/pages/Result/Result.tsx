@@ -8,6 +8,20 @@ import { RootState } from "../../app/store";
 import { getAllResult } from "../../features/result/resultSlice";
 import { Error, Loader } from "../../components";
 import { useNavigate } from "react-router-dom";
+import {
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+  /*   GridToolbarExport, */
+} from "@mui/x-data-grid";
+
+const CustomToolbar = () => {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarFilterButton />
+      {/*  <GridToolbarExport /> */}
+    </GridToolbarContainer>
+  );
+};
 
 const Result = () => {
   /*   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); */
@@ -31,14 +45,14 @@ const Result = () => {
     {
       field: "_id",
       headerName: "Result ID",
-
       flex: 1,
+      disableExport: true,
     },
     {
       field: "fullName",
       headerName: "Student",
       description: "This column has a value getter and is not sortable.",
-
+      disableExport: true,
       flex: 1,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.fName || ""} ${params.row.lName || ""}`,
@@ -139,6 +153,15 @@ const Result = () => {
           pageSize={10}
           rowsPerPageOptions={[5]}
           getRowId={(row) => row._id}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
+          componentsProps={{
+            toolbar: {
+              csvOptions: { field: ["fullName", "examTitle"] },
+              toolbar: { printOptions: { disableToolbarButton: true } },
+            },
+          }}
         />
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
   Button,
   Box,
   Grid,
+  Divider,
 } from "@mui/material";
 import {
   useAppDispatch,
@@ -189,15 +190,19 @@ const StartExam = () => {
           }}
         >
           <Typography variant="body1" fontWeight="bold" mb={2}>
-            Time Limit: {`${minutes}:${seconds}`}
+            Time Limit:{" "}
+            <Paper
+              sx={{ textAlign: "center", p: 1 }}
+              component="span"
+            >{`${minutes}:${seconds}`}</Paper>
           </Typography>
           <Typography variant="body1" fontWeight="bold" mb={2}>
-            {currentExam + 1}/{examDet!.questions.length}
+            Question {currentExam + 1}/{examDet!.questions.length}
           </Typography>
         </Box>
       )}
       {!showScore && examDet && (
-        <Paper sx={{ p: 4 }}>
+        <Paper sx={{ p: 4, py: 6 }}>
           <Box
             sx={{
               backgroundColor: "rgba(51, 166, 137,0.1)",
@@ -209,12 +214,12 @@ const StartExam = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Typography variant="h6" fontWeight="bold">
+              <Typography>
                 {currentExam + 1}. {examQuestions.questionText}
               </Typography>
               <Typography variant="body1" color="green">
-                {examQuestions.point}{" "}
-                {examQuestions.point <= 1 ? "point" : "points"}
+                ({examQuestions.point}
+                {examQuestions.point <= 1 ? "point" : "points"})
               </Typography>
             </Stack>
           </Box>
@@ -265,22 +270,64 @@ const StartExam = () => {
         </Paper>
       )}
 
+      <Paper sx={{ p: 2, mt: 4 }}></Paper>
+
       {showScore && (
-        <Paper sx={{ p: 4 }}>
-          <Typography mb={2} variant="h5" fontWeight="bold">
-            Results
-          </Typography>
+        <>
+          <Paper sx={{ p: 4 }}>
+            <Typography
+              mb={2}
+              variant="h5"
+              fontWeight="bold"
+              textAlign="center"
+            >
+              Results
+            </Typography>
 
-          <Typography variant="h6">Correct answer: {correctAnswer}</Typography>
-          <Typography variant="h6">Wrong answer: {wrongAnswer}</Typography>
-          <Typography variant="h6">Final Score: {score}</Typography>
+            <Typography variant="h6">
+              Correct answer: {correctAnswer}
+            </Typography>
+            <Divider sx={{ my: 1 }} />
+            <Typography variant="h6">Wrong answer: {wrongAnswer}</Typography>
+            <Divider sx={{ my: 1 }} />
+            <Typography variant="h6">Final Score: {score}</Typography>
+            <Divider sx={{ my: 1 }} />
+            <Box sx={{ mt: 3 }}>
+              <Button sx={{ margin: "auto" }} onClick={handleExit}>
+                Back to home
+              </Button>
+            </Box>
+          </Paper>
 
-          <Box sx={{ mt: 3 }}>
-            <Button sx={{ margin: "auto" }} onClick={handleExit}>
-              Back to home
-            </Button>
-          </Box>
-        </Paper>
+          <Paper sx={{ p: 4, mt: 5 }}>
+            <Typography textAlign="center" variant="h5" fontWeight="bold">
+              Detailed Analysis
+            </Typography>
+
+            {shuffled.map((question, index) => (
+              <div>
+                <Typography
+                  sx={{
+                    backgroundColor: "rgba(51, 166, 137,0.1)",
+                    my: 2,
+                    p: 2,
+                  }}
+                >
+                  {index + 1}. {question.questionText}
+                </Typography>
+                <Typography>
+                  <Box
+                    component="span"
+                    sx={{ color: "green", fontWeight: "bold" }}
+                  >
+                    Correct answer:
+                  </Box>{" "}
+                  {question.answer}
+                </Typography>
+              </div>
+            ))}
+          </Paper>
+        </>
       )}
     </div>
   );

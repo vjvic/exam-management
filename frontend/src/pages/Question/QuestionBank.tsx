@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   Button,
@@ -8,6 +8,7 @@ import {
   Card,
   CardContent,
   Stack,
+  TextField,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -23,9 +24,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Loader, Error } from "../../components";
+import { QuestionBank as QBInterface } from "../../interface/QuestionBank";
 
 const QuestionBank = () => {
   const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   //Selector and dispatch
   const { questionBankList, isLoading, isError } = useAppSelector(
@@ -33,42 +37,22 @@ const QuestionBank = () => {
   );
   const dispatch = useAppDispatch();
 
-  const columns: GridColDef[] = [
-    {
-      field: "title",
-      headerName: "Question Bank",
-      flex: 1,
-    },
+  //Filter question bank
 
-    {
-      field: "action",
-      headerName: "Action",
-      flex: 1,
-      sortable: false,
-      valueGetter: (params) => params.row._id,
-      renderCell: (params) => {
-        return (
-          <div className="rowitem">
-            <IconButton
-              onClick={() => navigate(`/questions/${params.row._id}`)}
-            >
-              <VisibilityIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => navigate(`/questionbank/edit/${params.row._id}`)}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => dispatch(deleteQuestionBank(params.row._id!))}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </div>
-        );
-      },
-    },
-  ];
+  const filterQuestionbank = (questionBankList: QBInterface[]) => {
+    if (searchTerm !== "") {
+      const newQuestionBank = questionBankList.filter((qb) => {
+        return Object.values(qb)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+
+      return newQuestionBank;
+    }
+
+    return questionBankList;
+  };
 
   useEffect(() => {
     dispatch(getAllQuestionBank(""));
@@ -103,6 +87,17 @@ const QuestionBank = () => {
         </Button>
       </Box>
 
+      <Box sx={{ my: 2 }}>
+        <TextField
+          variant="standard"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchTerm(e.target.value)
+          }
+        />
+      </Box>
+
       {/*  <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={questionBankList}
@@ -113,7 +108,7 @@ const QuestionBank = () => {
         />
       </div> */}
       <Grid container spacing={3}>
-        {questionBankList.map((questionBank) => (
+        {filterQuestionbank(questionBankList).map((questionBank) => (
           <Grid item lg={4} md={4} sm={6} xs={12} key={questionBank._id}>
             <Card>
               <CardContent>
