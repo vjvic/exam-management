@@ -15,16 +15,18 @@ const createQuestionBank = AsyncHandler(async (req, res) => {
 // @route   GET /api/questionbank
 // @access  Private
 const getAllQuestionBank = AsyncHandler(async (req, res) => {
-  const keyword = req.query.keyword
+  /*  const keyword = req.query.keyword
     ? {
         name: {
           $regex: req.query.keyword,
           $options: "i",
         },
       }
-    : {};
+    : {}; */
 
-  const questionBank = await QuestionBank.find({ ...keyword });
+  const questionBank = await QuestionBank.aggregate([
+    { $sort: { createdAt: -1 } },
+  ]);
 
   res.status(200).json(questionBank);
 });

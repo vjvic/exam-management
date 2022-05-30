@@ -14,7 +14,7 @@ const createExam = AsyncHandler(async (req, res) => {
 // @route   GET /api/exam
 // @access  Private
 const getAllExam = AsyncHandler(async (req, res) => {
-  const exam = await Exam.find({});
+  const exam = await Exam.aggregate([{ $sort: { createdAt: -1 } }]);
 
   res.status(200).json(exam);
 });
