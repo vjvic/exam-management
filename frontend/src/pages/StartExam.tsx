@@ -2,10 +2,10 @@ import {
   Paper,
   Typography,
   Stack,
-  /*   FormControl,
+  FormControl,
   RadioGroup,
   Radio,
-  FormControlLabel, */
+  FormControlLabel,
   Button,
   Box,
   Grid,
@@ -42,7 +42,7 @@ const StartExam = () => {
   /*   const dispatch = useAppDispatch(); */
 
   //States
-  /*   const [userAnswer, setUserAnswer] = useState(""); */
+  const [userAnswer, setUserAnswer] = useState("");
   const [currentExam, setCurrentExam] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -56,9 +56,9 @@ const StartExam = () => {
       [array[i], array[j]] = [array[j], array[i]];
     }
   } */
-  /*   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserAnswer((event.target as HTMLInputElement).value);
-  }; */
+  };
 
   let shuffled = useMemo(
     () =>
@@ -79,15 +79,15 @@ const StartExam = () => {
 
   const examLength = examDet?.questions!.length!;
 
-  const handleNext = (answer: string, point: number, text: string) => {
+  const handleNext = (answer: string, point: number) => {
     /*   setUserAnswer(text);
     console.log(userAnswer); */
 
-    if (answer !== text) {
+    if (answer !== userAnswer) {
       setWrongAnswer((wrongAnswer) => wrongAnswer + 1);
     }
 
-    if (answer === text) {
+    if (answer === userAnswer) {
       setCorrectAnswer((correctAnswer) => correctAnswer + 1);
       setScore((score) => score + point);
       /*    setUserAnswer(""); */
@@ -98,6 +98,8 @@ const StartExam = () => {
     } else {
       setShowScore(true);
     }
+
+    setUserAnswer("");
   };
 
   const handleExit = () => {
@@ -190,11 +192,7 @@ const StartExam = () => {
           }}
         >
           <Typography variant="body1" fontWeight="bold" mb={2}>
-            Time Limit:{" "}
-            <Paper
-              sx={{ textAlign: "center", p: 1 }}
-              component="span"
-            >{`${minutes}:${seconds}`}</Paper>
+            Time Limit: {`${minutes}:${seconds}`}
           </Typography>
           <Typography variant="body1" fontWeight="bold" mb={2}>
             Question {currentExam + 1}/{examDet!.questions.length}
@@ -205,8 +203,9 @@ const StartExam = () => {
         <Paper sx={{ p: 4, py: 6 }}>
           <Box
             sx={{
+              borderRadius: "10px",
               backgroundColor: "rgba(51, 166, 137,0.1)",
-              p: 2,
+              p: 3,
             }}
           >
             <Stack
@@ -237,36 +236,43 @@ const StartExam = () => {
             />
           )}
 
-          <Box sx={{ my: 3 }}>
-            <Grid container spacing={2}>
-              {examQuestions.choices.map((choice: any) => (
-                <Grid item lg={6} md={6} sm={6} xs={6}>
-                  <Button
-                    size="large"
-                    variant="outlined"
-                    fullWidth
-                    onClick={() =>
-                      handleNext(
-                        examQuestions.answer,
-                        examQuestions.point,
-                        choice.text
-                      )
-                    }
-                  >
-                    {choice.text}
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
+          <div>
+            <FormControl sx={{ my: 4, px: 2 }} fullWidth>
+              <RadioGroup value={userAnswer} onChange={handleChange}>
+                {examQuestions.choices.map((choice: any) => (
+                  <FormControlLabel
+                    sx={{
+                      py: 1,
+                      borderRadius: "10px",
+                      backgroundColor:
+                        userAnswer === choice.text
+                          ? "rgba(51, 166, 137,0.1)"
+                          : "#ddd",
+                      width: "50%",
+                      my: 1,
+                      /*    border:
+                        userAnswer === choice.text ? "1px solid green" : "", */
+                    }}
+                    value={choice.text}
+                    key={choice.text}
+                    control={<Radio />}
+                    label={choice.text}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </div>
 
-          {/*   <Button
-            onClick={() =>
-              handleNext(examQuestions.answer, examQuestions.point)
-            }
-          >
-            Next
-          </Button> */}
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              variant="contained"
+              onClick={() =>
+                handleNext(examQuestions.answer, examQuestions.point)
+              }
+            >
+              Next
+            </Button>
+          </Box>
         </Paper>
       )}
 
@@ -311,6 +317,7 @@ const StartExam = () => {
                     backgroundColor: "rgba(51, 166, 137,0.1)",
                     my: 2,
                     p: 2,
+                    borderRadius: "10px",
                   }}
                 >
                   {index + 1}. {question.questionText}
