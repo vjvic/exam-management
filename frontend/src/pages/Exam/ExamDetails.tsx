@@ -60,7 +60,7 @@ const ExamDetails = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h5" fontWeight="bold" mb={2}>
+            <Typography variant="h4" mb={5} textAlign="center">
               {examDet?.title}
             </Typography>
             <Button onClick={() => window.print()}>Print</Button>
@@ -108,8 +108,8 @@ const ExamDetails = () => {
       </Typography> */}
 
       <Typography
-        variant="h5"
-        fontWeight="bold"
+        variant="h4"
+        textAlign="center"
         mb={2}
         sx={{ display: "none", displayPrint: "block" }}
       >

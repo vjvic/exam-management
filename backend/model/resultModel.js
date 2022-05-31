@@ -19,6 +19,7 @@ const questionSchema = mongoose.Schema(
     kd: { type: String, required: true },
     image: { type: String, default: "" },
     questionBank: String,
+    userAnswer: String,
   },
   {
     timestamps: true,

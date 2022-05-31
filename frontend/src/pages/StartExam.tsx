@@ -25,7 +25,7 @@ import { Loader, Error } from "../components";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"; */
 import { createResult } from "../features/result/resultSlice";
 import { finishedExam, reset } from "../features/exam/examSlice";
-/* import { Question } from "../interface/Question"; */
+import { Question } from "../interface/Question";
 
 const StartExam = () => {
   //Router hooks
@@ -46,6 +46,8 @@ const StartExam = () => {
   const [currentExam, setCurrentExam] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+
+  const [examResult, setExamResult] = useState<Question[]>([]);
 
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [wrongAnswer, setWrongAnswer] = useState(0);
@@ -79,9 +81,16 @@ const StartExam = () => {
 
   const examLength = examDet?.questions!.length!;
 
+  /*  let examResult: Question[] = []; */
+
   const handleNext = (answer: string, point: number) => {
     /*   setUserAnswer(text);
     console.log(userAnswer); */
+
+    const newQuestion = { userAnswer, ...examQuestions };
+
+    setExamResult([...examResult, newQuestion]);
+    console.log(examResult);
 
     if (answer !== userAnswer) {
       setWrongAnswer((wrongAnswer) => wrongAnswer + 1);
@@ -164,7 +173,7 @@ const StartExam = () => {
         lName: user!?.lName!.toString(),
         examTitle: examDet!?.title!.toString(),
         score: Number(score),
-        questions: shuffled,
+        questions: examResult,
       };
 
       dispatch(createResult(userResult!));
@@ -310,11 +319,14 @@ const StartExam = () => {
               Detailed Analysis
             </Typography>
 
-            {shuffled.map((question, index) => (
-              <div>
+            {examResult!.map((question, index) => (
+              <div key={index}>
                 <Typography
                   sx={{
-                    backgroundColor: "rgba(51, 166, 137,0.1)",
+                    backgroundColor:
+                      question.answer !== question.userAnswer
+                        ? "rgba(255, 0, 0,0.1)"
+                        : "rgba(51, 166, 137,0.1)",
                     my: 2,
                     p: 2,
                     borderRadius: "10px",
@@ -331,6 +343,17 @@ const StartExam = () => {
                   </Box>{" "}
                   {question.answer}
                 </Typography>
+                {question.answer !== question.userAnswer && (
+                  <Typography>
+                    <Box
+                      component="span"
+                      sx={{ color: "red", fontWeight: "bold" }}
+                    >
+                      Your answer:
+                    </Box>{" "}
+                    {question.userAnswer}
+                  </Typography>
+                )}
               </div>
             ))}
           </Paper>

@@ -32,7 +32,7 @@ const GeneratedExam = () => {
 
   return (
     <Box sx={{ displayPrint: "block", display: "none" }}>
-      <Typography variant="h5" mb={5} fontWeight="bold">
+      <Typography variant="h4" mb={5} textAlign="center">
         {resultDet?.examTitle}
       </Typography>
       {resultDet?.questions?.map((question, index) => (
@@ -45,6 +45,10 @@ const GeneratedExam = () => {
               <li key={c.text}>{c.text}</li>
             ))}
           </ul>
+          <Typography>Answer: {question.answer}</Typography>
+          {question.userAnswer && (
+            <Typography>User Answer: {question.userAnswer}</Typography>
+          )}
         </Box>
       ))}
     </Box>
