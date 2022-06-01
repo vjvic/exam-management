@@ -29,7 +29,7 @@ const createResult = AsyncHandler(async (req, res) => {
 // @route   GET /api/result
 // @access  Private
 const getAllResult = AsyncHandler(async (req, res) => {
-  const result = await Result.find({});
+  const result = await Result.aggregate([{ $sort: { createdAt: -1 } }]);
 
   res.status(200).json(result);
 });

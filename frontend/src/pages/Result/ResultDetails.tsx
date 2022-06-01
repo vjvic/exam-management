@@ -190,10 +190,12 @@ const ResultDetails = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    window.print();
+    if (resultDet) {
+      window.print();
 
-    navigate("/results");
-  }, []);
+      navigate("/results");
+    }
+  }, [resultDet, navigate]);
 
   if (isLoading) return <Loader />;
   if (isError) return <Error />;
